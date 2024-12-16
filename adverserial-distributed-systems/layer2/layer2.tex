@@ -1,0 +1,17 @@
+
+\chapter{Layer 2 Scaling Solutions}
+
+
+\section{Faster Layer 2 Interoperability}
+In late 2020, Ethereum community started focusing on \href{https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698}{\emph{rollup-centric roadmap}}. The idea of this was to enable various Layer 2 scaling solutions that may potentially provide a whole lot more of execution capacity than the Ethereum (henceforth to be referred as Layer1 or L1) will be capable of. 
+
+However, Layer 2 come with following new concerns:
+\begin{itemize}
+    \item \textbf{Security}: The security of Layer 2's is the concern of how easy it is to compromise a L2 in comparison to an L1. Generally, in a proof-of-stake system like ethereum, a lot of security is borrowed from stake at play. As of writing, this is around 33.8 million ETH staked / around 136.8 billion USD securing the ecosystem. Can the L2 match this level of security?
+    \item \textbf{Decentralization}: Control of the system especially with chains like Ethereum is fairly decentralized. As of writing, around 1 million validators run the nodes for the main chain\footnote{This number is a bit misleading given a lot is contributed by single institutions like \href{stake.fish}{stake.fish} running multiple validator nodes given each validator can only stake 32 ETH per validator. \href{https://eips.ethereum.org/EIPS/eip-7251}{The Ethereum Pectra Upgrade (EIP-7251)} is supposed to fix it with increased \texttt{MAX\_EFFECTIVE\_BALANCE} the staking balance per validator, in hopes consolidating many such large validators into fewer entities}. Layer 2 solutions hardly have decentralized sequencers and hence sit almost on the far end of decentralization argument. Ca the L2 match this level of decentralized controls? 
+    \item \textbf{Fragmentation}: Every L2 is almost like a separate "room", although situated within the same "house", the L1. This eventually leads to fragmentation of both users, and the liquidity. On a DEX, liquidity is directly tied to the quantity of tokens users have committed to the liquidity pools. If a crypto asset lacks sufficient liquidity, token holders may face difficulty selling their tokens when they wish. L2 brings in another dimenstion to this problem. Not only are tokens spread thin among various DeFi apps on the same chain, they are now spread among various DeFi apps on \emph{various} chains.
+\end{itemize}
+
+The Interoperability problems is concerned with the \emph{fragmentation} issue brought in by the advent of L2s. 
+
+In its most basic essence, Interoperability is concerned with a transaction that intends to affect state of two different L2 rollup chains. For example, a token transfer from $A$'s account on rollup $X$ to $B$'s account on rollup $Y$ is a transaction that affects the state of both $X$ and $Y$.

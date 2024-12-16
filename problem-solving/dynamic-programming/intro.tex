@@ -1,0 +1,48 @@
+Dynamic Programming in it's crudest sense is nothing more than "clever bruteforce".
+What that means is while the solution eventually a large brute-force computation, the \emph{cleverness} is in finding a sub-problem that helps solve for the larger problem instances. The key idea is "instance\emph{s}", not a single instance.
+
+Take the following relation for example:
+\begin{equation}
+    \label{relation:dontrequirememo}
+    \begin{split}
+        F(x) &= Max(F(x-1) + 1, 1) \\
+        F(0) &= 0
+    \end{split}
+\end{equation}
+Here, $F(2)$ will only be used for calculating $F(3)$ and nowhere else. 
+
+On the other hand, the following relation:
+\begin{equation}
+    \label{relation:requiresmemo}
+    \begin{split}
+        F(x) &= Max(Max(n F(x-n) + 1) \forall n \in [0, x), 1) \\
+        F(0) &= 0
+    \end{split}
+\end{equation}
+
+uses $F(2)$ for all calculations where $x > 2$ such as $F(3)$, $F(4)$, etc.
+
+The cleverness in the relation \ref{relation:requiresmemo} that can potentially help it get to similar asymptotics as the \ref{relation:dontrequirememo} is \textbf{memoization}.
+
+\section{Memoization}
+Memoization is nothing but trade-off of space to gain in time. Naive implementation of \ref{relation:requiresmemo} in code will yield results with almost constant space but exponential time. The time complexity leads to:
+
+\begin{equation}
+    \label{timecomplexity:requiresmemo}
+    \begin{split}
+        O(n) = \sum_{i = 0}^{n-1}O(i) + 1
+    \end{split}
+\end{equation}
+
+If however, after every solution of an instance in range $[0, k)$, the solution is kept in some constant-time accessible storage $M$, the problem instance $k$ dissolves into:
+
+\begin{equation}
+    \label{timecomplexity:requiresmemowithmemo}
+    \begin{split}
+        O(k) &= \sum_{i = 0}^{k-1}O(i) + 1 \\
+            &= \sum_{i = 0}^{k-1}O(1) + 1 \\
+            &= k+1
+    \end{split}
+\end{equation}
+
+We are going to use this idea quite generously.

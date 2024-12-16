@@ -3,9 +3,18 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{bookstyle}
 \usepackage{array}
+\usepackage{amsmath}
 \usepackage{import}
 \usepackage{imakeidx}
 \usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
 
 \makeindex[columns=3, title=Alphabetical Index, intoc]
 
@@ -15,6 +24,8 @@
 \tableofcontents
 
 \import{./zero-knowledge/}{zk.tex}
+\import{./adverserial-distributed-systems/}{adverserial.tex}
+\import{./programming-languages/}{programming-languages.tex}
 \import{./problem-solving/}{problemsolving.tex}
 
 \end{document}
