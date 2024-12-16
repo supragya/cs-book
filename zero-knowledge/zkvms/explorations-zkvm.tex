@@ -1,0 +1,82 @@
+
+\chapter{Explorations in ZKVMs}
+
+This chapter intends to give a brief overview of the zero-knowledge virtual machines and their current state of usability.
+
+\section{RISC-V as a common target}
+As soon as we find ourselves exploring ZK-VMs, we quickly find ourselves with a bunch of projects such as RISC-Zero, Succinct's SP1, Mozak, Polygon Miden, Jolt etc, all of which for some reason are RISC-V compatible. What that means is that they expect input instructions to be composed of RISC-V instruction set.
+
+\subsection{Why RISC-V though?}
+Modern compiler infrastructure such as that of LLVM makes the code generation process modular. A lot of programming languages can be supported if we target RISC-V, for example C++ through Clang, Rust through RustC, Golang through TinyGo can all convert into LLVM bytecode. This can at the end be compiled down to a well knows small instruction set target such as RISC-V. RISC-V essentially is the 5th reduced-instruction-set-architecture that came out of UC Berkeley; hence the name. The main reason however that RISC-V becomes a compilation target of interest is because of two simple reasons apart from language-support: \textbf{minimalism} and \textbf{modularity}.
+
+
+\textbf{Minimalism in RISC-V}: RISC-V is relatively simple ISA. It has 32 registers that can hold 32 bits each (\texttt{x0}-\texttt{x31}) alonside a special register \texttt{pc} that holds the address of currently executing instruction's address. The base 32-bit version of RISC-V dealing in integers is \texttt{riscvi} and has well-known simple instructions like \texttt{ADD}, \texttt{JAL}, \texttt{BNE} etc. All of these are relatively simple to describe.
+
+
+\textbf{Modularity in RISC-V}: RISC-V provides a base, but also provides a bunch of useful extensions that one can opt-in to. For example, \texttt{+m} provides functionality such as multiplication (and division), \texttt{+f} provides floating point numbers, \texttt{+a} gives access to atomics among others. This modularity allows us to choose the tightest subset of features to implement for a ZKVM.
+
+RISC-V compatible ZK-VMs are mostly targeted towards \texttt{riscvi+m}.
+% \kulbox{{\bf Why RISC-V though?} }
+
+\section{Writing constraints for these instructions}
+
+\section{Self-modifying code and dealing with it}
+
+\section{Identifying the program}
+
+\section{Proof generation without pre-compiles}
+While the numbers described below present the situation as seen in December 2024, they still give good information on what we can expect in the signature verification regime. ED25519 is one of the signature schemes used quite commonly in blockchains like Solana, Tendermint-based chains like Cosmos as well as Polkadot.
+
+\begin{center}
+\begin{tabular}{ | m{14em} | m{5em}| m{5em} |m{5em} |m{5em} |m{4em} | } 
+  \hline
+  \textbf{Test Description} & \textbf{Execution Trace Generation Time} & \textbf{RISC-0 Segments Count} & \textbf{Total Cycles} & \textbf{User Cycles} & \textbf{Proving Time}\\ 
+  \hline
+  ED25519 1 signature no-precompile 3-byte msg  & 91ms & 4 & 3.67M & 3.12M & 130s \\ 
+  \hline
+  ED25519 1 signature no-precompile 3000-byte msg  & 91ms & 4 & 4.19M & 3.48M & 147s \\ 
+  \hline
+  ED25519 2 signatures no-precompile 3-byte msg  & 171ms & 7 & 6.81M & 6.06M & 242s \\ 
+  \hline
+  ED25519 2 signatures no-precompile 3000-byte msg  & 191ms & 8 & 7.60M & 6.78M & 270s \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+Analysis of the above gives us the following key points:
+\begin{itemize}
+    \item The proof generation procedure is undertaken in two stages: a simulation phase where the execution "trace" is generated and the proof generation phase where the execution trace is proven.
+    \item Compared to the actual proving time in each which includes both the stages, the first stage (execution "trace" generation) takes miniscule amount of time. For example in the test running 1 ed25519 signature verification in zkvm, 91ms were taken in execution "trace" generation step while around 130,000ms were taken for proof generation.
+    \item On average, on a very beefy machine without GPU, Risc-0 can clock in around \textbf{28,000 instruction / seconds} of proving.
+    \item In large calculations, the verification is broken down into multiple smaller proving segments, limiting on average, proving time \textbf{~30s / segment}, \textbf{8GB RAM usage / segment}. Maybe we can use parallelization of these segments for faster proving, but we need to see who "proves things". Also, segmentation of proof provides larger overhead in proof accumulation and continuation checks not accounted for in these benchmarks.
+\end{itemize}
+
+Another important test we run is for a hash function: SHA256. Alongside ED25519, SHA256 becomes the primary underlying algorithm used extensively in chains like Solana
+
+\begin{center}
+\begin{tabular}{ | m{14em} | m{5em}| m{5em} |m{5em} |m{5em} |m{4em} | } 
+  \hline
+  \textbf{Test Description} & \textbf{Execution Trace Generation Time} & \textbf{RISC-0 Segments Count} & \textbf{Total Cycles} & \textbf{User Cycles} & \textbf{Proving Time}\\ 
+  \hline
+  SHA256 1 byte  & 3.21ms & 1 & 131K & 8.9K & 4.5s \\ 
+  \hline
+  SHA256 10 byte  & 3.25ms & 1 & 131K & 8.9K & 4.5s \\ 
+  \hline
+  SHA256 100 byte  & 3.39ms & 1 & 131K & 15.4K & 4.62s \\ 
+  \hline
+  SHA256 1,000 byte  & 4.9ms & 1 & 262K & 100K & 9.26s \\ 
+  \hline
+  SHA256 10,000 byte  & 20.5ms & 1 & 1.05M & 0.96M & 37s \\ 
+  \hline
+  SHA256 100,000 byte  & 175.43ms & 10 & 10.48M & 9.5M & 368s \\ 
+  \hline
+\end{tabular}
+\end{center}
+
+\section{Proof generation with pre-compiles}
+
+A few other things we learn from the above experiments:
+\begin{itemize}
+    \item We find that zkVM needs to run at least \textbf{$2^{17}$}\textbf{cycles} of instructions regardless of what our code does. If instructions are less, the rest of the rows are padded, which amounts to extra zkvm cycles.
+    \item The growth of total cycles required for execution grows linearly with amount of bytes in question.
+\end{itemize}

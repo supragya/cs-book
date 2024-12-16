@@ -1,0 +1,9 @@
+\contentsline {chapter}{\numberline {1}Explorations in ZKVMs}{5}{}%
+\contentsline {section}{\numberline {1.1}RISC-V as a common target}{5}{}%
+\contentsline {subsection}{\numberline {1.1.1}Why RISC-V though?}{5}{}%
+\contentsline {section}{\numberline {1.2}Writing constraints for these instructions}{6}{}%
+\contentsline {section}{\numberline {1.3}Self-modifying code and dealing with it}{6}{}%
+\contentsline {section}{\numberline {1.4}Identifying the program}{6}{}%
+\contentsline {section}{\numberline {1.5}Proof generation without pre-compiles}{6}{}%
+\contentsline {section}{\numberline {1.6}Proof generation with pre-compiles}{7}{}%
+\contentsline {chapter}{\numberline {2}Dynamic Programming}{9}{}%

@@ -1,0 +1,20 @@
+\documentclass{book}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{bookstyle}
+\usepackage{array}
+\usepackage{import}
+\usepackage{imakeidx}
+\usepackage{graphicx}
+
+\makeindex[columns=3, title=Alphabetical Index, intoc]
+
+\begin{document}
+\import{./}{cover.tex}
+
+\tableofcontents
+
+\import{./zero-knowledge/}{zk.tex}
+\import{./problem-solving/}{problemsolving.tex}
+
+\end{document}
