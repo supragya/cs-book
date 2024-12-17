@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.16)  17 DEC 2024 00:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.16)  17 DEC 2024 17:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -595,43 +595,47 @@ Underfull \hbox (badness 10000) in paragraph at lines 59--60
 []|\T1/cmss/bx/n/10 Proving
  []
 
-[6{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}])) (./adverserial-distributed-systems/adverserial.tex (./adverserial-distributed-systems/./layer2/layer2.tex [7] [8
+[6{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}])) (./version-control/vc.tex (./version-control/./git/git.tex [7] [8
 
 ]
 Chapter 2.
-)) (./programming-languages/programming-languages.tex (./programming-languages/./golang/golang.tex [9] [10
+(./version-control/./git/common_tricks.tex))) (./adverserial-distributed-systems/adverserial.tex (./adverserial-distributed-systems/./layer2/layer2.tex [9] [10
 
 ]
 Chapter 3.
-) (./programming-languages/./rust/rust.tex [11] [12
+)) (./programming-languages/programming-languages.tex (./programming-languages/./golang/golang.tex [11] [12
 
 ]
 Chapter 4.
-)) (./problem-solving/problemsolving.tex (./problem-solving/./dynamic-programming/dp.tex [13] [14
+) (./programming-languages/./rust/rust.tex [13] [14
 
 ]
 Chapter 5.
-(./problem-solving/./dynamic-programming/intro.tex) (./problem-solving/./dynamic-programming/main_subproblems.tex [15{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/iwona/ex-iwona.enc}]))) [16] (build/book.aux)
+)) (./problem-solving/problemsolving.tex (./problem-solving/./dynamic-programming/dp.tex [15] [16
+
+]
+Chapter 6.
+(./problem-solving/./dynamic-programming/intro.tex) (./problem-solving/./dynamic-programming/main_subproblems.tex [17{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/iwona/ex-iwona.enc}]))) [18] (build/book.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `book.out' has not changed.
-(rerunfilecheck)             Checksum: F59A9CD5A0A87D54CCABC76C228BFB43;2775.
+(rerunfilecheck)             Checksum: D6F50AC3B4B28F6B4ADADE4DCD763C48;3102.
  ) 
 Here is how much of TeX's memory you used:
- 11229 strings out of 474116
- 175659 string characters out of 5743681
+ 11258 strings out of 474116
+ 176458 string characters out of 5743681
  1948187 words of memory out of 5000000
- 33310 multiletter control sequences out of 15000+600000
+ 33321 multiletter control sequences out of 15000+600000
  582698 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,15n,79p,1023b,496s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,15n,79p,1023b,494s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/hfbright/hfbrmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/hfbright/hfbrsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/hfbright/hfbrsy8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/nowacki/iwona/iwonar.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsi1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx0900.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx2488.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on build/book.pdf (16 pages, 264303 bytes).
+Output written on build/book.pdf (18 pages, 273121 bytes).
 PDF statistics:
- 282 PDF objects out of 1000 (max. 8388607)
- 222 compressed objects within 3 object streams
- 39 named destinations out of 1000 (max. 500000)
- 129 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 301 PDF objects out of 1000 (max. 8388607)
+ 239 compressed objects within 3 object streams
+ 43 named destinations out of 1000 (max. 500000)
+ 145 words of extra memory for PDF output out of 10000 (max. 10000000)
 

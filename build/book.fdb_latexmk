@@ -1,13 +1,13 @@
 # Fdb version 4
-["makeindex build/book.idx"] 1734357179.35249 "build/book.idx" "build/book.ind" "build/book" 1734374299.26157 2
-  "build/book.idx" 1734374298.96899 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex build/book.idx"] 1734357179.35249 "build/book.idx" "build/book.ind" "build/book" 1734437256.99093 2
+  "build/book.idx" 1734437256.72981 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "build/book.ilg"
   "build/book.ind"
   (rewritten before read)
-["pdflatex"] 1734374298.65702 "/Users/ecluser/Projects/supragya/csbook/book.tex" "build/book.pdf" "book" 1734374299.26173 0
+["pdflatex"] 1734437256.47557 "/Users/ecluser/Projects/supragya/csbook/book.tex" "build/book.pdf" "book" 1734437256.99103 0
   "./cover.tex" 1734354830.03538 765 97f085dd6b46a6b25358f0e2818f77af ""
-  "/Users/ecluser/Projects/supragya/csbook/book.tex" 1734374296.77793 678 95ad436a89ac079fc1a35920e6db2a89 ""
+  "/Users/ecluser/Projects/supragya/csbook/book.tex" 1734436982.38097 714 289d9956c845c54fb2594ab4b0829e39 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/iwona/ex-iwona.enc" 1276043435 3130 8cd10f890623d1a768321ebf954797d3 ""
@@ -129,14 +129,14 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1734320964.4867 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1734320920 8221442 39f276160ec08c40f2c5b32215d62b76 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "adverserial-distributed-systems/./layer2/layer2.tex" 1734374292.4451 2398 42bfa38a4fc9ef2d57679ed0875188ce ""
+  "adverserial-distributed-systems/./layer2/layer2.tex" 1734374609.79469 2806 6fa7f2e038c84c24a358b64a243ff84d ""
   "adverserial-distributed-systems/adverserial.tex" 1734372125.80965 31 8fe885d5695c3537108fc37b5f704563 ""
-  "book.tex" 1734374296.77793 678 95ad436a89ac079fc1a35920e6db2a89 ""
-  "bookstyle.sty" 1734354830.02637 464 02a62068196f769856076faed8675abc ""
-  "build/book.aux" 1734374299.16251 2864 f0410f64a8b0d105470ffcc32d321ec7 "pdflatex"
+  "book.tex" 1734436982.38097 714 289d9956c845c54fb2594ab4b0829e39 ""
+  "bookstyle.sty" 1734429895.0164 494 5ada9cb71ad1f442e42a952313134912 ""
+  "build/book.aux" 1734437256.90363 3182 d173399303301cd7e791e2344cdc2726 "pdflatex"
   "build/book.ind" 0 -1 0 "makeindex build/book.idx"
-  "build/book.out" 1734374299.16336 2775 f59a9cd5a0a87d54ccabc76c228bfb43 "pdflatex"
-  "build/book.toc" 1734374299.16361 1326 fe51bc6ae73eba4f9b99725666544975 "pdflatex"
+  "build/book.out" 1734437256.90436 3102 d6f50ac3b4b28f6b4adade4dcd763c48 "pdflatex"
+  "build/book.toc" 1734437256.90456 1486 20898aee426f5eaf0a5c02abbf4852e4 "pdflatex"
   "cover.tex" 1734354830.03538 765 97f085dd6b46a6b25358f0e2818f77af ""
   "problem-solving/./dynamic-programming/dp.tex" 1734357553.85864 89 d0cd0ebeca7260cf661ad2d1ec05d9e3 ""
   "problem-solving/./dynamic-programming/intro.tex" 1734357399.23277 1926 d062a913388716edc5b955e6a5382ad1 ""
@@ -145,6 +145,9 @@
   "programming-languages/./golang/golang.tex" 1734359213.13747 34 ec324c1c5ea194540740a759b594894c ""
   "programming-languages/./rust/rust.tex" 1734359156.1031 137 3f2c7d3e5eed1b145d1f35b48ddfd174 ""
   "programming-languages/programming-languages.tex" 1734359213.04278 58 d8ae68a470509795887ac4b83ffcbcc8 ""
+  "version-control/./git/common_tricks.tex" 1734437255.12382 280 0a488aa4bf5afddf3cc2df7bd8ecf28f ""
+  "version-control/./git/git.tex" 1734437153.97474 94 45407804e6de395c4eb8996e4f29a4b5 ""
+  "version-control/vc.tex" 1734436981.34699 27 be2fcdb5d919a74afacbf4fc8b72a4fe ""
   "zero-knowledge/./zkvms/explorations-zkvm.tex" 1734354830.03944 5970 bdedd22285f31dcf6d7cfd2d817fe730 ""
   "zero-knowledge/zk.tex" 1734354830.0386 41 6d29b0c54fe00b645ae95390d83c94cf ""
   (generated)
