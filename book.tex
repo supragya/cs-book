@@ -7,13 +7,33 @@
 \usepackage{import}
 \usepackage{imakeidx}
 \usepackage{graphicx}
+\usepackage{listings}
+\usepackage{listings-rust}
+\usepackage{color}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=black
+    citecolor=Primary1,
+    filecolor=Primary2,
+    linkcolor=Primary3,
+    urlcolor=Primary2,
+}
+
+\lstset{frame=tb,
+  language=Rust,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{Primary2},
+  commentstyle=\color{Primary1},
+  stringstyle=\color{Primary3},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
 }
 
 \makeindex[columns=3, title=Alphabetical Index, intoc]

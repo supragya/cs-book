@@ -1,13 +1,13 @@
 # Fdb version 4
-["makeindex build/book.idx"] 1734357179.35249 "build/book.idx" "build/book.ind" "build/book" 1734437495.76202 2
-  "build/book.idx" 1734437495.5024 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex build/book.idx"] 1734586258.43461 "build/book.idx" "build/book.ind" "build/book" 1734586954.84986 2
+  "build/book.idx" 1734586954.58256 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "build/book.ilg"
   "build/book.ind"
   (rewritten before read)
-["pdflatex"] 1734437495.22062 "/Users/ecluser/Projects/supragya/csbook/book.tex" "build/book.pdf" "book" 1734437495.76213 0
+["pdflatex"] 1734586954.31315 "/Users/ecluser/Projects/supragya/csbook/book.tex" "build/book.pdf" "book" 1734586954.84994 0
   "./cover.tex" 1734354830.03538 765 97f085dd6b46a6b25358f0e2818f77af ""
-  "/Users/ecluser/Projects/supragya/csbook/book.tex" 1734436982.38097 714 289d9956c845c54fb2594ab4b0829e39 ""
+  "/Users/ecluser/Projects/supragya/csbook/book.tex" 1734585718.69866 1149 ca0086c3c456a2617614fd1f72c6a96b ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/iwona/ex-iwona.enc" 1276043435 3130 8cd10f890623d1a768321ebf954797d3 ""
@@ -117,6 +117,10 @@
   "/usr/local/texlive/2024/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty" 1665067230 13815 760b0c02f691ea230f5359c4e1de23a7 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def" 1708463273 30006 3d512c0edd558928ddea1690180ef77e ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg" 1279039959 678 4792914a8f45be57bb98413425e4c7af ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/listings/listings.cfg" 1708549794 1830 20af84c556326f7c12b9202ebe363f56 ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/listings/listings.sty" 1708549794 81322 d02238bdeb305f2c9f9d0229f99371d0 ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstmisc.sty" 1708549794 77022 5c8c440739265e7ba15b8379ece6ecd7 ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstpatch.sty" 1708549794 329 f19f5da7234b51d16764e23d20999c73 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/refcount/refcount.sty" 1576624809 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1657483315 9714 ba3194bd52c8499b3f1e3eb91d409670 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/sansmath/sansmath.sty" 1272241190 8168 ff4ba5f8ff45ea059f3ec8f06131363f ""
@@ -129,15 +133,17 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1734320964.4867 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1734320920 8221442 39f276160ec08c40f2c5b32215d62b76 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "adverserial-distributed-systems/./layer2/layer2.tex" 1734374609.79469 2806 6fa7f2e038c84c24a358b64a243ff84d ""
+  "adverserial-distributed-systems/./layer2/./plasma.tex" 1734586952.96095 2715 daabab6208845870159910712fe7b48e ""
+  "adverserial-distributed-systems/./layer2/layer2.tex" 1734585803.87021 4929 f9a793ae7db3496860802e36131d7fe2 ""
   "adverserial-distributed-systems/adverserial.tex" 1734372125.80965 31 8fe885d5695c3537108fc37b5f704563 ""
-  "book.tex" 1734436982.38097 714 289d9956c845c54fb2594ab4b0829e39 ""
+  "book.tex" 1734585718.69866 1149 ca0086c3c456a2617614fd1f72c6a96b ""
   "bookstyle.sty" 1734429895.0164 494 5ada9cb71ad1f442e42a952313134912 ""
-  "build/book.aux" 1734437495.67659 3182 d173399303301cd7e791e2344cdc2726 "pdflatex"
+  "build/book.aux" 1734586954.76237 3819 c2fef7f2aef319d9ab2a101d4216000c "pdflatex"
   "build/book.ind" 0 -1 0 "makeindex build/book.idx"
-  "build/book.out" 1734437495.67704 3102 d6f50ac3b4b28f6b4adade4dcd763c48 "pdflatex"
-  "build/book.toc" 1734437495.67721 1486 20898aee426f5eaf0a5c02abbf4852e4 "pdflatex"
+  "build/book.out" 1734586954.76313 3959 0d76626ed3da75873b7df70587deda34 "pdflatex"
+  "build/book.toc" 1734586954.76332 1918 d348cf2417ab429f1578a25e4fd90665 "pdflatex"
   "cover.tex" 1734354830.03538 765 97f085dd6b46a6b25358f0e2818f77af ""
+  "listings-rust.sty" 1734585701.27248 12270 7c444cbfed7aa42b3ddcd0885e4a539c ""
   "problem-solving/./dynamic-programming/dp.tex" 1734357553.85864 89 d0cd0ebeca7260cf661ad2d1ec05d9e3 ""
   "problem-solving/./dynamic-programming/intro.tex" 1734357399.23277 1926 d062a913388716edc5b955e6a5382ad1 ""
   "problem-solving/./dynamic-programming/main_subproblems.tex" 1734357816.4037 421 4c72a50d29792463643ceeb68df18237 ""

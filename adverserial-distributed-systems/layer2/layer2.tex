@@ -1,6 +1,24 @@
 
 \chapter{Layer 2 Scaling Solutions}
 
+\section{General classification}
+We classify Layer 2 scaling solution according to their setup:
+\begin{itemize}
+    \item \textbf{Plasma}: A tree of sidechains (chains of chains) where each user is asked to ensure the part of state it owns is available. Here, significant interaction with L1 is only required in case of dispute resolution. This came much before other solutions (proposed by Joseph Poon and Vitalik Buterin in 2017) but it was too complex to build a useful plasma.
+    \item \textbf{Rollup}: An ecosystem running in parallel to a Layer 1 solution that has it's own state transition function (STF). After a bunch of transactions and blocks are created, the rollup posts transaction data / state-diff on chain and proves the combined state transition via opmistic or succinct zk proof.
+    \item \textbf{Validium}: Similar to a rollup, just that the data-availability of the transaction is kept not on L1, but a separate \emph{data-availability committee} or the validium operator themselves. Validium saves on recurring cost to make data available on L1, but at the cost of security.
+\end{itemize}
+
+\subimport{./}{plasma.tex}
+
+\section{Bottlenecked by DA}
+Layer 2 rollups have been around for a while. The first Layer 2 scaling solution was Plasma, proposed by Joseph Poon and Vitalik Buterin in 2017. The idea was to create a tree of sidechains, each of which would be able to process transactions in parallel. The root chain would be responsible for the security of the system, while the sidechains would be responsible for processing transactions.
+
+Rollups however needs to guarantee that the state of rollup is \textbf{data-available}. Otherwise, if state is not available and the rollup-operator stops working, users cannot withdraw. As, even though the root commitment to the entire state is available, the opening are not. This makes rollups constrained by data-availability capacity of the Layer 1 chain.
+
+Ethereum provides \texttt{375 KB} blobs every \texttt{12} seconds.
+
+The following question hence often comes us: \emph{Can we eliminate need for state availability in L2 scalability solutions?}
 
 \section{Faster Layer 2 Interoperability}
 In late 2020, Ethereum community started focusing on \href{https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698}{\emph{rollup-centric roadmap}}. The idea of this was to enable various Layer 2 scaling solutions that may potentially provide a whole lot more of execution capacity than the Ethereum (henceforth to be referred as Layer1 or L1) will be capable of. 

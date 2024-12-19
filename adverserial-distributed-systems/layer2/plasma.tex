@@ -1,0 +1,30 @@
+\section{Plasma: Each one save one}
+The setup of Plasma entails that if each part of the state has a well-defined owner, then the owner can be made responsible for keeping their part of the system available.
+
+Essentially, all Plasma chains have an \textbf{Operator} who keeps the chain moving. The system is setup optimistically with an intinsic level of trust on this operator. If the operator misbehaves, it remains the responsibility of the users to exit the chain.
+
+Plasma chains are multi-layered chains where every "Parent Chain" settles for its child chains. The topmost "Parent Chain", the root chain settles on a well-known settlement platform and calls it the Layer 1. Each parent chain is responsible for three basic events through it's contract:
+\begin{itemize}
+    \item \textbf{New Deposit}: Whenever anyone submits a new token deposit of the form \texttt{(depositAddress, amount, blockHeight)}.
+    \item \textbf{Block Progression}: Only submit the root-hash of the block, \emph{not the data contained within it}. The data within hash to be kept in a good condition (and available) by the user. This takes the form \texttt{(blockHeight, rootHash)}.
+    \item \textbf{New Withdrawal}: If the operator misbehaves, the users are supposed to exit the plasma chain. This request is posted directly on Layer 1, as it may be assumed that the operator is not available / misbehaving. This takes the form \texttt{(withdrawaladdress, amount, blockheight, txIndex, ouputIndex)}.
+
+\subsection{Operator misbehaviors and exits}
+\end{itemize} 
+
+\subsection{Plasma Cash}
+In \textbf{Plasma Cash}, since users are only keeping track of their own tokens, they don't know who owns any of the other tokens. When a user wants to send their token to another user, they need to prove that they actually own that token! This creates a problem where each user is expected to be \emph{perennially online} to ensure they can generate a witness against the current state-root of plasma chain.
+
+In such a setup however, other inefficiencies also arise, because of the non-fungible nature of the tokens involved. In a ledger model of accounting, spending 0.1 Token or spending 20 Token out of a 50 Token balance are the same complexity-wise. However, the same is much harder with NFTs given we have to establish the denominations beforehand for all possible transfers in the future, or deal with splitting and merging of tokens.
+
+% \begin{lstlisting}
+%     // Hello.java
+%     import javax.swing.JApplet;
+%     import java.awt.Graphics;
+    
+%     public class Hello extends JApplet {
+%         public void paintComponent(Graphics g) {
+%             g.drawString("Hello, world!", 65, 95);
+%         }    
+%     }
+% \end{lstlisting}
