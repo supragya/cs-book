@@ -1,0 +1,9 @@
+\chapter{General Problems with Adversarial Distributed Systems}
+\section{The ever growing state, state expiry}
+State expiry refers to removing state from individual nodes if it hasn't been accessed recently. There are several ways this could be implemented, including:
+
+\textbf{Expire by rent}: charging "rent" to accounts and expiring them when their rent reaches zero. This design is implemented in Solana.
+\textbf{Expire by time}: making accounts inactive if there are no reading/writing to that account for some amount of time
+
+
+\section{Rebuilding the chain}

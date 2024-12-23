@@ -1,23 +1,41 @@
-\contentsline {chapter}{\numberline {1}Explorations in ZKVMs}{5}{chapter.1}%
+\contentsline {chapter}{\numberline {1}ZKVMs: Zero Knowledge Virtual Machines}{5}{chapter.1}%
 \contentsline {section}{\numberline {1.1}RISC-V as a common target}{5}{section.1.1}%
 \contentsline {subsection}{\numberline {1.1.1}Why RISC-V though?}{5}{subsection.1.1.1}%
-\contentsline {section}{\numberline {1.2}Writing constraints for these instructions}{6}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Self-modifying code and dealing with it}{6}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Identifying the program}{6}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Proof generation without pre-compiles}{6}{section.1.5}%
-\contentsline {section}{\numberline {1.6}Proof generation with pre-compiles}{7}{section.1.6}%
+\contentsline {section}{\numberline {1.2}The general design of ZKVMs}{6}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Writing constraints for these instructions}{6}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Self-modifying code and dealing with it}{6}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Identifying the program}{6}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Proof generation without pre-compiles}{6}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Proof generation with pre-compiles}{7}{section.1.7}%
 \contentsline {chapter}{\numberline {2}Version Control using Git}{9}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Using Git via SSH}{9}{section.2.1}%
-\contentsline {chapter}{\numberline {3}Layer 2 Scaling Solutions}{11}{chapter.3}%
-\contentsline {section}{\numberline {3.1}General classification}{11}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Plasma: Each one save one}{11}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Operator misbehaviors and exits}{12}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Plasma Cash}{12}{subsection.3.2.2}%
-\contentsline {section}{\numberline {3.3}Bottlenecked by DA}{12}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Faster Layer 2 Interoperability}{12}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Golang}{15}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Rust}{17}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Iterators}{17}{section.5.1}%
-\contentsline {chapter}{\numberline {6}Dynamic Programming}{19}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Memoization}{19}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Most important subproblems}{20}{section.6.2}%
+\contentsline {chapter}{\numberline {3}Ethereum}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Legacy Ethereum (Ethereum 1.0)}{11}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Accessing Historical Block Hashes: EIP: 2935}{11}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}Ethereum after Merge (Ethereum 2.0)}{11}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}The Proof-of-Stake Block}{11}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Finality Metalayer: Casper FFG}{12}{subsection.3.2.2}%
+\contentsline {chapter}{\numberline {4}Solana}{13}{chapter.4}%
+\contentsline {section}{\numberline {4.1}The Transaction Processing Unit}{13}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Proof of History: VDF based transaction ordering}{13}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Entries, Slots, Bank}{13}{section.4.3}%
+\contentsline {chapter}{\numberline {5}General Problems with Adversarial Distributed Systems}{15}{chapter.5}%
+\contentsline {section}{\numberline {5.1}The ever growing state, state expiry}{15}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Rebuilding the chain}{15}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Layer 2 Scaling Solutions}{17}{chapter.6}%
+\contentsline {section}{\numberline {6.1}General classification}{17}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Where sits the enourmous data?}{17}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Plasma: Each one save one}{18}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Operator misbehaviors and exits}{18}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Plasma Cash}{18}{subsection.6.3.2}%
+\contentsline {section}{\numberline {6.4}Bottlenecked by DA}{18}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Rollups and levels of confirmation}{19}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Faster Layer 2 Interoperability}{19}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Golang}{21}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Rust}{23}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Iterators}{23}{section.8.1}%
+\contentsline {chapter}{\numberline {9}Binary Search}{25}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Most important subproblems}{25}{section.9.1}%
+\contentsline {chapter}{\numberline {10}Dynamic Programming}{27}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Memoization}{27}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Most important subproblems}{28}{section.10.2}%

@@ -1,0 +1,11 @@
+\subsection{Accessing Historical Block Hashes: EIP: 2935}
+For various applications, it is necessary to access the historical block hashes of the Ethereum blockchain. One such reasons is that it provides a good source of randomness. Another good reason is to build an "introspection engine" where contracts on Ethereum can introspect its own history.
+
+Block hashes of the current block can not be known during the context of execution of a transaction. One of the reasons for this is that during execution of a transaction, the block's receipt hash is not built yet, since that in turn depends on all the transactions in the block combined, each transaction cannot have the block-hash.
+
+Ethereum however, has an opcode called \code{BLOCKHASH} which allows contracts to access the block hash of the 256 most recent blocks. This opcode is useful for applications that require randomness, but it is not enough for applications that require access to the entire history of block hashes.
+
+\textbf{But what limits the access to historical block hashes more than 256 blocks old?} There hash been two separate known attempts at solving this. One by Vitalik himself via \href{https://eips.ethereum.org/EIPS/eip-210}{EIP-210} and another by Vitalik, Tomasz (Netermind) etc via \href{https://eips.ethereum.org/EIPS/eip-2935}{EIP-2935}. As of writing, EIP-210 is marked as stagnant and EIP-2935 is in "Review" state since 4 years.
+
+The primary idea of EIP-2935 was to create a new storage trie that stores the block hashes of all blocks. This would have been located at a special location: \code{
+0xffffffff\_ffffffff\_ffffffff\_ffffffff\_fffffffe}. This address would essentially be just a state without a bytecode, making it different from all other accounts. Hence, a new opcode \code{STOP} could 

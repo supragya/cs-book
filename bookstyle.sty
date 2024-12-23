@@ -4,7 +4,7 @@
 \definecolor{Primary1}{HTML}{1FABD5}
 \definecolor{Primary2}{HTML}{1D8DB0}
 \definecolor{Primary3}{HTML}{116E8A}
-\colorlet{LightPrimary}{Primary2!20!white}
+\colorlet{LightPrimary}{Primary2!15!white}
 
 %% FONT
 \sansmath
@@ -15,3 +15,6 @@
 \renewcommand{\familydefault}{\sfdefault}
 
 \setlength{\parindent}{0pt}
+
+% Create a new LaTeX command where upon writing \code{...}, the text inside the curly braces will be formatted in a monospaced font, colored in a Primary2 color with background color of LightPrimary.
+\newcommand{\code}[1]{\colorbox{LightPrimary}{\textcolor{Primary2}{\texttt{#1}}}}
