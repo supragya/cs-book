@@ -21,7 +21,10 @@
 \contentsline {section}{\numberline {4.3}Entries, Slots, Bank}{13}{section.4.3}%
 \contentsline {chapter}{\numberline {5}General Problems with Adversarial Distributed Systems}{15}{chapter.5}%
 \contentsline {section}{\numberline {5.1}The ever growing state, state expiry}{15}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Rebuilding the chain}{15}{section.5.2}%
+\contentsline {section}{\numberline {5.2}Rebuilding the chain / Chain Derivation}{15}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Supporting a different virtual machine}{15}{section.5.3}%
+\contentsline {subsubsection}{Arbitrum Stylus}{15}{section*.2}%
+\contentsline {subsubsection}{R55-Eth}{15}{section*.3}%
 \contentsline {chapter}{\numberline {6}Layer 2 Scaling Solutions}{17}{chapter.6}%
 \contentsline {section}{\numberline {6.1}General classification}{17}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Where sits the enourmous data?}{17}{section.6.2}%

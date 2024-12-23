@@ -1,8 +1,8 @@
-PWD /Users/ecluser/Projects/supragya/csbook
+PWD /Users/scrolldev/Projects/supragya/cs-book
 INPUT /usr/local/texlive/2024/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Users/ecluser/Projects/supragya/csbook/book.tex
+INPUT /Users/scrolldev/Projects/supragya/cs-book/book.tex
 OUTPUT build/book.log
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/book.cls
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/book.cls
@@ -279,6 +279,10 @@ INPUT ./adverserial-distributed-systems/./general-problems/general-problems.tex
 INPUT ./adverserial-distributed-systems/./general-problems/general-problems.tex
 INPUT ./adverserial-distributed-systems/./general-problems/general-problems.tex
 INPUT ./adverserial-distributed-systems/./general-problems/general-problems.tex
+INPUT ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png
+INPUT ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png
+INPUT ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png
+INPUT ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png
 INPUT ./adverserial-distributed-systems/./layer2/layer2.tex
 INPUT ./adverserial-distributed-systems/./layer2/layer2.tex
 INPUT ./adverserial-distributed-systems/./layer2/layer2.tex
