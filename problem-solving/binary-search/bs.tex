@@ -1,4 +1,107 @@
 \chapter{Binary Search}
+Binary search is a simple technique of problem solving that splits the solution space in half at each step. But when it comes to implementation, it's rather difficult to write a bug-free code in just a few minutes.
+
+A lot of issues arise when implementing binary search such as:
+\begin{itemize}
+    \item Off-by-one errors
+    \item Incorrect bounds
+    \item Incorrect mid calculation
+    \item Incorrect condition to update bounds
+\end{itemize}
+
+\section{Basic: Minimize $k$ such that $f(k)$ is true}
+This is the most basic form. Basically becuase the search space is given directly. We would be given a vector $[A0, A1, ..., An]$ and we need to find the minimum $k$ such that $f(k)$ is true.
+
+\section{Advanced: Search spaces with \code{feasible(x) -> bool}}
+Finding the search space could be tricky sometimes\footnote{A good description is available on Leetcode: \href{https://leetcode.com/discuss/study-guide/786126/Python-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems}{https://leetcode.com/discuss/study-guide/786126/Python-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems}}. However, one common element in these problems is the aspect of monotonicity. Here, if $f(k)$ is true, then $f(k+1)$ is also true. Following are some good examples that establish the concept.
+
+\subsection{Problem [SeqShip]: Sequential objects shipping within $D$ days}
+\textbf{Problem}: Assume a sequential line of objects $O$ with their individual weights described in an array that are situated at port $A$ and want to be shipped to port $B$. Every day, a ship of some maximum weight capacity $m$ makes trip from $A$ to $B$ transporting some objects in $O$. Given a maximum days $D$ that shipping company can tolerate to transport all objects in $O$, find lowest possible $m$. An example object line could look as follows:
+$$
+O = [6, 7, 1, 2, 3, 4, 5, 8, 9, 10]
+$$
+Given $D = 5$, the minimum $m$ would be $15$. Because we can ship items as: $[6, 7], [1, 2, 3, 4, 5], [8], [9], [10]$.
+
+\textbf{Discussion}: This problem does not have a clear search space prima facie, but the thing we realize is it asks us to minimize $m$. Now let's run this idea: if some $m$ works for shipping in $D$ days, would $m+1$ work also? More concretely, assume that a ship of capacity $10$ is able to do the work at hand, can a ship of capacity $11$ do it too? The answer is yes. We can call this function $f(x)$ more aptly \code{feasible(x) -> bool}.
+
+But what should be the search space? Well, the minimum we need is atleast $max(O)$ since we need to ship the heaviest object in some trip, even if it is the only item shipped that day. The maximum we need is probably shipping all objects in one day. So, the search space is $[max(O), sum(O)]$.
+
+\textbf{Solution}: The problem can now be reduced to: Find $m$ such that $f(m)$ is true where $f(m)$ is defined as: \textit{Can we simulate shipping $O$ in $D$ days with a ship of capacity $m$?} in the search space $[max(O), sum(O)]$.
+
+Each simulation is an $O(n)$ operation where $n = |O|$. Maximum simulations is $log_2(sum(O) - max(O))$. Hence runtime is $O(|O| \cdot log_2(sum(O) - max(O)))$.
+
+\subsection{Problem [KokoBanana]: Monkey eating piles of bananas}
+\textbf{Problem}: Assume a monkey is hungry and wants to eat some bananas. There are $G$ piles of bananas, each pile $i$ has $b_i$ bananas. The monkey can eat $k$ bananas per hour and has a maximum of $D$ hours to eat all bananas. Each hour, the monkey can decide any one pile and eat $k$ bananas from it, if there are less than $k$ bananas, it eats all but doesn't eat from any other pile that hour. What is the minimum $k$ for which the monkey can eat all bananas in $D$ hours?
+
+Example scenarios:
+$$
+G = 4, \verb|Piles| = [3, 6, 7, 11], D = 8 \quad k = 4
+$$
+$$
+G = 5, \verb|Piles| = [30, 11, 23, 4, 20], D = 5 \quad k = 30
+$$
+$$
+G = 5, \verb|Piles| = [30, 11, 23, 4, 20], D = 6 \quad k = 23
+$$
+
+\textbf{Discussion}: Very similar to problem [SeqShip], this problem also has a monotonicity property. If $k$ bananas per hour works, then $k+1$ bananas per hour would also work, albeit not the most optimal. This also uses \code{feasible(x) -> bool} function.
+
+But what is the search space? The minimum $k$ would be $1$ as that's the least a monkey has to eat per hour to make progress hour-on-hour. However, we can probably do better than that. The minimum should be no lesser than $m = D/sum(\verb|Piles|)$ as that's the least number of bananas the monkey has to eat per hour to eat all bananas in $D$ hours assuming no inefficiencies, i.e. every hour is spent eating exactly $m$ bananas. This is unlikely since not all $b_i$ may be exactly divisible by $m$.
+
+The maximum $k$ would be $max(\verb|Piles|)$ as that's the most bananas the monkey can eat in one hour given that in each hour it can only eat from a single pile. 
+
+The search space is hence $[D/sum(\verb|Piles|), max(\verb|Piles|)]$.
+
+Also note an interesting property: a monkey cannot eat any faster than in $G$ hours. Hence any problem where $|Piles| > G$ would have no solution.
+
+\subsection{Problem [SplitM]: Split array into $m$ subarrays}
+\textbf{Problem}: Given an array $A$ of non-negative integers, split it into $m$ subarrays such that the maximum sum $s$ of any subarray is minimized. Example:
+$$
+A = [7, 2, 5, 10, 8], M = 2 \quad s = 18(\verb|split:| [7, 2, 5], [10, 8])
+$$
+\textbf{Discussion}: The monotonicity property still holds. If $s$ is a valid maximum sum of any subarray, then $s+1$ is also a valid maximum sum of any subarray. This one still makes use of \code{feasible(x) -> bool} function.
+
+\section{Advanced: Search spaces with \code{enough(x) -> bool}}
+\subsection{Problem [KSmallMul]: K-th smallest number in multiplication table}
+\textbf{Problem}: We define a multiplication table as a $m \times n$ matrix where $$\verb|table|[i][j] = i \times j$$Given $m, n, k$, find the $k$-th smallest number in the multiplication table. An example may look as follows:
+$$
+m = 3, n = 3, k = 5 \quad \verb|table| = \begin{bmatrix}
+1 & 2 & 3 \\
+2 & 4 & 6 \\
+3 & 6 & 9 
+\end{bmatrix}
+\quad \text{Answer:} 3(1, 2, 2, 3, 3)
+$$
+
+\textbf{Discussion}: For Kth-Smallest problems like this, what comes to our mind first is Heap. Usually we can maintain a Min-Heap and just pop the top of the Heap for k times. However, that doesn't work out in this problem. We don't have every single number in the entire multiplication table. Instead, we only have the height and the length of the table. If we are to apply Heap method, we need to explicitly calculate these $m \times n$ values and save them to a heap. The time complexity and space complexity of this process are both $O(mn)$, which is quite inefficient.
+
+The search space is not clear. But we can define a function \code{enough(x) -> bool} that tells us if there are atleast $k$ numbers in the multiplication table that are less than or equal to $x$. Ofcourse, if there $x$ satisfies $k$ numbers, then $x+1$ would also satisfy $k$ numbers. We exploit this monotonicity property.
+
+Now, we intend to beat time to be better than $O(mn)$. That means \code{enough(x) -> bool} should be considerably cheaper to compute. We exploit the following algorithm:
+
+\begin{lstlisting}[language=Rust, caption=Rust implementation of enough function]
+    fn enough(num: i32, m: i32, n: i32, k: i32) -> bool {
+        let mut count = 0;
+        // We run iteration for each row
+        for row in 1..=m {
+            // Each row has (num / row) elements less than or equal to num. 
+            // However, this has to be contained within n since at most there are n columns.
+            let add = (num / row).min(n);
+            if add == 0 {
+                // Exit and do no further iterations since if there are no numbers 
+                // lower than num in this row, any further rows won't have any as well.
+                break;
+            }
+            count += add;
+        }
+        count >= k
+    }
+\end{lstlisting}
+
+The above algorithm runs in $O(m)$ time.
+
+The search space of course is $[1, m \times n]$. For every $x$ in this search space, we can calculate the number of elements in the multiplication table that are less than or equal to $x$ in $O(m)$ time. Hence, the runtime of this solution is $O(m \cdot log_2(m \times n))$.
+
 
 \subimport{}{intro.tex}
 \subimport{}{patterns.tex}

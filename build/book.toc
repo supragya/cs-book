@@ -38,7 +38,13 @@
 \contentsline {chapter}{\numberline {8}Rust}{23}{chapter.8}%
 \contentsline {section}{\numberline {8.1}Iterators}{23}{section.8.1}%
 \contentsline {chapter}{\numberline {9}Binary Search}{25}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Most important subproblems}{25}{section.9.1}%
-\contentsline {chapter}{\numberline {10}Dynamic Programming}{27}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Memoization}{27}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Most important subproblems}{28}{section.10.2}%
+\contentsline {section}{\numberline {9.1}Basic: Minimize $k$ such that $f(k)$ is true}{25}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {feasible(x) -> bool}}}}{25}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{25}{subsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{26}{subsection.9.2.2}%
+\contentsline {subsection}{\numberline {9.2.3}Problem [SplitM]: Split array into $m$ subarrays}{26}{subsection.9.2.3}%
+\contentsline {section}{\numberline {9.3}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {enough(x) -> bool}}}}{27}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{27}{subsection.9.3.1}%
+\contentsline {chapter}{\numberline {10}Dynamic Programming}{29}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Memoization}{29}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Most important subproblems}{30}{section.10.2}%
