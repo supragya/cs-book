@@ -7,5 +7,4 @@ Ethereum however, has an opcode called \code{BLOCKHASH} which allows contracts t
 
 \textbf{But what limits the access to historical block hashes more than 256 blocks old?} There hash been two separate known attempts at solving this. One by Vitalik himself via \href{https://eips.ethereum.org/EIPS/eip-210}{EIP-210} and another by Vitalik, Tomasz (Netermind) etc via \href{https://eips.ethereum.org/EIPS/eip-2935}{EIP-2935}. As of writing, EIP-210 is marked as stagnant and EIP-2935 is in "Review" state since 4 years.
 
-The primary idea of EIP-2935 was to create a new storage trie that stores the block hashes of all blocks. This would have been located at a special location: \code{
-0xffffffff\_ffffffff\_ffffffff\_ffffffff\_fffffffe}. This address would essentially be just a state without a bytecode, making it different from all other accounts. Hence, a new opcode \code{STOP} could 
+The primary idea of EIP-2935 was to create a new storage trie that stores the block hashes of all blocks. This would have been located at a special location: \code{0xffffffff\_ffffffff\_ffffffff\_ffffffff\_fffffffe}. This address would essentially be just a state without a bytecode, making it different from all other accounts. Hence, a new opcode \code{STOP} could 
