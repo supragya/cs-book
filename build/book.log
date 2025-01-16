@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.16)  1 JAN 2025 23:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.16)  2 JAN 2025 20:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -522,7 +522,7 @@ LaTeX Font Info:    Trying to load font information for OMX+iwona on input line 
  (/usr/local/texlive/2024/texmf-dist/tex/latex/iwona/omxiwona.fd
 File: omxiwona.fd 2008/07/22 v0.995 font definition file for OMX/iwona (MW)
 ) [3]
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 42.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 44.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 ))
@@ -651,7 +651,7 @@ Chapter 2.
 ]
 Chapter 3.
 (./adverserial-distributed-systems/./ethereum/./eip-2935.tex) (./adverserial-distributed-systems/./ethereum/./pos-block.tex
-<./adverserial-distributed-systems/ethereum/assets/block-merge.png, id=302, 753.81625pt x 392.46625pt>
+<./adverserial-distributed-systems/ethereum/assets/block-merge.png, id=312, 753.81625pt x 392.46625pt>
 File: ./adverserial-distributed-systems/ethereum/assets/block-merge.png Graphic file (type png)
 <use ./adverserial-distributed-systems/ethereum/assets/block-merge.png>
 Package pdftex.def Info: ./adverserial-distributed-systems/ethereum/assets/block-merge.png  used on input line 10.
@@ -664,16 +664,17 @@ Chapter 4.
 
 ]
 Chapter 5.
-<./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png, id=329, 3011.25pt x 1694.33pt>
+(./adverserial-distributed-systems/./general-problems/./mev.tex) [15]
+<./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png, id=348, 3011.25pt x 1694.33pt>
 File: ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png Graphic file (type png)
 <use ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png>
-Package pdftex.def Info: ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png  used on input line 24.
+Package pdftex.def Info: ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png  used on input line 27.
 (pdftex.def)             Requested size: 328.82707pt x 185.00665pt.
-) (./adverserial-distributed-systems/./layer2/layer2.tex [15 <./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png>] [16
-
-]
+) (./adverserial-distributed-systems/./layer2/layer2.tex [16 <./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png>]
 Chapter 6.
-(./adverserial-distributed-systems/./layer2/./plasma.tex [17]) [18])) (./programming-languages/programming-languages.tex (./programming-languages/./golang/golang.tex [19] [20
+(./adverserial-distributed-systems/./layer2/./plasma.tex [17
+
+]) [18])) (./programming-languages/programming-languages.tex (./programming-languages/./golang/golang.tex [19] [20
 
 ]
 Chapter 7.
@@ -740,21 +741,21 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `book.out' has not changed.
-(rerunfilecheck)             Checksum: 943A3604807E5370CE06D3C173E45F25;10415.
+(rerunfilecheck)             Checksum: C0D96786B42F8616602E2E03CE03BF11;10884.
  ) 
 Here is how much of TeX's memory you used:
- 14423 strings out of 474116
- 223680 string characters out of 5743681
+ 14439 strings out of 474116
+ 224421 string characters out of 5743681
  1989187 words of memory out of 5000000
- 36336 multiletter control sequences out of 15000+600000
+ 36342 multiletter control sequences out of 15000+600000
  588590 words of font info for 107 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,15n,89p,7922b,2322s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/hfbright/hfbrmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/hfbright/hfbrsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/hfbright/hfbrsy8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/nowacki/iwona/iwonar.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsi1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx0900.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx2488.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt0900.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1440.pfb>
-Output written on build/book.pdf (30 pages, 1642676 bytes).
+Output written on build/book.pdf (30 pages, 1645317 bytes).
 PDF statistics:
- 570 PDF objects out of 1000 (max. 8388607)
- 483 compressed objects within 5 object streams
- 107 named destinations out of 1000 (max. 500000)
- 395 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 585 PDF objects out of 1000 (max. 8388607)
+ 498 compressed objects within 5 object streams
+ 110 named destinations out of 1000 (max. 500000)
+ 411 words of extra memory for PDF output out of 10000 (max. 10000000)
 

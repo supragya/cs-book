@@ -1,11 +1,11 @@
 # Fdb version 4
-["makeindex build/book.idx"] 1735751045.48769 "build/book.idx" "build/book.ind" "build/book" 1735753132.13146 0
-  "build/book.idx" 1735753131.37478 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex build/book.idx"] 1735828770.28669 "build/book.idx" "build/book.ind" "build/book" 1735828887.91839 0
+  "build/book.idx" 1735828887.1736 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "build/book.ilg"
   "build/book.ind"
   (rewritten before read)
-["pdflatex"] 1735753131.07639 "/Users/ecluser/Projects/supragya/csbook/book.tex" "build/book.pdf" "book" 1735753132.13158 0
+["pdflatex"] 1735828886.84256 "/Users/ecluser/Projects/supragya/csbook/book.tex" "build/book.pdf" "book" 1735828887.91847 0
   "./cover.tex" 1734354830.03538 765 97f085dd6b46a6b25358f0e2818f77af ""
   "/Users/ecluser/Projects/supragya/csbook/book.tex" 1734945299.33205 1219 3132dcd4165e446283db384ef42d4802 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
@@ -148,7 +148,8 @@
   "adverserial-distributed-systems/./ethereum/./eip-2935.tex" 1734969789.70073 1786 013fae77c3c0c1b48c8b39ef24a5129b ""
   "adverserial-distributed-systems/./ethereum/./pos-block.tex" 1734944331.62464 1399 75aa7d01661763b6278a12c6c6f098c6 ""
   "adverserial-distributed-systems/./ethereum/ethereum.tex" 1734943970.40567 310 ba8e5acfa4b072d1c63d8c74d9906412 ""
-  "adverserial-distributed-systems/./general-problems/general-problems.tex" 1735710479.81933 2173 6aab34ca4c1d33fddd7dfbea186fbb9f ""
+  "adverserial-distributed-systems/./general-problems/./mev.tex" 1735828885.58504 1647 79426f7a51e279974c78d1d08a5ac0ec ""
+  "adverserial-distributed-systems/./general-problems/general-problems.tex" 1735827434.71056 2199 e1f50e9129133bf0627726945b418981 ""
   "adverserial-distributed-systems/./layer2/./plasma.tex" 1734586952.96095 2715 daabab6208845870159910712fe7b48e ""
   "adverserial-distributed-systems/./layer2/layer2.tex" 1734946674.16105 6449 2476a948672c869a127222ff3be362f4 ""
   "adverserial-distributed-systems/./solana/solana.tex" 1734617355.92193 173 941efa20c6a10d160c977f91178a9dfd ""
@@ -157,10 +158,10 @@
   "adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png" 1735710479.81884 1452455 90a7c5b82c6a5db5d7043908dc2bd81b ""
   "book.tex" 1734945299.33205 1219 3132dcd4165e446283db384ef42d4802 ""
   "bookstyle.sty" 1734947360.73297 777 e2ff3bd7d47ae017cb8748ed5cd8872e ""
-  "build/book.aux" 1735753132.02231 8553 6cf8ec746c4fe988d22d087a5b2bcb25 "pdflatex"
-  "build/book.ind" 1735751045.61079 0 d41d8cd98f00b204e9800998ecf8427e "makeindex build/book.idx"
-  "build/book.out" 1735753132.02336 10415 943a3604807e5370ce06d3c173e45f25 "pdflatex"
-  "build/book.toc" 1735753132.02359 4668 73ba9de947e19eb575d5be5238231484 "pdflatex"
+  "build/book.aux" 1735828887.80996 8832 a0f586d704491bdaafa240ae4027ca14 "pdflatex"
+  "build/book.ind" 1735828770.38597 0 d41d8cd98f00b204e9800998ecf8427e "makeindex build/book.idx"
+  "build/book.out" 1735828887.81104 10884 c0d96786b42f8616602e2e03ce03bf11 "pdflatex"
+  "build/book.toc" 1735828887.81131 4865 8e3a06924e6102f3a76ca41cb8c9ebf2 "pdflatex"
   "cover.tex" 1734354830.03538 765 97f085dd6b46a6b25358f0e2818f77af ""
   "listings-rust.sty" 1734585701.27248 12270 7c444cbfed7aa42b3ddcd0885e4a539c ""
   "problem-solving/./binary-search/bs.tex" 1735753130.89295 8329 2efedd7557db611356f1a1f2b875cc2d ""

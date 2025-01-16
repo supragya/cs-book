@@ -1,0 +1,15 @@
+\section{Miner's Extractable Value (MEV)}
+Miner's Extractable Value (MEV) is a term coined by Phil Daian et al. in their \href{https://arxiv.org/pdf/1904.05234}{Flash Boys 2.0} paper. It refers to the value that miners can extract from the transactions they include in a block. MEV is a result of the fact that miners have the ability to order transactions in a block and can choose which transactions to include or exclude. This gives them the power to front-run transactions, re-order transactions, and censor transactions. 
+
+Sometimes MEV is also described as "maximal extractable value".
+
+General purpose blockchains provide an almost turing-complete environment\footnote{Almost in the sense that execution is still bounded to some maximum number of steps, called gas limit in Ethereum and compute limit in Solana} for executing smart contracts / programs. Smart contract / programs are sequence of steps or rules that can be deployed at will. Some of these major programs are Decentralized Exchanges (DEX), Automated Market Makers (AMM), and lending protocols. These programs are often used to trade assets, provide liquidity, and borrow assets.
+
+\subsection{Basic on-chain DeX based arbitrage}
+
+If an arbitrage opportunity exists of the following format:
+\begin{itemize}
+    \item \textbf{Transaction 1}: Decentralized exchange $D1$ is selling asset $A$ in exchange of $B$ at rate $x:1$
+    \item \textbf{Transaction 2}: Decentralized exchange $D2$ is buying asset $A$ and giving $B$ at rate $y:1$
+    \item \textbf{Arb Condition}: $x > y$, i.e. $D1$ gives more $A$ per unit of $B$ than $D2$ needs to exchange for a unit of $B$
+\end{itemize}
