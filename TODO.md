@@ -1,0 +1,2 @@
+- [ ] Talk about Economics: https://www.youtube.com/watch?v=uhVJKAvl1qA&t=16s
+- [ ] Weak subjectivity
