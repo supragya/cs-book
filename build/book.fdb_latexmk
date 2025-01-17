@@ -1,13 +1,13 @@
 # Fdb version 4
-["makeindex build/book.idx"] 1737041728.09921 "build/book.idx" "build/book.ind" "build/book" 1737045193.34661 0
-  "build/book.idx" 1737045192.02278 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex build/book.idx"] 1737119904.35448 "build/book.idx" "build/book.ind" "build/book" 1737120498.36654 0
+  "build/book.idx" 1737120498.2091 224 2c5d2c725e3759b94e41af3eeb723d71 "pdflatex"
   (generated)
   "build/book.ilg"
   "build/book.ind"
   (rewritten before read)
-["pdflatex"] 1737045191.34976 "/Users/ecluser/Projects/supragya/csbook/book.tex" "build/book.pdf" "book" 1737045193.34673 0
+["pdflatex"] 1737120496.66126 "/Users/ecluser/Projects/supragya/csbook/book.tex" "build/book.pdf" "book" 1737120498.36666 0
   "./cover.tex" 1734354830.03538 765 97f085dd6b46a6b25358f0e2818f77af ""
-  "/Users/ecluser/Projects/supragya/csbook/book.tex" 1734945299.33205 1219 3132dcd4165e446283db384ef42d4802 ""
+  "/Users/ecluser/Projects/supragya/csbook/book.tex" 1737106728.26007 1259 2c0288070b60222025e362ee6d18eb7c ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/iwona/ex-iwona.enc" 1276043435 3130 8cd10f890623d1a768321ebf954797d3 ""
@@ -53,6 +53,7 @@
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb" 1248133631 25168 33771b85f45c82138dd7745db7092d1c ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsi1000.pfb" 1215737283 103607 8dec125a771685406ae21998f7cfb6f2 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb" 1215737283 95441 e322369dec2b43bb317c506a4a44deaa ""
+  "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb" 1215737283 94648 b03e7f03878c9582819008e1f17e2327 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb" 1215737283 94269 4665f0d253cc3cca9439f89dbf2b9f33 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx0800.pfb" 1215737283 151158 a9e6f19f14a78f43f630e10a3f0953bb ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx0900.pfb" 1215737283 154664 ab0d0aa25a7cc3b241bf03b9240cdd63 ""
@@ -226,7 +227,7 @@
   "adverserial-distributed-systems/./ethereum/./eip-2935.tex" 1734969789.70073 1786 013fae77c3c0c1b48c8b39ef24a5129b ""
   "adverserial-distributed-systems/./ethereum/./pos-block.tex" 1734944331.62464 1399 75aa7d01661763b6278a12c6c6f098c6 ""
   "adverserial-distributed-systems/./ethereum/ethereum.tex" 1734943970.40567 310 ba8e5acfa4b072d1c63d8c74d9906412 ""
-  "adverserial-distributed-systems/./general-problems/./flp-impossibility.tex" 1737045191.15084 9124 b8f5c27efcd2baffacf10b6b5b8fe112 ""
+  "adverserial-distributed-systems/./general-problems/./flp-impossibility.tex" 1737120496.4449 13981 34db88ddaae487476b2e37dd34586610 ""
   "adverserial-distributed-systems/./general-problems/./mev.tex" 1735828885.58504 1647 79426f7a51e279974c78d1d08a5ac0ec ""
   "adverserial-distributed-systems/./general-problems/./pos-and-nothing-at-stake.tex" 1737012264.82383 5575 a99d7e4635dce6a990c9c796727126b9 ""
   "adverserial-distributed-systems/./general-problems/./wealth-inequality.tex" 1737016742.77753 689 8f5884788d45b69d6b0f5120beea1baf ""
@@ -237,15 +238,17 @@
   "adverserial-distributed-systems/adverserial.tex" 1734944861.0518 147 5b450ab696a9aa226ef2d5a58253990b ""
   "adverserial-distributed-systems/ethereum/assets/block-merge.png" 1734943034.48554 70647 2d50e099a33b013570054fe31f053b67 ""
   "adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png" 1735710479.81884 1452455 90a7c5b82c6a5db5d7043908dc2bd81b ""
+  "adverserial-distributed-systems/general-problems/assets/flp-impossibility-lemma1.png" 1737105721.34384 11730 fc15890d3b804a8ec79f3f95d7c217a3 ""
+  "adverserial-distributed-systems/general-problems/assets/flp-sequence-bivalent-to-bivalent.png" 1737119781.82355 39507 03ed2afb574390a26b0e9e820c2e779d ""
   "adverserial-distributed-systems/general-problems/assets/flp-single-node-read-write.png" 1737035940.6977 44748 720a4464ad1d721859b18023d94c7d50 ""
   "adverserial-distributed-systems/general-problems/assets/tragedy-of-the-commons.png" 1737010300.31704 423087 dccd23f763cfecc71a889645cd83cc4b ""
   "adverserial-distributed-systems/solana/assets/blockchain-trilemma.png" 1737004028.70909 621425 9afcbd035c65b4c10d53c73eff0189ea ""
-  "book.tex" 1734945299.33205 1219 3132dcd4165e446283db384ef42d4802 ""
-  "bookstyle.sty" 1737030522.75124 1312 4af4e12e22cd92fe1f26dcd504166799 ""
-  "build/book.aux" 1737045193.18491 10958 9922041ff88f80d4d477c2918a69e2b5 "pdflatex"
-  "build/book.ind" 1737041728.25302 0 d41d8cd98f00b204e9800998ecf8427e "makeindex build/book.idx"
-  "build/book.out" 1737045193.18625 13228 53a56c56b71c3850de3507e3509908cd "pdflatex"
-  "build/book.toc" 1737045193.18652 5871 efffa7aa5b1f946050a2044de4ab332c "pdflatex"
+  "book.tex" 1737106728.26007 1259 2c0288070b60222025e362ee6d18eb7c ""
+  "bookstyle.sty" 1737114948.33552 1845 71dd97eab32fed0991ebd4e931496620 ""
+  "build/book.aux" 1737120498.22243 12416 3e547af3bc0975abb93e00130ad1e5e4 "pdflatex"
+  "build/book.ind" 1737119904.4602 307 20befb6271f4849473ed210e2a5b9087 "makeindex build/book.idx"
+  "build/book.out" 1737120498.2235 14625 ec115bac3125e7cfa7b0c5a5fa6e8a6c "pdflatex"
+  "build/book.toc" 1737120498.22368 6463 6a4f6a7b1eff3f4e37fd89cda52893a4 "pdflatex"
   "cover.tex" 1734354830.03538 765 97f085dd6b46a6b25358f0e2818f77af ""
   "listings-rust.sty" 1734585701.27248 12270 7c444cbfed7aa42b3ddcd0885e4a539c ""
   "problem-solving/./binary-search/bs.tex" 1735753130.89295 8329 2efedd7557db611356f1a1f2b875cc2d ""

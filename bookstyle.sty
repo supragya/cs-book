@@ -30,5 +30,15 @@
 
 \newtcolorbox{quotebox}[2][]{breakable,sharp corners, skin=enhancedmiddle jigsaw,parbox=false,
 boxrule=0mm,leftrule=2mm,boxsep=0mm,arc=0mm,outer arc=0mm,attach title to upper,
-after title={.\ }, coltitle=Primary2,colback=Primary3!10,colframe=black, title={#2},
+after title={.\ }, coltitle=Primary2,colback=Primary1!10,colframe=black, title={#2},
+fonttitle=\bfseries,#1}
+
+\newtcolorbox{refbox}[2][]{breakable, skin=enhancedmiddle jigsaw,parbox=false,
+boxrule=0mm,leftrule=2mm,boxsep=0mm,arc=0mm,outer arc=0mm,attach title to upper,
+after title={}, coltitle=Primary2,colback=yellow!10,colframe=black, title={#2},
+fonttitle=\bfseries,#1}
+
+\newtcolorbox{alertbox}[2][]{breakable, skin=enhancedmiddle jigsaw,parbox=false,
+boxrule=0mm,leftrule=2mm,boxsep=0mm,arc=0mm,outer arc=0mm,attach title to upper,
+after title={\ }, coltitle=Primary2,colback=yellow!20,colframe=black, title={#2},
 fonttitle=\bfseries,#1}

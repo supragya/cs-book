@@ -20,43 +20,49 @@
 \contentsline {section}{\numberline {4.2}Proof of History: VDF based transaction ordering}{13}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Entries, Slots, Bank}{13}{section.4.3}%
 \contentsline {chapter}{\numberline {5}General Concepts in Adversarial Distributed Systems}{15}{chapter.5}%
-\contentsline {section}{\numberline {5.1}FLP Impossibility Theorem}{15}{section.5.1}%
+\contentsline {section}{\numberline {5.1}FLP: Can't have both consistency and liveness}{15}{section.5.1}%
 \contentsline {subsection}{\numberline {5.1.1}The FLP Impossibility Claim}{15}{subsection.5.1.1}%
 \contentsline {subsection}{\numberline {5.1.2}Key concepts}{16}{subsection.5.1.2}%
 \contentsline {subsection}{\numberline {5.1.3}Consensus, System Configurations, Events and Schedules}{17}{subsection.5.1.3}%
-\contentsline {section}{\numberline {5.2}Proof of Stake: The Nothing at Stake problem}{17}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}No penalties = No canonicalization}{18}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Example: The 1\% attacker}{18}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}The Tragedy of the Commons}{18}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Simulating the "wrong choice is costly"}{18}{subsection.5.2.4}%
-\contentsline {section}{\numberline {5.3}Wealth Inequality and the Gini Coefficient}{19}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Miner's Extractable Value (MEV)}{19}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}Basic on-chain DeX based arbitrage}{19}{subsection.5.4.1}%
-\contentsline {section}{\numberline {5.5}The ever growing state, state expiry}{19}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Rebuilding the chain / Chain Derivation}{20}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Supporting a different virtual machine}{20}{section.5.7}%
-\contentsline {subsubsection}{Arbitrum Stylus}{20}{section*.2}%
-\contentsline {subsubsection}{R55-Eth}{20}{section*.3}%
-\contentsline {chapter}{\numberline {6}Layer 2 Scaling Solutions}{21}{chapter.6}%
-\contentsline {section}{\numberline {6.1}General classification}{21}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Where sits the enourmous data?}{21}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Plasma: Each one save one}{22}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Operator misbehaviors and exits}{22}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Plasma Cash}{22}{subsection.6.3.2}%
-\contentsline {section}{\numberline {6.4}Bottlenecked by DA}{22}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Rollups and levels of confirmation}{23}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Faster Layer 2 Interoperability}{23}{section.6.6}%
-\contentsline {chapter}{\numberline {7}Golang}{25}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Rust}{27}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Iterators}{27}{section.8.1}%
-\contentsline {chapter}{\numberline {9}Binary Search}{29}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Basic: Minimize $k$ such that $f(k)$ is true}{29}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {feasible(x) -> bool}}}}{29}{section.9.2}%
-\contentsline {subsection}{\numberline {9.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{29}{subsection.9.2.1}%
-\contentsline {subsection}{\numberline {9.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{30}{subsection.9.2.2}%
-\contentsline {subsection}{\numberline {9.2.3}Problem [SplitM]: Split array into $m$ subarrays}{30}{subsection.9.2.3}%
-\contentsline {section}{\numberline {9.3}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {enough(x) -> bool}}}}{31}{section.9.3}%
-\contentsline {subsection}{\numberline {9.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{31}{subsection.9.3.1}%
-\contentsline {chapter}{\numberline {10}Dynamic Programming}{33}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Memoization}{33}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Most important subproblems}{34}{section.10.2}%
+\contentsline {subsection}{\numberline {5.1.4}Lemma 1: Disjoint Schedules Commute}{17}{subsection.5.1.4}%
+\contentsline {subsection}{\numberline {5.1.5}Lemma 2: There exists a bi-valent initial configuration}{17}{subsection.5.1.5}%
+\contentsline {subsection}{\numberline {5.1.6}Lemma 3: All roads lead to indecision}{18}{subsection.5.1.6}%
+\contentsline {subsection}{\numberline {5.1.7}Proving the theorem}{18}{subsection.5.1.7}%
+\contentsline {subsection}{\numberline {5.1.8}Conclusion}{18}{subsection.5.1.8}%
+\contentsline {section}{\numberline {5.2}Proof of Stake: The Nothing at Stake problem}{19}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}No penalties = No canonicalization}{19}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Example: The 1\% attacker}{19}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}The Tragedy of the Commons}{19}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Simulating the "wrong choice is costly"}{20}{subsection.5.2.4}%
+\contentsline {section}{\numberline {5.3}Wealth Inequality and the Gini Coefficient}{20}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Miner's Extractable Value (MEV)}{20}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Basic on-chain DeX based arbitrage}{21}{subsection.5.4.1}%
+\contentsline {section}{\numberline {5.5}The ever growing state, state expiry}{21}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Rebuilding the chain / Chain Derivation}{21}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Supporting a different virtual machine}{21}{section.5.7}%
+\contentsline {subsubsection}{Arbitrum Stylus}{21}{section*.2}%
+\contentsline {subsubsection}{R55-Eth}{21}{section*.3}%
+\contentsline {chapter}{\numberline {6}Layer 2 Scaling Solutions}{23}{chapter.6}%
+\contentsline {section}{\numberline {6.1}General classification}{23}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Where sits the enourmous data?}{23}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Plasma: Each one save one}{24}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Operator misbehaviors and exits}{24}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Plasma Cash}{24}{subsection.6.3.2}%
+\contentsline {section}{\numberline {6.4}Bottlenecked by DA}{24}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Rollups and levels of confirmation}{25}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Faster Layer 2 Interoperability}{25}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Golang}{27}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Rust}{29}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Iterators}{29}{section.8.1}%
+\contentsline {chapter}{\numberline {9}Binary Search}{31}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Basic: Minimize $k$ such that $f(k)$ is true}{31}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {feasible(x) -> bool}}}}{31}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{31}{subsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{32}{subsection.9.2.2}%
+\contentsline {subsection}{\numberline {9.2.3}Problem [SplitM]: Split array into $m$ subarrays}{32}{subsection.9.2.3}%
+\contentsline {section}{\numberline {9.3}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {enough(x) -> bool}}}}{33}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{33}{subsection.9.3.1}%
+\contentsline {chapter}{\numberline {10}Dynamic Programming}{35}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Memoization}{35}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Most important subproblems}{36}{section.10.2}%
+\contentsline {chapter}{Alphabetical Index}{37}{section*.4}%

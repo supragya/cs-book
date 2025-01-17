@@ -38,65 +38,75 @@
 \@writefile{toc}{\contentsline {chapter}{\numberline {5}General Concepts in Adversarial Distributed Systems}{15}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}FLP Impossibility Theorem}{15}{section.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}FLP: Can't have both consistency and liveness}{15}{section.5.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}The FLP Impossibility Claim}{15}{subsection.5.1.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Key concepts}{16}{subsection.5.1.2}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces The single node case of read and write}}{16}{figure.5.1}\protected@file@percent }
 \newlabel{fig:flp-single-node-read-write}{{5.1}{16}{The single node case of read and write}{figure.5.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}Consensus, System Configurations, Events and Schedules}{17}{subsection.5.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Proof of Stake: The Nothing at Stake problem}{17}{section.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}No penalties = No canonicalization}{18}{subsection.5.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}Example: The 1\% attacker}{18}{subsection.5.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}The Tragedy of the Commons}{18}{subsection.5.2.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Tragedy of the commons}}{18}{figure.5.2}\protected@file@percent }
-\newlabel{fig:tragedy-of-the-commons}{{5.2}{18}{Tragedy of the commons}{figure.5.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.4}Simulating the "wrong choice is costly"}{18}{subsection.5.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}Wealth Inequality and the Gini Coefficient}{19}{section.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.4}Miner's Extractable Value (MEV)}{19}{section.5.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.1}Basic on-chain DeX based arbitrage}{19}{subsection.5.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.5}The ever growing state, state expiry}{19}{section.5.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.6}Rebuilding the chain / Chain Derivation}{20}{section.5.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.7}Supporting a different virtual machine}{20}{section.5.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Arbitrum Stylus}{20}{section*.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Arbitrum Nitro}}{20}{figure.5.3}\protected@file@percent }
-\newlabel{fig:arbitrum-nitro}{{5.3}{20}{Arbitrum Nitro}{figure.5.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{R55-Eth}{20}{section*.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}Layer 2 Scaling Solutions}{21}{chapter.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.4}Lemma 1: Disjoint Schedules Commute}{17}{subsection.5.1.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Schedules applying to disjoint processes can be out of order}}{17}{figure.5.2}\protected@file@percent }
+\newlabel{fig:flp-impossibility-lemma1}{{5.2}{17}{Schedules applying to disjoint processes can be out of order}{figure.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.5}Lemma 2: There exists a bi-valent initial configuration}{17}{subsection.5.1.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.6}Lemma 3: All roads lead to indecision}{18}{subsection.5.1.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces A bi-valent configuration can lead to another bi-valent configuration}}{18}{figure.5.3}\protected@file@percent }
+\newlabel{fig:bivalent-to-bivalent}{{5.3}{18}{A bi-valent configuration can lead to another bi-valent configuration}{figure.5.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.7}Proving the theorem}{18}{subsection.5.1.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.8}Conclusion}{18}{subsection.5.1.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Proof of Stake: The Nothing at Stake problem}{19}{section.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}No penalties = No canonicalization}{19}{subsection.5.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.2}Example: The 1\% attacker}{19}{subsection.5.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.3}The Tragedy of the Commons}{19}{subsection.5.2.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Tragedy of the commons}}{19}{figure.5.4}\protected@file@percent }
+\newlabel{fig:tragedy-of-the-commons}{{5.4}{19}{Tragedy of the commons}{figure.5.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.4}Simulating the "wrong choice is costly"}{20}{subsection.5.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Wealth Inequality and the Gini Coefficient}{20}{section.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Miner's Extractable Value (MEV)}{20}{section.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.1}Basic on-chain DeX based arbitrage}{21}{subsection.5.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}The ever growing state, state expiry}{21}{section.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.6}Rebuilding the chain / Chain Derivation}{21}{section.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.7}Supporting a different virtual machine}{21}{section.5.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Arbitrum Stylus}{21}{section*.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Arbitrum Nitro}}{21}{figure.5.5}\protected@file@percent }
+\newlabel{fig:arbitrum-nitro}{{5.5}{21}{Arbitrum Nitro}{figure.5.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{R55-Eth}{21}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Layer 2 Scaling Solutions}{23}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {6.1}General classification}{21}{section.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.2}Where sits the enourmous data?}{21}{section.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.3}Plasma: Each one save one}{22}{section.6.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.1}Operator misbehaviors and exits}{22}{subsection.6.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.2}Plasma Cash}{22}{subsection.6.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.4}Bottlenecked by DA}{22}{section.6.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.5}Rollups and levels of confirmation}{23}{section.6.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.6}Faster Layer 2 Interoperability}{23}{section.6.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {7}Golang}{25}{chapter.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}General classification}{23}{section.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Where sits the enourmous data?}{23}{section.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Plasma: Each one save one}{24}{section.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.1}Operator misbehaviors and exits}{24}{subsection.6.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.2}Plasma Cash}{24}{subsection.6.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.4}Bottlenecked by DA}{24}{section.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.5}Rollups and levels of confirmation}{25}{section.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.6}Faster Layer 2 Interoperability}{25}{section.6.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {7}Golang}{27}{chapter.7}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{\numberline {8}Rust}{27}{chapter.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {8}Rust}{29}{chapter.8}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {8.1}Iterators}{27}{section.8.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {9}Binary Search}{29}{chapter.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8.1}Iterators}{29}{section.8.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {9}Binary Search}{31}{chapter.9}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {9.1}Basic: Minimize $k$ such that $f(k)$ is true}{29}{section.9.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {feasible(x) -> bool}}}}{29}{section.9.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{29}{subsection.9.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{30}{subsection.9.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.3}Problem [SplitM]: Split array into $m$ subarrays}{30}{subsection.9.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9.3}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {enough(x) -> bool}}}}{31}{section.9.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{31}{subsection.9.3.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.1}Rust implementation of enough function}{31}{lstlisting.9.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {10}Dynamic Programming}{33}{chapter.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9.1}Basic: Minimize $k$ such that $f(k)$ is true}{31}{section.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {feasible(x) -> bool}}}}{31}{section.9.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{31}{subsection.9.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{32}{subsection.9.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.3}Problem [SplitM]: Split array into $m$ subarrays}{32}{subsection.9.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9.3}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {enough(x) -> bool}}}}{33}{section.9.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{33}{subsection.9.3.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.1}Rust implementation of enough function}{33}{lstlisting.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {10}Dynamic Programming}{35}{chapter.10}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{relation:dontrequirememo}{{10.1}{33}{Dynamic Programming}{equation.10.0.1}{}}
-\newlabel{relation:requiresmemo}{{10.2}{33}{Dynamic Programming}{equation.10.0.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {10.1}Memoization}{33}{section.10.1}\protected@file@percent }
-\newlabel{timecomplexity:requiresmemo}{{10.3}{33}{Memoization}{equation.10.1.3}{}}
-\newlabel{timecomplexity:requiresmemowithmemo}{{10.4}{34}{Memoization}{equation.10.1.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {10.2}Most important subproblems}{34}{section.10.2}\protected@file@percent }
-\gdef \@abspage@last{34}
+\newlabel{relation:dontrequirememo}{{10.1}{35}{Dynamic Programming}{equation.10.0.1}{}}
+\newlabel{relation:requiresmemo}{{10.2}{35}{Dynamic Programming}{equation.10.0.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {10.1}Memoization}{35}{section.10.1}\protected@file@percent }
+\newlabel{timecomplexity:requiresmemo}{{10.3}{35}{Memoization}{equation.10.1.3}{}}
+\newlabel{timecomplexity:requiresmemowithmemo}{{10.4}{36}{Memoization}{equation.10.1.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {10.2}Most important subproblems}{36}{section.10.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Alphabetical Index}{37}{section*.4}\protected@file@percent }
+\gdef \@abspage@last{37}

@@ -1,11 +1,15 @@
-\section{FLP Impossibility Theorem}
+\section{FLP: Can't have both consistency and liveness}
+
+\index{FLP Impossibility Theorem}
 
 The domain of distributed systems say a major breakthrough in 1978 when Leslie Lamport in his paper "\href{https://amturing.acm.org/p558-lamport.pdf}{Time, Clocks, and the Ordering of Events in a Distributed System}" introduced the concept of logical clocks. Effectively, this paper presented an affirmative answer to the following question:
 
 \begin{quotebox}{1978 Leslie Lamport}
     Can we impose total ordering to events received by different nodes in a distributed system?
+    \index{Lamport Clocks}
 \end{quotebox}
 
+\index{Partial Order}
 As a primer, a partial ordering is an order on a set of elements which satisfies the following properties:
 \begin{itemize}
     \item \textbf{Reflexivity}: $a \leq a$ i.e an element is always ordered with itself
@@ -33,7 +37,11 @@ We take the FLP paper's abstract verbatim that reads the following:
     The consensus problem involves an \textbf{asynchronous system} of \textbf{processes}, some of which may be \textbf{unreliable}. The problem is for the \textbf{reliable processes to agree} on a binary value. In this paper, it is shown that every protocol for this problem has \textbf{the possibility of nontermination}, even with only \textbf{one faulty process}. 
 \end{quotebox}
 
-The key takeaway from this abstract, without key terms being defined is: If we exist in a distributed system where each "process" / node is willing to participate in a consensus protocol, which may take infinite amount of time to reach a consensus, with message delays being unbounded, with at-most one process being faulty, i.e. dies without notice to others, then it is not always possible to reach to a common global value.
+The key takeaway from this abstract, without key terms being defined is: If we exist in a distributed system where each "process" / node is willing to participate in a consensus protocol, which may take infinite amount of time to reach a consensus, with message \textbf{delays being unbounded} and \textbf{no shared clock}, with at-most one process being faulty, i.e. dies without notice to others, then it is not always possible to reach to a common global value.
+
+\begin{alertbox}{Async model guarantees eventual message delivery}
+    Do note that when we say the model of message delivery between processes is \textbf{asynchrous} \index{asynchronous model}, we mean that there is no upper bound on the time it takes for a message to be delivered. However, the subtle point is that the message \textbf{eventually gets delivered and is not lost}.
+\end{alertbox}
 
 Before we establish this however, we need to define some key concepts:
 
@@ -62,6 +70,7 @@ There are $n$ nodes in the distributed system. The nodes are connected to each o
 
 Each process $p_i$ can send a message $m \in M$ ($M$ being the "message universe") to some other process $p_x$ at any time as a tuple $(p_x, m)$ submitted to a globally singleton multi-set \textbf{message buffer} (note, source $p_i$ is not described in the tuple).
 
+\index{Message Buffer}
 The \textbf{message buffer} is a special non-deterministic (the only component in the system that is not deterministic) entity that presents each process with a function \code{receive(i) $\to$ $\{\phi, m\}$}. This function when called with index $i$, either returns $\phi$, a null message or $m$, one of the messages the buffer has received for delivery to process $p_i$. In the latter case, upon delivering the message, a tuple $(p_i, m)$ is removed from the message buffer. Note how message buffer sufficiently describes an asynchronous message passing system. It can choose to returen the null message any number of times, in effect simulating unbounded delay.
 
 In a \textbf{synchronous} setting however, we have some upper bound on the time it takes for a message to be delivered. In an \textbf{asynchronous} setting, we have no such bound. As such, it is impossible to detect if the counterparty process has failed or is just taking a long time to respond.
@@ -83,7 +92,7 @@ Consensus in distributed systems is defined as any algorithm that satisfies the 
 \begin{itemize}
     \item \textbf{Agreement}: All non-faulty processes decide on the same value.
     \item \textbf{Termination}: All non-faulty processes eventually decide on a value.
-    \item \textbf{Validity}: All non-faulty processes decide on a value that was some process's internal state at the start. \emph{Corrollary}: If all non-faulty processes start with the same input value, then the decision value must be the same as the input value.
+    \item \textbf{Validity}: All non-faulty processes decide on a value that was some process's internal state at the start. \emph{Corollary}: If all non-faulty processes start with the same input value, then the decision value must be the same as the input value.
 \end{itemize}
 
 The system configuration $C$ advances to a new configuration $C'$ when it encounters \textbf{events}. 
@@ -93,3 +102,68 @@ The system configuration $C$ advances to a new configuration $C'$ when it encoun
 If at any system configuration $C$, all schedules lead to a final terminating consensus decision of value $v$, then we say that the system configuration $C$ is \textbf{decisive} / \textbf{univalent} for value $v$. This can also be written as \emph{v-valent}. Since we are in binary domain, decisive configurations are either $0$-valent or $1$-valent.
 
 If at any system configuration $C$, different schedules lead to different consensus decisions, then we say that system configuration $C$ is \textbf{indecisive} / \textbf{multivalent}. Since we in binary domain, it also is called \emph{bi}-valent.
+
+\subsection{Lemma 1: Disjoint Schedules Commute}
+\begin{wrapfigure}{r}{0.20\textwidth}
+    \centering
+    \includegraphics[width=0.20\textwidth]{general-problems/assets/flp-impossibility-lemma1.png}
+    \caption{Schedules applying to disjoint processes can be out of order}
+    \label{fig:flp-impossibility-lemma1}
+\end{wrapfigure}
+Suppose that from some configuration $C$, the schedules $\sigma_1$, $\sigma_2$ lead to configurations $C_1$, $C_2$ respectively. If the sets of processes taking steps in $\sigma_1$ and $\sigma_2$, respectively, are disjoint, then $\sigma_2$ can be applied to $C_1$ and $\sigma_1$ can be applied to $C_2$, and both lead to the same configuration $C_3$. See \ref{fig:flp-impossibility-lemma1} for a visual representation.
+
+\subsection{Lemma 2: There exists a bi-valent initial configuration}
+
+Let us assume the contrary to be the case, i.e. all initial system configurations C are decisive, uni-valent. Then, either all are 0-valent, 1-valent or a mix of both with some states being 0-valent and others 1-valent.
+
+A strictly 0-valent or 1-valent configuration is trivial in nature and does not require any consensus protocol to reach a decision. However, a mix of both 0-valent and 1-valent configurations would require a consensus protocol to reach a decision.
+
+Assume $n$ processes participating in the system. Then, all decisive initial configurations are $2^n$ in number. Since all of them are uni-valent. There would exist some adjecency boundary between 0-valent and 1-valent configurations in the $n$ dimensional lattice, the only process differentiating this being one of the $n$ processes in the system. If such process goes down without notice, the system would be left in a bi-valent state if it intends to resolve the consensus deterministically as it cannot choose 0-valency or 1-valency.
+
+\subsection{Lemma 3: All roads lead to indecision}
+If we start from some bi-valent system configuration $C_i$, with some specific event $e = (p, m)$ extractable from the message buffer from $C_i$, there exists a schedule $S_{C_i}$ that leads to a bi-valent configuration $C_{i+1}$ with event $e$ consumed in the process.
+
+\begin{wrapfigure}{r}{0.80\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{general-problems/assets/flp-sequence-bivalent-to-bivalent.png}
+    \caption{A bi-valent configuration can lead to another bi-valent configuration}
+    \label{fig:bivalent-to-bivalent}
+\end{wrapfigure}
+
+It is noteworthy that we operate in a asynchronous network model, where-in while it can take a really long time for a message to be delivered, the guarantee exists that it is eventually delivered.
+
+This lemma intends to present that there is a sequence of message deliveries that we can do at each bi-valent configuration that leads to another bi-valent configuration, and also that $e$ getting delivered. Multiple applications of this approach will essentially prove the FLP impossibility theorem.
+
+Let us set-up the proof in the following way:
+\begin{itemize}
+    \item Start with a bi-valent configuration $C_i$.
+    \item Let there be a sequence of events $S_{C_i} = \{e_1, e_2, \ldots, e_n\}$ that lead to a bi-valent configuration $C_{i+1}$. It should be noted that $|S_{C_i}| = 0$ is possible.
+    \item Let $C'_{i}$ be the configuration that is reached by applying the schedule $S_{C_i}$ to $C_i$. Since $|S_{C_i}| = 0$ is possible, $C'_{i}$ can be the same as $C_i$.
+\end{itemize}
+
+
+\subsection{Proving the theorem}
+
+\subsection{Conclusion}
+is a seq
+is a seq
+is a seq
+is a seq
+is a seq
+is a seq
+v
+
+is a seq
+is a seq
+is a seq
+is a seq
+
+\begin{refbox}{Further Resources}
+    \small
+    \begin{description}
+        \item [Original Paper]: \href{https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf}{https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf}
+        \item [Overview - FLP Impossibility Theorem]: \href{https://www.youtube.com/watch?v=Vmlj-67aymw}{https://www.youtube.com/watch?v=Vmlj-67aymw}
+        \item [Extending the bi-valent configuration (Lemma 3)]: \href{https://www.youtube.com/watch?v=cwEXmcszbos}{https://www.youtube.com/watch?v=cwEXmcszbos}
+        \item [Consize summary]: \href{https://www.youtube.com/watch?v=2fnS-f-mwIo}{https://www.youtube.com/watch?v=2fnS-f-mwIo}
+    \end{description}
+\end{refbox}
