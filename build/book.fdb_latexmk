@@ -1,11 +1,11 @@
 # Fdb version 4
-["makeindex build/book.idx"] 1737119904.35448 "build/book.idx" "build/book.ind" "build/book" 1737120498.36654 0
-  "build/book.idx" 1737120498.2091 224 2c5d2c725e3759b94e41af3eeb723d71 "pdflatex"
+["makeindex build/book.idx"] 1737122990.5968 "build/book.idx" "build/book.ind" "build/book" 1737131620.77814 0
+  "build/book.idx" 1737131620.63159 224 2c5d2c725e3759b94e41af3eeb723d71 "pdflatex"
   (generated)
   "build/book.ilg"
   "build/book.ind"
   (rewritten before read)
-["pdflatex"] 1737120496.66126 "/Users/ecluser/Projects/supragya/csbook/book.tex" "build/book.pdf" "book" 1737120498.36666 0
+["pdflatex"] 1737131619.06055 "/Users/ecluser/Projects/supragya/csbook/book.tex" "build/book.pdf" "book" 1737131620.77829 0
   "./cover.tex" 1734354830.03538 765 97f085dd6b46a6b25358f0e2818f77af ""
   "/Users/ecluser/Projects/supragya/csbook/book.tex" 1737106728.26007 1259 2c0288070b60222025e362ee6d18eb7c ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
@@ -227,7 +227,7 @@
   "adverserial-distributed-systems/./ethereum/./eip-2935.tex" 1734969789.70073 1786 013fae77c3c0c1b48c8b39ef24a5129b ""
   "adverserial-distributed-systems/./ethereum/./pos-block.tex" 1734944331.62464 1399 75aa7d01661763b6278a12c6c6f098c6 ""
   "adverserial-distributed-systems/./ethereum/ethereum.tex" 1734943970.40567 310 ba8e5acfa4b072d1c63d8c74d9906412 ""
-  "adverserial-distributed-systems/./general-problems/./flp-impossibility.tex" 1737120496.4449 13981 34db88ddaae487476b2e37dd34586610 ""
+  "adverserial-distributed-systems/./general-problems/./flp-impossibility.tex" 1737131616.79173 19234 9cfe2500275bffee993ea22a4af32f9a ""
   "adverserial-distributed-systems/./general-problems/./mev.tex" 1735828885.58504 1647 79426f7a51e279974c78d1d08a5ac0ec ""
   "adverserial-distributed-systems/./general-problems/./pos-and-nothing-at-stake.tex" 1737012264.82383 5575 a99d7e4635dce6a990c9c796727126b9 ""
   "adverserial-distributed-systems/./general-problems/./wealth-inequality.tex" 1737016742.77753 689 8f5884788d45b69d6b0f5120beea1baf ""
@@ -239,16 +239,17 @@
   "adverserial-distributed-systems/ethereum/assets/block-merge.png" 1734943034.48554 70647 2d50e099a33b013570054fe31f053b67 ""
   "adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png" 1735710479.81884 1452455 90a7c5b82c6a5db5d7043908dc2bd81b ""
   "adverserial-distributed-systems/general-problems/assets/flp-impossibility-lemma1.png" 1737105721.34384 11730 fc15890d3b804a8ec79f3f95d7c217a3 ""
+  "adverserial-distributed-systems/general-problems/assets/flp-pre-0-valent-to-non-pre-0-valent.png" 1737128516.39219 43731 480a30f36df6bd973d42700e4db6b04a ""
   "adverserial-distributed-systems/general-problems/assets/flp-sequence-bivalent-to-bivalent.png" 1737119781.82355 39507 03ed2afb574390a26b0e9e820c2e779d ""
   "adverserial-distributed-systems/general-problems/assets/flp-single-node-read-write.png" 1737035940.6977 44748 720a4464ad1d721859b18023d94c7d50 ""
   "adverserial-distributed-systems/general-problems/assets/tragedy-of-the-commons.png" 1737010300.31704 423087 dccd23f763cfecc71a889645cd83cc4b ""
   "adverserial-distributed-systems/solana/assets/blockchain-trilemma.png" 1737004028.70909 621425 9afcbd035c65b4c10d53c73eff0189ea ""
   "book.tex" 1737106728.26007 1259 2c0288070b60222025e362ee6d18eb7c ""
   "bookstyle.sty" 1737114948.33552 1845 71dd97eab32fed0991ebd4e931496620 ""
-  "build/book.aux" 1737120498.22243 12416 3e547af3bc0975abb93e00130ad1e5e4 "pdflatex"
-  "build/book.ind" 1737119904.4602 307 20befb6271f4849473ed210e2a5b9087 "makeindex build/book.idx"
-  "build/book.out" 1737120498.2235 14625 ec115bac3125e7cfa7b0c5a5fa6e8a6c "pdflatex"
-  "build/book.toc" 1737120498.22368 6463 6a4f6a7b1eff3f4e37fd89cda52893a4 "pdflatex"
+  "build/book.aux" 1737131620.6414 12736 f6eb6fe0b3a60ba85c8098e5b5ac94b9 "pdflatex"
+  "build/book.ind" 1737122990.71091 307 20befb6271f4849473ed210e2a5b9087 "makeindex build/book.idx"
+  "build/book.out" 1737131620.6425 14564 581aaba411521e8adb0db073b7050734 "pdflatex"
+  "build/book.toc" 1737131620.6427 6452 81860de2ef3fe9921dced05179397f24 "pdflatex"
   "cover.tex" 1734354830.03538 765 97f085dd6b46a6b25358f0e2818f77af ""
   "listings-rust.sty" 1734585701.27248 12270 7c444cbfed7aa42b3ddcd0885e4a539c ""
   "problem-solving/./binary-search/bs.tex" 1735753130.89295 8329 2efedd7557db611356f1a1f2b875cc2d ""

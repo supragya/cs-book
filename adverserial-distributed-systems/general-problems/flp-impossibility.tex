@@ -1,4 +1,4 @@
-\section{FLP: Can't have both consistency and liveness}
+\section{FLP: Can't live without trade-offs}
 
 \index{FLP Impossibility Theorem}
 
@@ -121,14 +121,14 @@ A strictly 0-valent or 1-valent configuration is trivial in nature and does not 
 Assume $n$ processes participating in the system. Then, all decisive initial configurations are $2^n$ in number. Since all of them are uni-valent. There would exist some adjecency boundary between 0-valent and 1-valent configurations in the $n$ dimensional lattice, the only process differentiating this being one of the $n$ processes in the system. If such process goes down without notice, the system would be left in a bi-valent state if it intends to resolve the consensus deterministically as it cannot choose 0-valency or 1-valency.
 
 \subsection{Lemma 3: All roads lead to indecision}
-If we start from some bi-valent system configuration $C_i$, with some specific event $e = (p, m)$ extractable from the message buffer from $C_i$, there exists a schedule $S_{C_i}$ that leads to a bi-valent configuration $C_{i+1}$ with event $e$ consumed in the process.
+\textbf{Claim}: If we start from some bi-valent system configuration $C_i$, with some specific event $e = (p, m)$ extractable from the message buffer from $C_i$, there exists a schedule $S_{C_i}$ that leads to a bi-valent configuration $C_{i+1}$ with event $e$ consumed in the process.
 
-\begin{wrapfigure}{r}{0.80\textwidth}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{general-problems/assets/flp-sequence-bivalent-to-bivalent.png}
     \caption{A bi-valent configuration can lead to another bi-valent configuration}
     \label{fig:bivalent-to-bivalent}
-\end{wrapfigure}
+\end{figure}
 
 It is noteworthy that we operate in a asynchronous network model, where-in while it can take a really long time for a message to be delivered, the guarantee exists that it is eventually delivered.
 
@@ -137,26 +137,58 @@ This lemma intends to present that there is a sequence of message deliveries tha
 Let us set-up the proof in the following way:
 \begin{itemize}
     \item Start with a bi-valent configuration $C_i$.
-    \item Let there be a sequence of events $S_{C_i} = \{e_1, e_2, \ldots, e_n\}$ that lead to a bi-valent configuration $C_{i+1}$. It should be noted that $|S_{C_i}| = 0$ is possible.
-    \item Let $C'_{i}$ be the configuration that is reached by applying the schedule $S_{C_i}$ to $C_i$. Since $|S_{C_i}| = 0$ is possible, $C'_{i}$ can be the same as $C_i$.
+    \item Let there be a sequence of events $S_{C_i} = \{e_1, e_2, \ldots, e_n\}, e_i \ne e \forall i \in [0, n]$ that lead to a bi-valent configuration $C_{i+1}$. It should be noted that $|S_{C_i}| = 0$ is possible.
+    \item Let $C'_{i}$ be the "penultimate configuration" that is reached by applying the schedule $S_{C_i}$ to $C_i$. Since $|S_{C_i}| = 0$ is possible, $C'_{i}$ can be the same as $C_i$.
 \end{itemize}
 
+\textbf{All configurations in \ref{fig:bivalent-to-bivalent} are bi-valent}: It is easy to see that in our definition of system configurations, we can never go from a uni-valent configuration to a bi-valent configuration. In this setup of $C_i$ and $C_{i+1}$ both being bi-valent, all the intermediate configurations including the penultimate configuration $C'_{i}$ must also be bi-valent.
+
+We now define a few possible configuration categories for intermediate and penultimate configurations shown in \ref{fig:bivalent-to-bivalent}.
+
+\begin{itemize}
+    \item \textbf{Pre-uni-valent}: Some configuration $C^*$ is pre-uni-valent, if it is reachable from $C_i$ via some sequence of events without delivering $e = (p, m)$ and application of $e$ to it would transition into a new configuration $C^{**}$ which will be uni-valent. For example, if $C'$ is pre-uni-valent, then $C_{i+1}$ is uni-valent which we do not want.
+    \item \textbf{Pre-bi-valent}: Some configuration $C^*$ is pre-bi-valent, if it is reachable from $C_i$ via some sequence of events without delivering $e = (p, m)$ and application of $e$ to it would transition into a new configuration $C^{**}$ which will be bi-valent. For example, if $C'$ is pre-bi-valent, then $C_{i+1}$ is uni-valent which we want.
+\end{itemize}
+
+Note that Pre-X-valency resolving into X-valency for X being uni or bi, is a property of the event $e = (p, m)$.
+
+Note that all Pre-uni-valent configurations necessarily need to be bi-valent. As by definition, at that configuration if a decision is already made, the configuration would reduce to uni-valency. Hence, a Pre-0-valent configuration will have both 0-valent and atleast one of 1-valent and bi-valent configurations as its reachable children configurations. Similar argument goes for Pre-1-valent (atleast one of 0-valent or bi-valent) and Pre-bi-valent (atleast one of 0-valent or 1-valent).
+
+So, what can we say about $C_i$? Well, if $C_i$ is Pre-bi-valent, then by definition application of $e$ to it will lead to a bi-valent configuration $C_{i+1}$. In this case, we have proven bi-valency leading to bi-valency.
+
+The other case however is more interesting. What if $C_i$ is Pre-uni-valent? Well, direct application of $e$ to it will lead to a uni-valent configuration which we want to avoid. We need to path our way from a Pre-uni-valent configuration $C_i$ to some Pre-bi-valent $C'_{i}$ so that we can transition into a bi-valent $C_{i+1}$ by application of $e$. \textbf{Can we always path a way from a Pre-uni-valent configuration to a Pre-bi-valent configuration?}
+
+We begin with an assumption that $C_i$ is Pre-0-valent. Assume another event $e' = (p', m')$ distinct from $e = (p, m)$ such that application of $e'$ to some reachable configuration $X$ from $C_i$ leads to a non Pre-0-valent configuration $Y$. See figure \ref{fig:finding-non-pre-0-valent} for a visual representation.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{general-problems/assets/flp-pre-0-valent-to-non-pre-0-valent.png}
+    \caption{Finding a non Pre-0-valent configuration from a Pre-0-valent configuration}
+    \label{fig:finding-non-pre-0-valent}
+\end{figure}
+
+We claim to \textbf{show that $Y$ is Pre-bi-valent}.
+
+This is because, if $Y$ is Pre-1-valent and $e$ is applied to it, the resulting configuration $Y'$ will be 1-valent. However, since $e$ can be applied to $X$ as well, the resulting $X'$ from $X$ will be 0-valent. If later on, $e'$ is applied to $X'$, the resulting configuration $X''$ will also be 0-valent.
+
+However, we note that $X''$ is identical to $Y'$ by lemma 1 if $e$ and $e'$ are disjoint, i.e. $p' \ne p$. This is a contradiction as $Y'$ is 1-valent and $X''$ is 0-valent.
+
+On the other hand if $p' = p$, then resolution of deterministic value of choice rests on a single process $p$. If this process crashes, the system will be left in a bi-valent state.
+
+Hence, under the assumption of possibility of single node failure, transition from Pre-0-valency to Pre-1-valency is impossible. This implies that $Y$ indeed is a Pre-bi-valent configuration.
 
 \subsection{Proving the theorem}
+Let us start our protocol from some initial bi-valent configuration $C_0$. Existence of such initial configuration is given by lemma 2.
+
+For any transition to $C_{i+1}$ from $C_{i}$, we choose the oldest message $e_{old}$ known to be in the message buffer at $C_i$. Given $C_i$ and $e_{old}$, we can construct a schedule $S_{C_i}$ that leads to $C_{i+1}$ as per lemma 3 leading to a bi-valent configuration. This also, leads to the consumption of the oldest message $e_{old}$ known at $C_i$.
+
+We continously apply the above scheme till the point we are left with no messages in the message buffer. We eventually still reach a bivalent state $C_{\infty}$.
 
 \subsection{Conclusion}
-is a seq
-is a seq
-is a seq
-is a seq
-is a seq
-is a seq
-v
-
-is a seq
-is a seq
-is a seq
-is a seq
+\begin{itemize}
+    \item The FLP impossibility theorem makes clear that \textbf{trade-offs are required} in the design of distributed systems. Whether it is loosening up on deterministic guarantees or on tightening up on timing guarantees, you cannot have both.
+    \item The above can also be described as, in event of asynchrony, do you compromise on consistency (determinism) or on liveness? \textbf{Longest chain (Nakamoto) based consensus protocols like Bitcoin and Ethereum compromise on consistency, while protocols like PBFT compromise on liveness}.
+\end{itemize}
 
 \begin{refbox}{Further Resources}
     \small

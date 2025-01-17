@@ -436,6 +436,10 @@ INPUT ./adverserial-distributed-systems/general-problems/assets/flp-sequence-biv
 INPUT ./adverserial-distributed-systems/general-problems/assets/flp-sequence-bivalent-to-bivalent.png
 INPUT ./adverserial-distributed-systems/general-problems/assets/flp-sequence-bivalent-to-bivalent.png
 INPUT ./adverserial-distributed-systems/general-problems/assets/flp-sequence-bivalent-to-bivalent.png
+INPUT ./adverserial-distributed-systems/general-problems/assets/flp-pre-0-valent-to-non-pre-0-valent.png
+INPUT ./adverserial-distributed-systems/general-problems/assets/flp-pre-0-valent-to-non-pre-0-valent.png
+INPUT ./adverserial-distributed-systems/general-problems/assets/flp-pre-0-valent-to-non-pre-0-valent.png
+INPUT ./adverserial-distributed-systems/general-problems/assets/flp-pre-0-valent-to-non-pre-0-valent.png
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecss0900.tfm
 INPUT ./adverserial-distributed-systems/./general-problems/./pos-and-nothing-at-stake.tex
 INPUT ./adverserial-distributed-systems/./general-problems/./pos-and-nothing-at-stake.tex
