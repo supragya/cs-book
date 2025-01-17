@@ -1,6 +1,8 @@
 \RequirePackage{xcolor}
 \RequirePackage{sansmath}
 \RequirePackage{soul}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
 
 \definecolor{Primary1}{HTML}{1FABD5}
 \definecolor{Primary2}{HTML}{1D8DB0}
@@ -25,3 +27,8 @@
 \newcommand{\code}[1]{\colorbox{LightPrimary}{\textcolor{Primary2}{\texttt{#1}}}}
 
 \newcommand{\todo}[1]{{\textcolor{orange}{\texttt{TODO: #1}}}}
+
+\newtcolorbox{quotebox}[2][]{breakable,sharp corners, skin=enhancedmiddle jigsaw,parbox=false,
+boxrule=0mm,leftrule=2mm,boxsep=0mm,arc=0mm,outer arc=0mm,attach title to upper,
+after title={.\ }, coltitle=Primary2,colback=Primary3!10,colframe=black, title={#2},
+fonttitle=\bfseries,#1}
