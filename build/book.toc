@@ -20,26 +20,27 @@
 \contentsline {section}{\numberline {4.2}Proof of History: VDF based transaction ordering}{13}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Entries, Slots, Bank}{13}{section.4.3}%
 \contentsline {chapter}{\numberline {5}General Concepts in Adversarial Distributed Systems}{15}{chapter.5}%
-\contentsline {section}{\numberline {5.1}FLP: Can't live without trade-offs}{15}{section.5.1}%
-\contentsline {subsection}{\numberline {5.1.1}The FLP Impossibility Claim}{15}{subsection.5.1.1}%
-\contentsline {subsection}{\numberline {5.1.2}Key concepts}{16}{subsection.5.1.2}%
-\contentsline {subsection}{\numberline {5.1.3}Consensus, System Configurations, Events and Schedules}{17}{subsection.5.1.3}%
-\contentsline {subsection}{\numberline {5.1.4}Lemma 1: Disjoint Schedules Commute}{17}{subsection.5.1.4}%
-\contentsline {subsection}{\numberline {5.1.5}Lemma 2: There exists a bi-valent initial configuration}{17}{subsection.5.1.5}%
-\contentsline {subsection}{\numberline {5.1.6}Lemma 3: All roads lead to indecision}{18}{subsection.5.1.6}%
-\contentsline {subsection}{\numberline {5.1.7}Proving the theorem}{19}{subsection.5.1.7}%
-\contentsline {subsection}{\numberline {5.1.8}Conclusion}{20}{subsection.5.1.8}%
-\contentsline {section}{\numberline {5.2}Proof of Stake: The Nothing at Stake problem}{20}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}No penalties = No canonicalization}{20}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Example: The 1\% attacker}{21}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}The Tragedy of the Commons}{21}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Simulating the "wrong choice is costly"}{21}{subsection.5.2.4}%
-\contentsline {section}{\numberline {5.3}Wealth Inequality and the Gini Coefficient}{21}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Miner's Extractable Value (MEV)}{22}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}Basic on-chain DeX based arbitrage}{22}{subsection.5.4.1}%
-\contentsline {section}{\numberline {5.5}The ever growing state, state expiry}{22}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Rebuilding the chain / Chain Derivation}{22}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Supporting a different virtual machine}{22}{section.5.7}%
+\contentsline {section}{\numberline {5.1}Dolev-Strong: Byzantine-broadcast, SMR, in a synchronous world}{15}{section.5.1}%
+\contentsline {section}{\numberline {5.2}FLP: Can't handle even 1 faulty node in asynchronous world}{15}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}The FLP Impossibility Claim}{15}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Key concepts}{16}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Consensus, System Configurations, Events and Schedules}{17}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Lemma 1: Disjoint Schedules Commute}{17}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Lemma 2: There exists a bi-valent initial configuration}{17}{subsection.5.2.5}%
+\contentsline {subsection}{\numberline {5.2.6}Lemma 3: All roads lead to indecision}{18}{subsection.5.2.6}%
+\contentsline {subsection}{\numberline {5.2.7}Proving the theorem}{19}{subsection.5.2.7}%
+\contentsline {subsection}{\numberline {5.2.8}Conclusion}{20}{subsection.5.2.8}%
+\contentsline {section}{\numberline {5.3}Proof of Stake: The Nothing at Stake problem}{20}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}No penalties = No canonicalization}{20}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Example: The 1\% attacker}{21}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}The Tragedy of the Commons}{21}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Simulating the "wrong choice is costly"}{21}{subsection.5.3.4}%
+\contentsline {section}{\numberline {5.4}Wealth Inequality and the Gini Coefficient}{22}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Miner's Extractable Value (MEV)}{22}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Basic on-chain DeX based arbitrage}{22}{subsection.5.5.1}%
+\contentsline {section}{\numberline {5.6}The ever growing state, state expiry}{22}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Rebuilding the chain / Chain Derivation}{22}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Supporting a different virtual machine}{22}{section.5.8}%
 \contentsline {subsubsection}{Arbitrum Stylus}{23}{section*.2}%
 \contentsline {subsubsection}{R55-Eth}{23}{section*.3}%
 \contentsline {chapter}{\numberline {6}Layer 2 Scaling Solutions}{25}{chapter.6}%
