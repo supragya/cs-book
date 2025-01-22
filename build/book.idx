@@ -1,5 +1,6 @@
-\indexentry{FLP Impossibility Theorem|hyperpage}{15}
-\indexentry{Lamport Clocks|hyperpage}{15}
-\indexentry{Partial Order|hyperpage}{15}
-\indexentry{asynchronous model|hyperpage}{16}
-\indexentry{Message Buffer|hyperpage}{16}
+\indexentry{State Machine Replication|hyperpage}{11}
+\indexentry{FLP Impossibility Theorem|hyperpage}{11}
+\indexentry{Lamport Clocks|hyperpage}{11}
+\indexentry{Partial Order|hyperpage}{11}
+\indexentry{asynchronous model|hyperpage}{12}
+\indexentry{Message Buffer|hyperpage}{12}

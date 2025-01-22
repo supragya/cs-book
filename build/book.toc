@@ -9,61 +9,63 @@
 \contentsline {section}{\numberline {1.7}Proof generation with pre-compiles}{7}{section.1.7}%
 \contentsline {chapter}{\numberline {2}Version Control using Git}{9}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Using Git via SSH}{9}{section.2.1}%
-\contentsline {chapter}{\numberline {3}Ethereum}{11}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Legacy Ethereum (Ethereum 1.0)}{11}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Accessing Historical Block Hashes: EIP: 2935}{11}{subsection.3.1.1}%
-\contentsline {section}{\numberline {3.2}Ethereum after Merge (Ethereum 2.0)}{11}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}The Proof-of-Stake Block}{11}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Finality Metalayer: Casper FFG}{12}{subsection.3.2.2}%
-\contentsline {chapter}{\numberline {4}Solana}{13}{chapter.4}%
-\contentsline {section}{\numberline {4.1}The Transaction Processing Unit}{13}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Proof of History: VDF based transaction ordering}{13}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Entries, Slots, Bank}{13}{section.4.3}%
-\contentsline {chapter}{\numberline {5}General Concepts in Adversarial Distributed Systems}{15}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Dolev-Strong: Byzantine-broadcast, SMR, in a synchronous world}{15}{section.5.1}%
-\contentsline {section}{\numberline {5.2}FLP: Can't handle even 1 faulty node in asynchronous world}{15}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}The FLP Impossibility Claim}{15}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Key concepts}{16}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Consensus, System Configurations, Events and Schedules}{17}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Lemma 1: Disjoint Schedules Commute}{17}{subsection.5.2.4}%
-\contentsline {subsection}{\numberline {5.2.5}Lemma 2: There exists a bi-valent initial configuration}{17}{subsection.5.2.5}%
-\contentsline {subsection}{\numberline {5.2.6}Lemma 3: All roads lead to indecision}{18}{subsection.5.2.6}%
-\contentsline {subsection}{\numberline {5.2.7}Proving the theorem}{19}{subsection.5.2.7}%
-\contentsline {subsection}{\numberline {5.2.8}Conclusion}{20}{subsection.5.2.8}%
-\contentsline {section}{\numberline {5.3}Proof of Stake: The Nothing at Stake problem}{20}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}No penalties = No canonicalization}{20}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Example: The 1\% attacker}{21}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}The Tragedy of the Commons}{21}{subsection.5.3.3}%
-\contentsline {subsection}{\numberline {5.3.4}Simulating the "wrong choice is costly"}{21}{subsection.5.3.4}%
-\contentsline {section}{\numberline {5.4}Wealth Inequality and the Gini Coefficient}{22}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Miner's Extractable Value (MEV)}{22}{section.5.5}%
-\contentsline {subsection}{\numberline {5.5.1}Basic on-chain DeX based arbitrage}{22}{subsection.5.5.1}%
-\contentsline {section}{\numberline {5.6}The ever growing state, state expiry}{22}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Rebuilding the chain / Chain Derivation}{22}{section.5.7}%
-\contentsline {section}{\numberline {5.8}Supporting a different virtual machine}{22}{section.5.8}%
-\contentsline {subsubsection}{Arbitrum Stylus}{23}{section*.2}%
-\contentsline {subsubsection}{R55-Eth}{23}{section*.3}%
-\contentsline {chapter}{\numberline {6}Layer 2 Scaling Solutions}{25}{chapter.6}%
-\contentsline {section}{\numberline {6.1}General classification}{25}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Where sits the enourmous data?}{25}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Plasma: Each one save one}{26}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Operator misbehaviors and exits}{26}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Plasma Cash}{26}{subsection.6.3.2}%
-\contentsline {section}{\numberline {6.4}Bottlenecked by DA}{26}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Rollups and levels of confirmation}{27}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Faster Layer 2 Interoperability}{27}{section.6.6}%
-\contentsline {chapter}{\numberline {7}Golang}{29}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Rust}{31}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Iterators}{31}{section.8.1}%
-\contentsline {chapter}{\numberline {9}Binary Search}{33}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Basic: Minimize $k$ such that $f(k)$ is true}{33}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {feasible(x) -> bool}}}}{33}{section.9.2}%
-\contentsline {subsection}{\numberline {9.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{33}{subsection.9.2.1}%
-\contentsline {subsection}{\numberline {9.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{34}{subsection.9.2.2}%
-\contentsline {subsection}{\numberline {9.2.3}Problem [SplitM]: Split array into $m$ subarrays}{34}{subsection.9.2.3}%
-\contentsline {section}{\numberline {9.3}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {enough(x) -> bool}}}}{35}{section.9.3}%
-\contentsline {subsection}{\numberline {9.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{35}{subsection.9.3.1}%
-\contentsline {chapter}{\numberline {10}Dynamic Programming}{37}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Memoization}{37}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Most important subproblems}{38}{section.10.2}%
+\contentsline {chapter}{\numberline {3}Time, Synchrony and Node Failures}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}State Machine Replication}{11}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Dolev-Strong: Byzantine-broadcast, SMR, in a synchronous world}{11}{section.3.2}%
+\contentsline {section}{\numberline {3.3}FLP: Can't handle even 1 faulty node in asynchronous world}{11}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}The FLP Impossibility Claim}{12}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Key concepts}{12}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Consensus, System Configurations, Events and Schedules}{13}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Lemma 1: Disjoint Schedules Commute}{13}{subsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.3.5}Lemma 2: There exists a bi-valent initial configuration}{14}{subsection.3.3.5}%
+\contentsline {subsection}{\numberline {3.3.6}Lemma 3: All roads lead to indecision}{14}{subsection.3.3.6}%
+\contentsline {subsection}{\numberline {3.3.7}Proving the theorem}{15}{subsection.3.3.7}%
+\contentsline {subsection}{\numberline {3.3.8}Conclusion}{16}{subsection.3.3.8}%
+\contentsline {chapter}{\numberline {4}Ethereum}{17}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Legacy Ethereum (Ethereum 1.0)}{17}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Accessing Historical Block Hashes: EIP: 2935}{17}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Ethereum after Merge (Ethereum 2.0)}{17}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}The Proof-of-Stake Block}{17}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Finality Metalayer: Casper FFG}{18}{subsection.4.2.2}%
+\contentsline {chapter}{\numberline {5}Solana}{19}{chapter.5}%
+\contentsline {section}{\numberline {5.1}The Transaction Processing Unit}{19}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Proof of History: VDF based transaction ordering}{19}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Entries, Slots, Bank}{19}{section.5.3}%
+\contentsline {chapter}{\numberline {6}General Concepts in Adversarial Distributed Systems}{21}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Proof of Stake: The Nothing at Stake problem}{21}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}No penalties = No canonicalization}{21}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Example: The 1\% attacker}{22}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}The Tragedy of the Commons}{22}{subsection.6.1.3}%
+\contentsline {subsection}{\numberline {6.1.4}Simulating the "wrong choice is costly"}{22}{subsection.6.1.4}%
+\contentsline {section}{\numberline {6.2}Wealth Inequality and the Gini Coefficient}{22}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Miner's Extractable Value (MEV)}{23}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Basic on-chain DeX based arbitrage}{23}{subsection.6.3.1}%
+\contentsline {section}{\numberline {6.4}The ever growing state, state expiry}{23}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Rebuilding the chain / Chain Derivation}{23}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Supporting a different virtual machine}{23}{section.6.6}%
+\contentsline {subsubsection}{Arbitrum Stylus}{24}{section*.2}%
+\contentsline {subsubsection}{R55-Eth}{24}{section*.3}%
+\contentsline {chapter}{\numberline {7}Layer 2 Scaling Solutions}{25}{chapter.7}%
+\contentsline {section}{\numberline {7.1}General classification}{25}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Where sits the enourmous data?}{25}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Plasma: Each one save one}{26}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Operator misbehaviors and exits}{26}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}Plasma Cash}{26}{subsection.7.3.2}%
+\contentsline {section}{\numberline {7.4}Bottlenecked by DA}{26}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Rollups and levels of confirmation}{27}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Faster Layer 2 Interoperability}{27}{section.7.6}%
+\contentsline {chapter}{\numberline {8}Golang}{29}{chapter.8}%
+\contentsline {chapter}{\numberline {9}Rust}{31}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Iterators}{31}{section.9.1}%
+\contentsline {chapter}{\numberline {10}Binary Search}{33}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Basic: Minimize $k$ such that $f(k)$ is true}{33}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {feasible(x) -> bool}}}}{33}{section.10.2}%
+\contentsline {subsection}{\numberline {10.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{33}{subsection.10.2.1}%
+\contentsline {subsection}{\numberline {10.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{34}{subsection.10.2.2}%
+\contentsline {subsection}{\numberline {10.2.3}Problem [SplitM]: Split array into $m$ subarrays}{34}{subsection.10.2.3}%
+\contentsline {section}{\numberline {10.3}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {enough(x) -> bool}}}}{35}{section.10.3}%
+\contentsline {subsection}{\numberline {10.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{35}{subsection.10.3.1}%
+\contentsline {chapter}{\numberline {11}Dynamic Programming}{37}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Memoization}{37}{section.11.1}%
+\contentsline {section}{\numberline {11.2}Most important subproblems}{38}{section.11.2}%
 \contentsline {chapter}{Alphabetical Index}{39}{section*.4}%

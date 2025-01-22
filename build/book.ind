@@ -1,21 +1,25 @@
 \begin{theindex}
 
-  \item asynchronous model, \hyperpage{16}
+  \item asynchronous model, \hyperpage{12}
 
   \indexspace
 
-  \item FLP Impossibility Theorem, \hyperpage{15}
+  \item FLP Impossibility Theorem, \hyperpage{11}
 
   \indexspace
 
-  \item Lamport Clocks, \hyperpage{15}
+  \item Lamport Clocks, \hyperpage{11}
 
   \indexspace
 
-  \item Message Buffer, \hyperpage{16}
+  \item Message Buffer, \hyperpage{12}
 
   \indexspace
 
-  \item Partial Order, \hyperpage{15}
+  \item Partial Order, \hyperpage{11}
+
+  \indexspace
+
+  \item State Machine Replication, \hyperpage{11}
 
 \end{theindex}
