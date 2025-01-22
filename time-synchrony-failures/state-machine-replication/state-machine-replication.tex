@@ -1,3 +1,8 @@
 \section{State Machine Replication}
 
-Let's motivate the \textbf{State Machine Replication} \index{State Machine Replication} problem by imagining a distributed system that needs to maintain a consistent state (state as in, in finite / infinite automata) across all nodes. One may want to do this simply to improve uptime. If the state is replicated across different nodes, then if one node goes down, the system can still function.
+The \textbf{State Machine Replication} problem is to provide a solution that presents a fault-tolerant distributed system where nodes within have the ability to replicate the local state they hold between themselves. The classic examples here would be database replicas.
+
+To solve for the SMR problem, we need to argue about the following things:
+\begin{itemize}
+    \item \textbf{Node honesty}: What kind of 
+\end{itemize}

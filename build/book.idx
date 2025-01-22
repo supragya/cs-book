@@ -1,6 +1,13 @@
-\indexentry{State Machine Replication|hyperpage}{11}
-\indexentry{FLP Impossibility Theorem|hyperpage}{11}
-\indexentry{Lamport Clocks|hyperpage}{11}
-\indexentry{Partial Order|hyperpage}{11}
-\indexentry{asynchronous model|hyperpage}{12}
-\indexentry{Message Buffer|hyperpage}{12}
+\indexentry{Strong consistency|hyperpage}{12}
+\indexentry{Consistency|hyperpage}{12}
+\indexentry{Eventual Consistency|hyperpage}{12}
+\indexentry{Strong liveness|hyperpage}{12}
+\indexentry{Liveness|hyperpage}{12}
+\indexentry{Eventual Liveness|hyperpage}{12}
+\indexentry{Node honesty|hyperpage}{12}
+\indexentry{Consensus|hyperpage}{12}
+\indexentry{FLP Impossibility Theorem|hyperpage}{13}
+\indexentry{Lamport Clocks|hyperpage}{13}
+\indexentry{Partial Order|hyperpage}{13}
+\indexentry{asynchronous model|hyperpage}{14}
+\indexentry{Message Buffer|hyperpage}{14}

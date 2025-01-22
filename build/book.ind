@@ -1,25 +1,41 @@
 \begin{theindex}
 
-  \item asynchronous model, \hyperpage{12}
+  \item asynchronous model, \hyperpage{14}
 
   \indexspace
 
-  \item FLP Impossibility Theorem, \hyperpage{11}
+  \item Consensus, \hyperpage{12}
+  \item Consistency, \hyperpage{12}
 
   \indexspace
 
-  \item Lamport Clocks, \hyperpage{11}
+  \item Eventual Consistency, \hyperpage{12}
+  \item Eventual Liveness, \hyperpage{12}
 
   \indexspace
 
-  \item Message Buffer, \hyperpage{12}
+  \item FLP Impossibility Theorem, \hyperpage{13}
 
   \indexspace
 
-  \item Partial Order, \hyperpage{11}
+  \item Lamport Clocks, \hyperpage{13}
+  \item Liveness, \hyperpage{12}
 
   \indexspace
 
-  \item State Machine Replication, \hyperpage{11}
+  \item Message Buffer, \hyperpage{14}
+
+  \indexspace
+
+  \item Node honesty, \hyperpage{12}
+
+  \indexspace
+
+  \item Partial Order, \hyperpage{13}
+
+  \indexspace
+
+  \item Strong consistency, \hyperpage{12}
+  \item Strong liveness, \hyperpage{12}
 
 \end{theindex}

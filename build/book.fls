@@ -1,8 +1,8 @@
-PWD /Users/ecluser/Projects/supragya/csbook
+PWD /Users/supragyaraj/Projects/supragya/cs-book
 INPUT /usr/local/texlive/2024/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Users/ecluser/Projects/supragya/csbook/book.tex
+INPUT /Users/supragyaraj/Projects/supragya/cs-book/book.tex
 OUTPUT build/book.log
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/book.cls
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/book.cls
@@ -375,6 +375,16 @@ INPUT ./time-synchrony-failures/tsf.tex
 INPUT ./time-synchrony-failures/tsf.tex
 INPUT ./time-synchrony-failures/tsf.tex
 INPUT ./time-synchrony-failures/tsf.tex
+INPUT ./time-synchrony-failures/./key-definitions/key-definitions.tex
+INPUT ./time-synchrony-failures/./key-definitions/key-definitions.tex
+INPUT ./time-synchrony-failures/./key-definitions/key-definitions.tex
+INPUT ./time-synchrony-failures/./key-definitions/key-definitions.tex
+INPUT ./time-synchrony-failures/key-definitions/assets/5-node-distributed-system.png
+INPUT ./time-synchrony-failures/key-definitions/assets/5-node-distributed-system.png
+INPUT time-synchrony-failures/key-definitions/assets/5-node-distributed-system.png
+INPUT ./time-synchrony-failures/key-definitions/assets/5-node-distributed-system.png
+INPUT ./time-synchrony-failures/key-definitions/assets/5-node-distributed-system.png
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecsi1000.tfm
 INPUT ./time-synchrony-failures/./state-machine-replication/state-machine-replication.tex
 INPUT ./time-synchrony-failures/./state-machine-replication/state-machine-replication.tex
 INPUT ./time-synchrony-failures/./state-machine-replication/state-machine-replication.tex
@@ -388,7 +398,6 @@ INPUT ./time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-wr
 INPUT time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-write.png
 INPUT ./time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-write.png
 INPUT ./time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-write.png
-INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecsi1000.tfm
 INPUT ./time-synchrony-failures/flp-impossibility/assets/flp-impossibility-lemma1.png
 INPUT ./time-synchrony-failures/flp-impossibility/assets/flp-impossibility-lemma1.png
 INPUT time-synchrony-failures/flp-impossibility/assets/flp-impossibility-lemma1.png
