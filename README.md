@@ -5,3 +5,7 @@ Find latest MacTex distribution for download [here](https://www.tug.org/mactex/m
 ```sh
 brew install --cask mactex
 ```
+Change ownership of TexLive using:
+```
+sudo chown -R <username> /usr/local/texlive 
+```
