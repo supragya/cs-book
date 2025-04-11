@@ -1,0 +1,130 @@
+
+\chapter{Solidity}
+
+\section{The memory model}
+
+\subsection{\code{calldata} vs \code{memory} vs \code{storage}}
+\label{sec:soliditity-memory-model}
+Working with solidity requires us to think deeply about the memory model. Three data locations exist \footnote{ Alchemy doc explains with an example: \href{https://docs.alchemy.com/docs/what-is-the-difference-between-memory-and-calldata-in-solidity}{https://docs.alchemy.com/docs/what-is-the-difference-between-memory-and-calldata-in-solidity} 
+}:
+\begin{itemize}
+    \item \code{calldata}: This is a read-only area where function arguments are stored. It is immutable and cannot be modified.
+    \item \code{memory}: This is a temporary area where data can be stored and modified and available during the execution of the call. It is erased between function calls and does not persist on the blockchain.
+    \item \code{storage}: This is a persistent storage area on the blockchain.
+\end{itemize}
+
+\section{Function and their modifiers}
+
+\subsection{Visibility Modifiers: \code{private}, \code{internal}, \code{external}, \code{public}}
+Solidity has four visibility modifiers for functions\footnote{This youtube video has a good explanation: \href{https://www.youtube.com/watch?v=KTEp9xfu2tc}{https://www.youtube.com/watch?v=KTEp9xfu2tc}}. In increasing order of access they are (mnemonic \textbf{PIEP}):
+
+\begin{itemize}
+    \item \code{private}: Accessible by functions in the \textbf{same contract}, not even derived contracts.
+    \item \code{internal}: Accessible by functions in the same contract \textbf{and derived contracts}.
+    \item \code{external}: Accessible by functions from \textbf{other contracts}, but not internally (no call from the same contract).
+    \item \code{public}: Accessible by functions everywhere.
+\end{itemize}
+
+The general rule of thumb should be applied. Give each function the least amount of accessibility as possible.
+
+\subsection{Function Modifiers for preconditions and postconditions}
+Solidity provides us with a way to modify the behavior of functions using "function modifiers". Modifiers are often used to add preconditions or postconditions to functions, or to restrict access to certain functions.
+
+The following is an example of a function modifier:
+
+\begin{lstlisting}[language=Solidity, caption=Solidity isOwner modifier]
+modifier onlyOwner {
+    require(msg.sender == owner);
+    _;
+}
+\end{lstlisting}
+
+Here, the \code{onlyOwner} modifier checks if the sender of the message is the owner of the contract. The \code{\_;} statement is a mandatory placeholder for the function body that uses this modifier. A good explaination of this can be found \href{https://www.freecodecamp.org/news/what-are-solidity-modifiers/}{here from freecodecamp}.
+
+\label{lst:contract-with-modifiers}
+\begin{lstlisting}[language=Solidity, caption=Contract with modifiers]
+contract BaseContract{
+    address owner;
+
+    modifier onlyAllowedUser(address user) {
+        require(owner == user);
+        _;
+    }
+}
+
+contract DerivedContract is BaseContract {
+    function updateData(
+        bytes32 newData, 
+        address user
+    ) onlyAllowedUser(user) public {
+        // function body
+    }
+}
+\end{lstlisting}
+
+\subsection{Special modifiers: \code{view}, \code{pure} and \code{payable}}
+\label{sec:special-modifiers}
+In Solidity, functions can have special modifiers like pure, view, and payable that indicate their behavior, especially regarding how they interact with the blockchain's state or handle Ether.
+
+\begin{itemize}
+    \item \code{view}: This modifier indicates that the function does not modify the state of the contract. It can read the state but cannot change it. It is used for functions that only return values based on the current state of the contract.
+    \item \code{pure}: This modifier indicates that the function does not read or modify the state of the contract. It can only use its input parameters and return values. It is used for functions that perform calculations or operations without relying on the contract's state.
+    \item \code{payable}: This modifier indicates that the function can accept Ether. It allows the function to receive and process Ether sent along with the transaction. It is used for functions that involve financial transactions or require payment.
+\end{itemize}
+
+
+\begin{Exercise}[title={Solidity Basics}]
+    \begin{enumerate}
+        \item Explain the difference between \code{calldata}, \code{memory} and \code{storage} in Solidity.
+        \item Assume we deploy the contract at \ref{lst:contract-with-modifiers} on the Ethereum blockchain, without any parameters while deploying. What will be the value of \code{owner} in the contract (BaseContract)?
+        \item Write a solidity contract that gives you the N-th Fibonacci number.
+        \item Differentiate between \code{pure}, \code{view} and \code{payable} functions in Solidity.
+    \end{enumerate}
+\end{Exercise}
+\begin{Answer}
+    \begin{enumerate}
+        \item Refer to \ref{sec:soliditity-memory-model}
+        \item The value would be the zero address. \code{0x0000000000\_0000000000\_0000000000\_0000000000}
+        \item
+            \begin{lstlisting}[language=Solidity, caption=Fibonacci Contract]
+contract FibonacciContract {
+    uint256 f0 = 0;
+    uint256 f1 = 1;
+
+    function getNthFibonacci(
+        uint256 n
+    ) public 
+    view
+    returns (uint256) {
+        if (n == 0) {
+            return f0;
+        } else if (n == 1) {
+            return f1;
+        }
+
+        uint256 a = f0;
+        uint256 b = f1;
+
+        for(uint256 i = 1; i < n; i++) {
+            uint256 added = a + b;
+            a = b;
+            b = added;
+        }
+
+        return b;
+    }
+}
+            \end{lstlisting}
+        \item Refer \ref{sec:special-modifiers} for the definitions.
+    \end{enumerate}
+\end{Answer}
+
+
+
+\section {The EIP-721 Standard: Non-Fungible Tokens (NFTs)}
+
+Modifier can take in arguments as well and can be borrowed from other contracts. Take for example this:
+
+
+\section{Exercise Solutions}
+\shipoutAnswer

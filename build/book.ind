@@ -1,41 +1,55 @@
 \begin{theindex}
 
-  \item asynchronous model, \hyperpage{14}
+  \item asynchronous model, \hyperpage{16}
 
   \indexspace
 
-  \item Consensus, \hyperpage{12}
-  \item Consistency, \hyperpage{12}
+  \item Byzantine fault, \hyperpage{15}
 
   \indexspace
 
-  \item Eventual Consistency, \hyperpage{12}
-  \item Eventual Liveness, \hyperpage{12}
+  \item Consensus, \hyperpage{15}
+  \item Consistency, \hyperpage{14}
+  \item Crash fault, \hyperpage{15}
 
   \indexspace
 
-  \item FLP Impossibility Theorem, \hyperpage{13}
+  \item Eventual Consistency, \hyperpage{14}
+  \item Eventual Liveness, \hyperpage{14}
 
   \indexspace
 
-  \item Lamport Clocks, \hyperpage{13}
-  \item Liveness, \hyperpage{12}
+  \item Fail Stop, \hyperpage{15}
+  \item FLP Impossibility Theorem, \hyperpage{16}
 
   \indexspace
 
-  \item Message Buffer, \hyperpage{14}
+  \item Lamport Clocks, \hyperpage{16}
+  \item Liveness, \hyperpage{14}
 
   \indexspace
 
-  \item Node honesty, \hyperpage{12}
+  \item Message Buffer, \hyperpage{17}
 
   \indexspace
 
-  \item Partial Order, \hyperpage{13}
+  \item Node honesty, \hyperpage{14}
 
   \indexspace
 
-  \item Strong consistency, \hyperpage{12}
-  \item Strong liveness, \hyperpage{12}
+  \item Omission fault, \hyperpage{15}
+
+  \indexspace
+
+  \item Partial Order, \hyperpage{16}
+
+  \indexspace
+
+  \item Strong consistency, \hyperpage{14}
+  \item Strong liveness, \hyperpage{14}
+
+  \indexspace
+
+  \item True crash fault, \hyperpage{15}
 
 \end{theindex}

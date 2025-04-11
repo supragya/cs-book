@@ -28,7 +28,7 @@ Of course, these are strong claims, and we need to quantify the amount of consis
 
 To elaborate on the above, let's take the following example:
 
-A distributed system $S$ consists of 3 nodes $N = {n_0, n_1, n_2}$. The client $C$ can interact with any one of the three nodes in $N$. Assume the local ledgers of all three nodes are empty, as in:
+A distributed system $S$ consists of 3 nodes $N = \{n_0, n_1, n_2\}$. The client $C$ can interact with any one of the three nodes in $N$. Assume the local ledgers of all three nodes are empty, as in:
 $$
 n_0: {\verb|local view| = [\phi], \verb|known unprocessed txs| = \{\}}
 $$
@@ -65,6 +65,14 @@ Here, the movement of $t$ from "known unprocessed txs" to the "local view" of al
 \subsection{Node honesty}
 \index{Node honesty}
 \label{subsection:node-honesty}
+In distributed systems, we generally deal with different kind of node faults. We call a node "faulty" when it deviates intentionally or unintentionally from the regular, online, honest participation in the network.
+
+The following are the different kind of faults categorized:
+\begin{itemize}
+    \item \textbf{Crash fault}: \index{Crash fault} When some node $n_i$ behaves honestly from some origin time $t_0$ to some aribitrary time $t_c$, after which it crashes / goes offline. This can be further subdivided into nodes that present a \textbf{Fail-stop} \index{Fail Stop} failure and nodes that present a \textbf{True crash fault} \index{True crash fault}. Nodes that fail-stop halts, notifies everyone of its death and does not respond to any further messages. The nodes that experience true crash fault do not notify on the other hand. Evidently, true crash faults are harder to detect and manage as the rest of the network has to infer through indirect means the halt of the node.
+    \item \textbf{Omission fault}: \index{Omission fault} Omission fault is when a node $n_i$ does not present required messages that it should have presented in an ideal setting to the rest of the network. This could be acknowledgements, votes or any other message. It is to be noted that omission of a message may be due to unreliability in the underlying network instead of a malice at the node's end.
+    \item \textbf{Byzantine fault}: \index{Byzantine fault} Byzantine fault is where a node $n_i$ can behave arbitrarily, i.e. we can assume nothing about the node's behavior. Some of the actions exercised by such node could be: behaving like an honest node for some time range, behaving like a crashed node for some other time range, omitting messages, sending deceptive messages in hopes of disrupting the consensus. It should be noted however that we still assume the cryptography is not broken, as breaking that would mean in a system secured by public-key cryptography, the byzantine node can imitate any other node with no restrictions.
+\end{itemize}
 
 \subsection{Network Synchrony}
 
@@ -79,7 +87,15 @@ Consensus in distributed systems is defined as any algorithm $A$ that satisfies 
     \item \textbf{Validity}: All non-faulty processes decide on a value $v*$.
 \end{itemize}
 
-It is important to understand that all the above properties are for "non-faulty" processes, a.k.a. honest processes. See \ref{subsection:node-honesty} for definition of node faults.
+It is important to understand that all the above properties are for "non-faulty" processes, a.k.a. only the honest processes. See \ref{subsection:node-honesty} for definition of node faults.
+
+It is also worthwhile noting that aiming for any 2 out of the above 3 properties does not present us with any useful protocol. This can be argued as below:
+
+If we only aim for \emph{termination and agreement}, all the nodes at each step may decide on some hardcoded value $v' \in V$.
+
+If we only aim for \emph{agreement and validity}, all the nodes at each step will try to convince every other node to accept their value $v_i$ and never respond to other's messages. The consensus halts when all nodes are convinced. Unless all nodes started with the same value $v$, the consensus never halts.
+
+If we only aim for \emph{validity and termination}, all the nodes at each step will decide on their own local $v_i$.
 
 \subsection{Permissioning}
 
