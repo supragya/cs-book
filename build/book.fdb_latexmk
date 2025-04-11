@@ -1,11 +1,11 @@
 # Fdb version 4
-["makeindex build/book.idx"] 1744379191.98223 "build/book.idx" "build/book.ind" "build/book" 1744379412.45662 0
-  "build/book.idx" 1744379412.29154 763 2fe6e758c5516b806db2937d2ca6b0d2 "pdflatex"
+["makeindex build/book.idx"] 1744387674.56279 "build/book.idx" "build/book.ind" "build/book" 1744387884.41412 0
+  "build/book.idx" 1744387884.24666 763 2fe6e758c5516b806db2937d2ca6b0d2 "pdflatex"
   (generated)
   "build/book.ilg"
   "build/book.ind"
   (rewritten before read)
-["pdflatex"] 1744379410.25897 "/Users/supragyaraj/Projects/supragya/cs-book/book.tex" "build/book.pdf" "book" 1744379412.45674 0
+["pdflatex"] 1744387882.34055 "/Users/supragyaraj/Projects/supragya/cs-book/book.tex" "build/book.pdf" "book" 1744387884.41421 0
   "./cover.tex" 1737534910.03832 765 97f085dd6b46a6b25358f0e2818f77af ""
   "/Users/supragyaraj/Projects/supragya/cs-book/book.tex" 1744373076.95285 1432 0a3d4c44a4126210b5a0b600de1b4138 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
@@ -245,10 +245,10 @@
   "adverserial-distributed-systems/solana/assets/blockchain-trilemma.png" 1737534910.02793 621425 9afcbd035c65b4c10d53c73eff0189ea ""
   "book.tex" 1744373076.95285 1432 0a3d4c44a4126210b5a0b600de1b4138 ""
   "bookstyle.sty" 1737534910.02828 1845 71dd97eab32fed0991ebd4e931496620 ""
-  "build/book.aux" 1744379412.29768 17988 505c1275061195aa882a7e26799eeb3d "pdflatex"
-  "build/book.ind" 1744379192.08311 919 7950e61cb054e04628def99d09ee3907 "makeindex build/book.idx"
-  "build/book.out" 1744379412.29919 19581 47750495e3b974aee280fe27ae73d82a "pdflatex"
-  "build/book.toc" 1744379412.2994 9060 1ed8d483085899da699be1592d0f7cb2 "pdflatex"
+  "build/book.aux" 1744387884.25408 18681 c3fb3dec2d31ab96f923aa6c1fdd3404 "pdflatex"
+  "build/book.ind" 1744387674.64934 919 7950e61cb054e04628def99d09ee3907 "makeindex build/book.idx"
+  "build/book.out" 1744387884.25561 19827 90b6b12caccc1eec4ecddce50b17014c "pdflatex"
+  "build/book.toc" 1744387884.25582 9338 49e63bdc9e1e8637fb9071a7777126d2 "pdflatex"
   "cover.tex" 1737534910.03832 765 97f085dd6b46a6b25358f0e2818f77af ""
   "listings-rust.sty" 1737534910.03841 12270 7c444cbfed7aa42b3ddcd0885e4a539c ""
   "listings-solidity.sty" 1744373033.83626 2418 9967218d95ed64b7d9a691f72fd55fe3 ""
@@ -261,7 +261,7 @@
   "problem-solving/problemsolving.tex" 1737534910.03891 79 d2e3bca964e645f7295c48098bbb59d0 ""
   "programming-languages/./golang/golang.tex" 1737534910.03905 34 ec324c1c5ea194540740a759b594894c ""
   "programming-languages/./rust/rust.tex" 1737534910.03919 137 3f2c7d3e5eed1b145d1f35b48ddfd174 ""
-  "programming-languages/./solidity/solidity.tex" 1744379407.95437 6025 fc22242e3e2ab9fbdc62b6e6e55df4a9 ""
+  "programming-languages/./solidity/solidity.tex" 1744387882.1516 8398 ef8c76ceefe1f48321c8ff0bc13b5444 ""
   "programming-languages/programming-languages.tex" 1744245133.94343 92 476ee367d52b78a312d37a49d58c6637 ""
   "time-synchrony-failures/./flp-impossibility/flp-impossibility.tex" 1737534910.04005 19488 d37fe56514b41b9a29b6ec72b2c94d0f ""
   "time-synchrony-failures/./key-definitions/key-definitions.tex" 1737556387.23007 9748 01dc636166f968858ffa81775df60d02 ""

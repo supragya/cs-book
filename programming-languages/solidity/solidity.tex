@@ -3,7 +3,7 @@
 
 \section{The memory model}
 
-\subsection{\code{calldata} vs \code{memory} vs \code{storage}}
+\subsection{Memory types: \code{calldata} vs \code{memory} vs \code{storage}}
 \label{sec:soliditity-memory-model}
 Working with solidity requires us to think deeply about the memory model. Three data locations exist \footnote{ Alchemy doc explains with an example: \href{https://docs.alchemy.com/docs/what-is-the-difference-between-memory-and-calldata-in-solidity}{https://docs.alchemy.com/docs/what-is-the-difference-between-memory-and-calldata-in-solidity} 
 }:
@@ -12,6 +12,38 @@ Working with solidity requires us to think deeply about the memory model. Three 
     \item \code{memory}: This is a temporary area where data can be stored and modified and available during the execution of the call. It is erased between function calls and does not persist on the blockchain.
     \item \code{storage}: This is a persistent storage area on the blockchain.
 \end{itemize}
+
+\subsection{The on-chain storage}
+Each contract can only store data in its own storage \footnote{Alchemy doc on storage: \href{https://docs.alchemy.com/docs/smart-contract-storage-layout}{https://docs.alchemy.com/docs/smart-contract-storage-layout}}. Ethereum gives each contract $2^{256}$ slots of storage, where each storage is 32 bytes. Slots are contiguous and are referenced by indexes, starting at 0 and ending at $2^{256}$. All slots are initialized to a value of 0. Each contract's storage area has more slots than all the stars in the universe.
+
+\subsubsection{Static sized object representation}
+Every time we declare a struct, it follows the same rules of representation as C / C++ / Rust.
+For example, the following contract stores the struct as follows:
+
+\begin{lstlisting}[language=Solidity, caption=In-storage representation]
+contract UnpackedRepresentation {
+    bool boolVal;     // 1 bit of data, represented in slot 0
+    uint256 largeVal; // 32 bytes of data, represented in slot 1
+    uint8 smallVal;   // 1 byte of data, represented in slot 2
+}
+\end{lstlisting}
+
+A better alternative of this could have been:
+\begin{lstlisting}[language=Solidity, caption=In-storage representation(better)]
+contract PackedRepresentation {
+    bool boolVal;     // 1 bit of data, represented in slot 0
+    uint8 smallVal;   // 1 byte of data, represented in slot 0 (alongside boolVal)
+    uint256 largeVal; // 32 bytes of data, represented in slot 1
+}
+\end{lstlisting}
+
+\subsubsection{Dynamically sized object representation}
+Two primary dynamically sized objects exist in solidity: Dynamically sized arrays and Mappings. For each, the following is done:
+\begin{enumerate}
+    \item Similar to static sized objects, a slot is chosen for the object, say slot 3, this is the "marker slot" and holds only the length of the array or the mapping.
+    \item The first element of the array is stored at \code{keccak256(3)+0}. The second element is stored at \code{keccak256(3)+1} and so on.
+    \item In case of mappings, the mapping of some key $k$, in a mapping whose marker slot is $m$, is stored at \code{keccak256(h(k), m)}. The function $h$ is dependent on the type of the key. For example, if the key is a string, then $h$ is the key value unpadded. If the key is an integer, then $h$ is the identity function padded to nearest 32 bytes.
+\end{enumerate}
 
 \section{Function and their modifiers}
 

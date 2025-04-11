@@ -68,13 +68,16 @@
 \contentsline {section}{\numberline {9.1}Iterators}{37}{section.9.1}%
 \contentsline {chapter}{\numberline {10}Solidity}{39}{chapter.10}%
 \contentsline {section}{\numberline {10.1}The memory model}{39}{section.10.1}%
-\contentsline {subsection}{\numberline {10.1.1}\colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {calldata}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {memory}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {storage}}}}{39}{subsection.10.1.1}%
-\contentsline {section}{\numberline {10.2}Function and their modifiers}{39}{section.10.2}%
-\contentsline {subsection}{\numberline {10.2.1}Visibility Modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {private}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {internal}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {external}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {public}}}}{39}{subsection.10.2.1}%
-\contentsline {subsection}{\numberline {10.2.2}Function Modifiers for preconditions and postconditions}{39}{subsection.10.2.2}%
-\contentsline {subsection}{\numberline {10.2.3}Special modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {view}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {pure}}} and \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {payable}}}}{40}{subsection.10.2.3}%
+\contentsline {subsection}{\numberline {10.1.1}Memory types: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {calldata}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {memory}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {storage}}}}{39}{subsection.10.1.1}%
+\contentsline {subsection}{\numberline {10.1.2}The on-chain storage}{39}{subsection.10.1.2}%
+\contentsline {subsubsection}{Static sized object representation}{39}{section*.4}%
+\contentsline {subsubsection}{Dynamically sized object representation}{40}{section*.5}%
+\contentsline {section}{\numberline {10.2}Function and their modifiers}{40}{section.10.2}%
+\contentsline {subsection}{\numberline {10.2.1}Visibility Modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {private}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {internal}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {external}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {public}}}}{40}{subsection.10.2.1}%
+\contentsline {subsection}{\numberline {10.2.2}Function Modifiers for preconditions and postconditions}{40}{subsection.10.2.2}%
+\contentsline {subsection}{\numberline {10.2.3}Special modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {view}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {pure}}} and \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {payable}}}}{41}{subsection.10.2.3}%
 \contentsline {section}{\numberline {10.3}The EIP-721 Standard: Non-Fungible Tokens (NFTs)}{41}{section.10.3}%
-\contentsline {section}{\numberline {10.4}Exercise Solutions}{41}{section.10.4}%
+\contentsline {section}{\numberline {10.4}Exercise Solutions}{42}{section.10.4}%
 \contentsline {chapter}{\numberline {11}Binary Search}{43}{chapter.11}%
 \contentsline {section}{\numberline {11.1}Basic: Minimize $k$ such that $f(k)$ is true}{43}{section.11.1}%
 \contentsline {section}{\numberline {11.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {feasible(x) -> bool}}}}{43}{section.11.2}%
@@ -86,4 +89,4 @@
 \contentsline {chapter}{\numberline {12}Dynamic Programming}{47}{chapter.12}%
 \contentsline {section}{\numberline {12.1}Memoization}{47}{section.12.1}%
 \contentsline {section}{\numberline {12.2}Most important subproblems}{48}{section.12.2}%
-\contentsline {chapter}{Alphabetical Index}{49}{section*.4}%
+\contentsline {chapter}{Alphabetical Index}{49}{section*.6}%
