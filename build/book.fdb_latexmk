@@ -1,11 +1,11 @@
 # Fdb version 4
-["makeindex build/book.idx"] 1744387674.56279 "build/book.idx" "build/book.ind" "build/book" 1744387884.41412 0
-  "build/book.idx" 1744387884.24666 763 2fe6e758c5516b806db2937d2ca6b0d2 "pdflatex"
+["makeindex build/book.idx"] 1744432618.76903 "build/book.idx" "build/book.ind" "build/book" 1744550548.98383 0
+  "build/book.idx" 1744550548.79905 763 2fe6e758c5516b806db2937d2ca6b0d2 "pdflatex"
   (generated)
   "build/book.ilg"
   "build/book.ind"
   (rewritten before read)
-["pdflatex"] 1744387882.34055 "/Users/supragyaraj/Projects/supragya/cs-book/book.tex" "build/book.pdf" "book" 1744387884.41421 0
+["pdflatex"] 1744550546.55537 "/Users/supragyaraj/Projects/supragya/cs-book/book.tex" "build/book.pdf" "book" 1744550548.98392 0
   "./cover.tex" 1737534910.03832 765 97f085dd6b46a6b25358f0e2818f77af ""
   "/Users/supragyaraj/Projects/supragya/cs-book/book.tex" 1744373076.95285 1432 0a3d4c44a4126210b5a0b600de1b4138 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
@@ -230,7 +230,7 @@
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
   "adverserial-distributed-systems/./ethereum/./eip-2935.tex" 1737534910.02168 1786 013fae77c3c0c1b48c8b39ef24a5129b ""
   "adverserial-distributed-systems/./ethereum/./pos-block.tex" 1737534910.02182 1399 75aa7d01661763b6278a12c6c6f098c6 ""
-  "adverserial-distributed-systems/./ethereum/ethereum.tex" 1737534910.02175 310 ba8e5acfa4b072d1c63d8c74d9906412 ""
+  "adverserial-distributed-systems/./ethereum/ethereum.tex" 1744550546.303 8547 13283d6976784228af4f8deeee874137 ""
   "adverserial-distributed-systems/./general-problems/./mev.tex" 1737534910.0258 1647 79426f7a51e279974c78d1d08a5ac0ec ""
   "adverserial-distributed-systems/./general-problems/./pos-and-nothing-at-stake.tex" 1737534910.02589 5575 a99d7e4635dce6a990c9c796727126b9 ""
   "adverserial-distributed-systems/./general-problems/./wealth-inequality.tex" 1737534910.02595 689 8f5884788d45b69d6b0f5120beea1baf ""
@@ -240,15 +240,17 @@
   "adverserial-distributed-systems/./solana/solana.tex" 1737534910.02802 2247 3f1f6d5e159d1d56e308dcbc5f307c68 ""
   "adverserial-distributed-systems/adverserial.tex" 1737534910.02121 147 5b450ab696a9aa226ef2d5a58253990b ""
   "adverserial-distributed-systems/ethereum/assets/block-merge.png" 1737534910.02156 70647 2d50e099a33b013570054fe31f053b67 ""
+  "adverserial-distributed-systems/ethereum/assets/rlp-encoding-first-byte.png" 1744432235.12443 204547 20aa29d1eb487ecdee8db3b58565c272 ""
+  "adverserial-distributed-systems/ethereum/assets/wintermute-hack.png" 1744520096.27751 189863 f4efa3b9fd100f3e968521e6ed5bc86b ""
   "adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png" 1737534910.02504 1452455 90a7c5b82c6a5db5d7043908dc2bd81b ""
   "adverserial-distributed-systems/general-problems/assets/tragedy-of-the-commons.png" 1737534910.02563 423087 dccd23f763cfecc71a889645cd83cc4b ""
   "adverserial-distributed-systems/solana/assets/blockchain-trilemma.png" 1737534910.02793 621425 9afcbd035c65b4c10d53c73eff0189ea ""
   "book.tex" 1744373076.95285 1432 0a3d4c44a4126210b5a0b600de1b4138 ""
   "bookstyle.sty" 1737534910.02828 1845 71dd97eab32fed0991ebd4e931496620 ""
-  "build/book.aux" 1744387884.25408 18681 c3fb3dec2d31ab96f923aa6c1fdd3404 "pdflatex"
-  "build/book.ind" 1744387674.64934 919 7950e61cb054e04628def99d09ee3907 "makeindex build/book.idx"
-  "build/book.out" 1744387884.25561 19827 90b6b12caccc1eec4ecddce50b17014c "pdflatex"
-  "build/book.toc" 1744387884.25582 9338 49e63bdc9e1e8637fb9071a7777126d2 "pdflatex"
+  "build/book.aux" 1744550548.80724 20858 384759761ad79254784bce130890bfca "pdflatex"
+  "build/book.ind" 1744432618.85719 919 7950e61cb054e04628def99d09ee3907 "makeindex build/book.idx"
+  "build/book.out" 1744550548.809 21160 85b40f114d31bd525f138b55d22cd9e9 "pdflatex"
+  "build/book.toc" 1744550548.80922 10488 25dd4e30b3f51c2a89a8dcd80f8a4d36 "pdflatex"
   "cover.tex" 1737534910.03832 765 97f085dd6b46a6b25358f0e2818f77af ""
   "listings-rust.sty" 1737534910.03841 12270 7c444cbfed7aa42b3ddcd0885e4a539c ""
   "listings-solidity.sty" 1744373033.83626 2418 9967218d95ed64b7d9a691f72fd55fe3 ""
@@ -261,7 +263,7 @@
   "problem-solving/problemsolving.tex" 1737534910.03891 79 d2e3bca964e645f7295c48098bbb59d0 ""
   "programming-languages/./golang/golang.tex" 1737534910.03905 34 ec324c1c5ea194540740a759b594894c ""
   "programming-languages/./rust/rust.tex" 1737534910.03919 137 3f2c7d3e5eed1b145d1f35b48ddfd174 ""
-  "programming-languages/./solidity/solidity.tex" 1744387882.1516 8398 ef8c76ceefe1f48321c8ff0bc13b5444 ""
+  "programming-languages/./solidity/solidity.tex" 1744417118.84554 8400 5b96779d33330b931ff80f3c6caa2b3a ""
   "programming-languages/programming-languages.tex" 1744245133.94343 92 476ee367d52b78a312d37a49d58c6637 ""
   "time-synchrony-failures/./flp-impossibility/flp-impossibility.tex" 1737534910.04005 19488 d37fe56514b41b9a29b6ec72b2c94d0f ""
   "time-synchrony-failures/./key-definitions/key-definitions.tex" 1737556387.23007 9748 01dc636166f968858ffa81775df60d02 ""
