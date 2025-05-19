@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.1.22)  13 APR 2025 18:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.1.22)  19 MAY 2025 19:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -564,6 +564,8 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \WF@box=\box129
 \WF@everypar=\toks51
 Package: wrapfig 2003/01/31  v 3.6
+) (/usr/local/texlive/2024/texmf-dist/tex/latex/relsize/relsize.sty
+Package: relsize 2013/03/29 ver 4.1
 ) (/usr/local/texlive/2024/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2024-01-20 v7.01h Hypertext links for LaTeX
  (/usr/local/texlive/2024/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
@@ -708,13 +710,13 @@ Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 \tempskipb=\skip79
 \@savedmathindent=\skip80
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 26.
+Package hyperref Info: Option `colorlinks' set `true' on input line 27.
 \book@idxfile=\write4
 \openout4 = `book.idx'.
 
 
 Writing index file book.idx
-LaTeX Font Info:    Trying to load font information for T1+cmss on input line 49.
+LaTeX Font Info:    Trying to load font information for T1+cmss on input line 50.
 (/usr/local/texlive/2024/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 ) (/usr/local/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
@@ -724,24 +726,24 @@ File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
 ) (build/book.aux)
 \openout1 = `book.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 49.
-LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -797,7 +799,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 \c@lstlisting=\count363
-Package hyperref Info: Link coloring ON on input line 49.
+Package hyperref Info: Link coloring ON on input line 50.
  (build/book.out) (build/book.out)
 \@outlinefile=\write5
 \openout5 = `book.out'.
@@ -949,19 +951,19 @@ Chapter 2.
 ]
 Chapter 3.
 (./time-synchrony-failures/./key-definitions/key-definitions.tex
-<time-synchrony-failures/key-definitions/assets/5-node-distributed-system.png, id=533, 1391.1975pt x 1276.77pt>
+<time-synchrony-failures/key-definitions/assets/5-node-distributed-system.png, id=603, 1391.1975pt x 1276.77pt>
 File: time-synchrony-failures/key-definitions/assets/5-node-distributed-system.png Graphic file (type png)
 <use time-synchrony-failures/key-definitions/assets/5-node-distributed-system.png>
 Package pdftex.def Info: time-synchrony-failures/key-definitions/assets/5-node-distributed-system.png  used on input line 5.
 (pdftex.def)             Requested size: 187.89914pt x 172.43443pt.
  [13 <./time-synchrony-failures/key-definitions/assets/5-node-distributed-system.png>] [14]) (./time-synchrony-failures/./state-machine-replication/state-machine-replication.tex [15]) (./time-synchrony-failures/./flp-impossibility/flp-impossibility.tex [16]
-<time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-write.png, id=562, 924.45375pt x 575.14874pt>
+<time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-write.png, id=632, 924.45375pt x 575.14874pt>
 File: time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-write.png Graphic file (type png)
 <use time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-write.png>
 Package pdftex.def Info: time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-write.png  used on input line 53.
 (pdftex.def)             Requested size: 140.92793pt x 87.67274pt.
  [17 <./time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-write.png>]
-<time-synchrony-failures/flp-impossibility/assets/flp-impossibility-lemma1.png, id=568, 183.68625pt x 230.8625pt>
+<time-synchrony-failures/flp-impossibility/assets/flp-impossibility-lemma1.png, id=639, 183.68625pt x 230.8625pt>
 File: time-synchrony-failures/flp-impossibility/assets/flp-impossibility-lemma1.png Graphic file (type png)
 <use time-synchrony-failures/flp-impossibility/assets/flp-impossibility-lemma1.png>
 Package pdftex.def Info: time-synchrony-failures/flp-impossibility/assets/flp-impossibility-lemma1.png  used on input line 110.
@@ -972,13 +974,13 @@ Underfull \hbox (badness 7047) in paragraph at lines 111--111
  []
 
 [18 <./time-synchrony-failures/flp-impossibility/assets/flp-impossibility-lemma1.png>]
-<time-synchrony-failures/flp-impossibility/assets/flp-sequence-bivalent-to-bivalent.png, id=577, 1135.24126pt x 309.155pt>
+<time-synchrony-failures/flp-impossibility/assets/flp-sequence-bivalent-to-bivalent.png, id=648, 1135.24126pt x 309.155pt>
 File: time-synchrony-failures/flp-impossibility/assets/flp-sequence-bivalent-to-bivalent.png Graphic file (type png)
 <use time-synchrony-failures/flp-impossibility/assets/flp-sequence-bivalent-to-bivalent.png>
 Package pdftex.def Info: time-synchrony-failures/flp-impossibility/assets/flp-sequence-bivalent-to-bivalent.png  used on input line 129.
 (pdftex.def)             Requested size: 328.82707pt x 89.54886pt.
  [19 <./time-synchrony-failures/flp-impossibility/assets/flp-sequence-bivalent-to-bivalent.png>]
-<time-synchrony-failures/flp-impossibility/assets/flp-pre-0-valent-to-non-pre-0-valent.png, id=587, 1256.695pt x 318.18875pt>
+<time-synchrony-failures/flp-impossibility/assets/flp-pre-0-valent-to-non-pre-0-valent.png, id=658, 1256.695pt x 318.18875pt>
 File: time-synchrony-failures/flp-impossibility/assets/flp-pre-0-valent-to-non-pre-0-valent.png Graphic file (type png)
 <use time-synchrony-failures/flp-impossibility/assets/flp-pre-0-valent-to-non-pre-0-valent.png>
 Package pdftex.def Info: time-synchrony-failures/flp-impossibility/assets/flp-pre-0-valent-to-non-pre-0-valent.png  used on input line 166.
@@ -987,7 +989,7 @@ Package pdftex.def Info: time-synchrony-failures/flp-impossibility/assets/flp-pr
 
 ]
 Chapter 4.
-<./adverserial-distributed-systems/ethereum/assets/rlp-encoding-first-byte.png, id=606, 1208.515pt x 262.9825pt>
+<./adverserial-distributed-systems/ethereum/assets/rlp-encoding-first-byte.png, id=677, 1208.515pt x 262.9825pt>
 File: ./adverserial-distributed-systems/ethereum/assets/rlp-encoding-first-byte.png Graphic file (type png)
 <use ./adverserial-distributed-systems/ethereum/assets/rlp-encoding-first-byte.png>
 Package pdftex.def Info: ./adverserial-distributed-systems/ethereum/assets/rlp-encoding-first-byte.png  used on input line 13.
@@ -1015,7 +1017,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\colorbox' on input line 50.
 
 [24]
-<./adverserial-distributed-systems/ethereum/assets/wintermute-hack.png, id=638, 774.895pt x 485.815pt>
+<./adverserial-distributed-systems/ethereum/assets/wintermute-hack.png, id=708, 774.895pt x 485.815pt>
 File: ./adverserial-distributed-systems/ethereum/assets/wintermute-hack.png Graphic file (type png)
 <use ./adverserial-distributed-systems/ethereum/assets/wintermute-hack.png>
 Package pdftex.def Info: ./adverserial-distributed-systems/ethereum/assets/wintermute-hack.png  used on input line 72.
@@ -1027,7 +1029,7 @@ Overfull \hbox (13.12706pt too wide) in paragraph at lines 90--91
  []
 
 (./adverserial-distributed-systems/./ethereum/./pos-block.tex
-<./adverserial-distributed-systems/ethereum/assets/block-merge.png, id=654, 753.81625pt x 392.46625pt>
+<./adverserial-distributed-systems/ethereum/assets/block-merge.png, id=724, 753.81625pt x 392.46625pt>
 File: ./adverserial-distributed-systems/ethereum/assets/block-merge.png Graphic file (type png)
 <use ./adverserial-distributed-systems/ethereum/assets/block-merge.png>
 Package pdftex.def Info: ./adverserial-distributed-systems/ethereum/assets/block-merge.png  used on input line 10.
@@ -1036,7 +1038,7 @@ Package pdftex.def Info: ./adverserial-distributed-systems/ethereum/assets/block
 
 ]
 Chapter 5.
-<./adverserial-distributed-systems/solana/assets/blockchain-trilemma.png, id=671, 2818.53pt x 1866.975pt>
+<./adverserial-distributed-systems/solana/assets/blockchain-trilemma.png, id=741, 2818.53pt x 1866.975pt>
 File: ./adverserial-distributed-systems/solana/assets/blockchain-trilemma.png Graphic file (type png)
 <use ./adverserial-distributed-systems/solana/assets/blockchain-trilemma.png>
 Package pdftex.def Info: ./adverserial-distributed-systems/solana/assets/blockchain-trilemma.png  used on input line 6.
@@ -1055,7 +1057,7 @@ Overfull \hbox (2.62962pt too wide) in paragraph at lines 23--24
 []\T1/cmtt/m/n/10 TODO: Show how a per-son con-trol-ling >0% stake can canon-i-cal-ize the wrong fork and thus you
  []
 
-<./adverserial-distributed-systems/general-problems/assets/tragedy-of-the-commons.png, id=691, 939.51pt x 473.77pt>
+<./adverserial-distributed-systems/general-problems/assets/tragedy-of-the-commons.png, id=762, 939.51pt x 473.77pt>
 File: ./adverserial-distributed-systems/general-problems/assets/tragedy-of-the-commons.png Graphic file (type png)
 <use ./adverserial-distributed-systems/general-problems/assets/tragedy-of-the-commons.png>
 Package pdftex.def Info: ./adverserial-distributed-systems/general-problems/assets/tragedy-of-the-commons.png  used on input line 30.
@@ -1071,7 +1073,7 @@ Underfull \hbox (badness 1087) in paragraph at lines 35--36
  []
 
 ) (./adverserial-distributed-systems/./general-problems/./wealth-inequality.tex [32 <./adverserial-distributed-systems/general-problems/assets/tragedy-of-the-commons.png>]) (./adverserial-distributed-systems/./general-problems/./mev.tex) [33]
-<./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png, id=709, 3011.25pt x 1694.33pt>
+<./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png, id=780, 3011.25pt x 1694.33pt>
 File: ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png Graphic file (type png)
 <use ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png>
 Package pdftex.def Info: ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png  used on input line 33.
@@ -1080,18 +1082,38 @@ Package pdftex.def Info: ./adverserial-distributed-systems/general-problems/asse
 Chapter 7.
 (./adverserial-distributed-systems/./layer2/./plasma.tex [35
 
-]) [36])) (./programming-languages/programming-languages.tex (./programming-languages/./golang/golang.tex [37] [38
+]) [36]) (./adverserial-distributed-systems/./async-transactions/async_transactions.tex [37] [38
 
 ]
 Chapter 8.
-) (./programming-languages/./rust/rust.tex [39] [40
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 13.
+[39]
+Overfull \hbox (2.62962pt too wide) in paragraph at lines 55--56
+[][]\T1/cmtt/m/n/10 TODO: Note: Side chan-nel con-text in-jec-tion is pos-si-ble via solver's run-time in-puts. How-
+ []
 
-]
+[40]
+Overfull \hbox (36.80547pt too wide) in paragraph at lines 72--73
+\T1/cmss/m/n/10 Assume an in-tent $\OT1/cmss/m/sl/10+ 	[]$ \T1/cmss/m/n/10 is reg-is-tered by user $\OT1/cmss/m/sl/10+ U[]$ \T1/cmss/m/n/10 at time $\OT1/cmss/m/sl/10+ t[]$ \T1/cmss/m/n/10 and is com-posed of $\OT1/cmss/m/sl/10+ N$ \T1/cmss/m/n/10 ac-tions in-ter-nally, $\OMS/cmbrs/m/n/10 f\OT1/cmss/m/sl/10+ 	[]\OT1/cmss/m/n/10 , \OT1/cmss/m/sl/10+ 	[]\OT1/cmss/m/n/10 , ...\OT1/cmss/m/sl/10+ 	[]\OMS/cmbrs/m/n/10 g$\T1/cmss/m/n/10 . 
+ []
+
+
+Overfull \hbox (3.56836pt too wide) in paragraph at lines 81--82
+\T1/cmss/m/n/10 a fee of $\OT1/cmss/m/sl/10+ F[]\OT1/cmss/m/n/10 , \OT1/cmss/m/sl/10+ F[]\OT1/cmss/m/n/10 , ...\OT1/cmss/m/sl/10+ F[]$\T1/cmss/m/n/10 . Sim-i-lar to above, the cu-mu-la-tive fee for ex-e-cut-ing the ac-tions $\OMS/cmbrs/m/n/10 f\OT1/cmss/m/sl/10+ 	[]\OT1/cmss/m/n/10 , \OT1/cmss/m/sl/10+ 	[]\OT1/cmss/m/n/10 , ...\OT1/cmss/m/sl/10+ 	[]\OMS/cmbrs/m/n/10 g$
+ []
+
+[41{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/iwona/ex-iwona.enc}])) (./programming-languages/programming-languages.tex (./programming-languages/./golang/golang.tex [42]
 Chapter 9.
-) (./programming-languages/./solidity/solidity.tex [41] [42
+) (./programming-languages/./rust/rust.tex [43
+
+] [44
 
 ]
 Chapter 10.
+) (./programming-languages/./solidity/solidity.tex [45] [46
+
+]
+Chapter 11.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\colorbox' on input line 6.
@@ -1104,10 +1126,9 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\colorbox' on input line 6.
 
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 23.
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <9> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 24.
-[43]
+[47]
 Overfull \hbox (17.76463pt too wide) in paragraph at lines 44--45
 []\T1/cmss/m/n/10 The first el-e-ment of the ar-ray is stored at [][][][][][]. The sec-ond el-e-ment is stored at [][][][][][]
  []
@@ -1133,7 +1154,7 @@ Overfull \hbox (4.31837pt too wide) in paragraph at lines 51--52
 \T1/cmss/m/n/10 Solidity has four vis-i-bil-ity mod-i-fiers for func-tions[][][][][]. In in-creas-ing or-der of ac-cess they are (mnemonic \T1/cmss/bx/n/10 PrIEPu\T1/cmss/m/n/10 ): 
  []
 
-[44]
+[48]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\colorbox' on input line 97.
@@ -1146,8 +1167,8 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\colorbox' on input line 97.
 
-)) (./problem-solving/problemsolving.tex (./problem-solving/./binary-search/bs.tex [45] [46]
-Chapter 11.
+)) (./problem-solving/problemsolving.tex (./problem-solving/./binary-search/bs.tex [49] [50]
+Chapter 12.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 12.
@@ -1178,7 +1199,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 18.
 
-[47
+[51
 
 ]
 
@@ -1193,14 +1214,14 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\colorbox' on input line 64.
 
-[48] (./problem-solving/./binary-search/intro.tex) (./problem-solving/./binary-search/patterns.tex)) (./problem-solving/./dynamic-programming/dp.tex [49{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/iwona/ex-iwona.enc}] [50
+[52] (./problem-solving/./binary-search/intro.tex) (./problem-solving/./binary-search/patterns.tex)) (./problem-solving/./dynamic-programming/dp.tex [53] [54
 
 ]
-Chapter 12.
-(./problem-solving/./dynamic-programming/intro.tex [51]) (./problem-solving/./dynamic-programming/main_subproblems.tex))) [52]
+Chapter 13.
+(./problem-solving/./dynamic-programming/intro.tex [55]) (./problem-solving/./dynamic-programming/main_subproblems.tex))) [56]
 runsystem(makeindex book.idx)...executed safely (allowed).
 
- (build/book.ind) [53
+ (build/book.ind) [57
 
 
 
@@ -1210,21 +1231,21 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `book.out' has not changed.
-(rerunfilecheck)             Checksum: 85B40F114D31BD525F138B55D22CD9E9;21160.
+(rerunfilecheck)             Checksum: BC7A8C2B885126EC27F1514665191F15;23997.
  ) 
 Here is how much of TeX's memory you used:
- 29338 strings out of 474116
- 570976 string characters out of 5743682
+ 29476 strings out of 474116
+ 573669 string characters out of 5743682
  2039187 words of memory out of 5000000
- 50754 multiletter control sequences out of 15000+600000
+ 50850 multiletter control sequences out of 15000+600000
  589678 words of font info for 109 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 116i,15n,121p,7939b,2293s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 116i,15n,121p,7939b,2324s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/hfbright/hfbrmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/hfbright/hfbrsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/hfbright/hfbrsy8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/nowacki/iwona/iwonar.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsi1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx0800.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx0900.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsx2488.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt0900.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1440.pfb>
-Output written on build/book.pdf (53 pages, 3214538 bytes).
+Output written on build/book.pdf (57 pages, 3236057 bytes).
 PDF statistics:
- 1124 PDF objects out of 1200 (max. 8388607)
- 990 compressed objects within 10 object streams
- 278 named destinations out of 1000 (max. 500000)
- 804 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1232 PDF objects out of 1440 (max. 8388607)
+ 1093 compressed objects within 11 object streams
+ 310 named destinations out of 1000 (max. 500000)
+ 916 words of extra memory for PDF output out of 10000 (max. 10000000)
 

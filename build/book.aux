@@ -112,55 +112,74 @@
 \@writefile{toc}{\contentsline {section}{\numberline {7.4}Bottlenecked by DA}{36}{section.7.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {7.5}Rollups and levels of confirmation}{37}{section.7.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {7.6}Faster Layer 2 Interoperability}{37}{section.7.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {8}Golang}{39}{chapter.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {8}An on-chain system for asynchronous transactions}{39}{chapter.8}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{\numberline {9}Rust}{41}{chapter.9}\protected@file@percent }
+\newlabel{chap:async-transactions}{{8}{39}{An on-chain system for asynchronous transactions}{chapter.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.1}Definitions}{39}{section.8.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {8.1}Intent of Execution}{39}{lstlisting.8.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {8.2}Action}{39}{lstlisting.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8.2}Time Turner}{40}{section.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8.3}Asynchronous Execution Protocol (AEP)}{40}{section.8.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3.1}Inter-Intent Dependencies}{40}{subsection.8.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3.2}Intra-Intent Dependencies}{40}{subsection.8.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3.3}Anatomy of an Action}{41}{subsection.8.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3.4}Execution Forking for optimal fee}{41}{subsection.8.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3.5}DApps' "Forking Loss" compensation}{41}{subsection.8.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3.6}Intent griefing by solvers}{42}{subsection.8.3.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3.7}Execution Payments}{42}{subsection.8.3.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3.8}Intent Registration}{42}{subsection.8.3.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3.9}Intent halt due to EOW collapse}{42}{subsection.8.3.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3.10}On Options default by dApps or solvers}{42}{subsection.8.3.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {9}Golang}{43}{chapter.9}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {9.1}Iterators}{41}{section.9.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {10}Solidity}{43}{chapter.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {10}Rust}{45}{chapter.10}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {10.1}The memory model}{43}{section.10.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.1.1}Memory types: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {calldata}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {memory}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {storage}}}}{43}{subsection.10.1.1}\protected@file@percent }
-\newlabel{sec:soliditity-memory-model}{{10.1.1}{43}{Memory types: \code {calldata} vs \code {memory} vs \code {storage}}{subsection.10.1.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.1.2}The on-chain storage}{43}{subsection.10.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Static sized object representation}{43}{section*.7}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.1}In-storage representation}{43}{lstlisting.10.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.2}In-storage representation(better)}{44}{lstlisting.10.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Dynamically sized object representation}{44}{section*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {10.2}Function and their modifiers}{44}{section.10.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.1}Visibility Modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {private}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {internal}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {external}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {public}}}}{44}{subsection.10.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.2}Function Modifiers for preconditions and postconditions}{44}{subsection.10.2.2}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.3}Solidity isOwner modifier}{44}{lstlisting.10.3}\protected@file@percent }
-\newlabel{lst:contract-with-modifiers}{{10.2.2}{45}{Function Modifiers for preconditions and postconditions}{lstnumber.10.3.4}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.4}Contract with modifiers}{45}{lstlisting.10.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.3}Special modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {view}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {pure}}} and \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {payable}}}}{45}{subsection.10.2.3}\protected@file@percent }
-\newlabel{sec:special-modifiers}{{10.2.3}{45}{Special modifiers: \code {view}, \code {pure} and \code {payable}}{subsection.10.2.3}{}}
-\@writefile{loe}{\contentsline {exercise}{Exercise\ 2\ {\relax \fontshape  it\selectfont  Solidity Basics}\hspace  {.66em}}{45}{Exercise.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {10.3}The EIP-721 Standard: Non-Fungible Tokens (NFTs)}{45}{section.10.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {10.4}Exercise Solutions}{46}{section.10.4}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.5}Fibonacci Contract}{46}{lstlisting.10.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {11}Binary Search}{47}{chapter.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10.1}Iterators}{45}{section.10.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {11}Solidity}{47}{chapter.11}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {11.1}Basic: Minimize $k$ such that $f(k)$ is true}{47}{section.11.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {11.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {feasible(x) -> bool}}}}{47}{section.11.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{47}{subsection.11.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{48}{subsection.11.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.3}Problem [SplitM]: Split array into $m$ subarrays}{48}{subsection.11.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {11.3}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {enough(x) -> bool}}}}{49}{section.11.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {11.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{49}{subsection.11.3.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {11.1}Rust implementation of enough function}{49}{lstlisting.11.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {12}Dynamic Programming}{51}{chapter.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11.1}The memory model}{47}{section.11.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.1.1}Memory types: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {calldata}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {memory}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {storage}}}}{47}{subsection.11.1.1}\protected@file@percent }
+\newlabel{sec:soliditity-memory-model}{{11.1.1}{47}{Memory types: \code {calldata} vs \code {memory} vs \code {storage}}{subsection.11.1.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.1.2}The on-chain storage}{47}{subsection.11.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Static sized object representation}{47}{section*.7}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {11.1}In-storage representation}{47}{lstlisting.11.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {11.2}In-storage representation(better)}{48}{lstlisting.11.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Dynamically sized object representation}{48}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11.2}Function and their modifiers}{48}{section.11.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.1}Visibility Modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {private}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {internal}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {external}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {public}}}}{48}{subsection.11.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.2}Function Modifiers for preconditions and postconditions}{48}{subsection.11.2.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {11.3}Solidity isOwner modifier}{48}{lstlisting.11.3}\protected@file@percent }
+\newlabel{lst:contract-with-modifiers}{{11.2.2}{49}{Function Modifiers for preconditions and postconditions}{lstnumber.11.3.4}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {11.4}Contract with modifiers}{49}{lstlisting.11.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.3}Special modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {view}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {pure}}} and \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {payable}}}}{49}{subsection.11.2.3}\protected@file@percent }
+\newlabel{sec:special-modifiers}{{11.2.3}{49}{Special modifiers: \code {view}, \code {pure} and \code {payable}}{subsection.11.2.3}{}}
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 2\ {\relax \fontshape  it\selectfont  Solidity Basics}\hspace  {.66em}}{49}{Exercise.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11.3}The EIP-721 Standard: Non-Fungible Tokens (NFTs)}{49}{section.11.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11.4}Exercise Solutions}{50}{section.11.4}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {11.5}Fibonacci Contract}{50}{lstlisting.11.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {12}Binary Search}{51}{chapter.12}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{relation:dontrequirememo}{{12.1}{51}{Dynamic Programming}{equation.12.0.1}{}}
-\newlabel{relation:requiresmemo}{{12.2}{51}{Dynamic Programming}{equation.12.0.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {12.1}Memoization}{51}{section.12.1}\protected@file@percent }
-\newlabel{timecomplexity:requiresmemo}{{12.3}{51}{Memoization}{equation.12.1.3}{}}
-\newlabel{timecomplexity:requiresmemowithmemo}{{12.4}{52}{Memoization}{equation.12.1.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {12.2}Most important subproblems}{52}{section.12.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Alphabetical Index}{53}{section*.9}\protected@file@percent }
-\gdef \@abspage@last{53}
+\@writefile{toc}{\contentsline {section}{\numberline {12.1}Basic: Minimize $k$ such that $f(k)$ is true}{51}{section.12.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {12.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {feasible(x) -> bool}}}}{51}{section.12.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{51}{subsection.12.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{52}{subsection.12.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.2.3}Problem [SplitM]: Split array into $m$ subarrays}{52}{subsection.12.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {12.3}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {enough(x) -> bool}}}}{53}{section.12.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{53}{subsection.12.3.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {12.1}Rust implementation of enough function}{53}{lstlisting.12.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {13}Dynamic Programming}{55}{chapter.13}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{relation:dontrequirememo}{{13.1}{55}{Dynamic Programming}{equation.13.0.1}{}}
+\newlabel{relation:requiresmemo}{{13.2}{55}{Dynamic Programming}{equation.13.0.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {13.1}Memoization}{55}{section.13.1}\protected@file@percent }
+\newlabel{timecomplexity:requiresmemo}{{13.3}{55}{Memoization}{equation.13.1.3}{}}
+\newlabel{timecomplexity:requiresmemowithmemo}{{13.4}{56}{Memoization}{equation.13.1.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {13.2}Most important subproblems}{56}{section.13.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Alphabetical Index}{57}{section*.9}\protected@file@percent }
+\gdef \@abspage@last{57}
