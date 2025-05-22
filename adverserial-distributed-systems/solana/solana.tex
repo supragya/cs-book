@@ -19,7 +19,57 @@ Very briefly, the blockchain trilemma goes as follows:
 
 Solana focuses a whole lot more on the "transactions per second" part of the blockchain, a.k.a. the "scalability" aspect.
 
+\section{The transaction and the block}
 
-\section{The Transaction Processing Unit}
+\subsection{Transactions and "blockhash queue"}
+
+\subsubsection{Transaction expiration for long term replay protection}
+A transaction's recent blockhash acts as a timestamp, and a "blockhash queue" stores the last 150 blockhashes for validation. Transactions are considered recent if their blockhash is within the queue, and if they are not processed within a certain timeframe (around 1 minute 19 seconds), they can expire. You can find more details in solana docs here: \href{https://solana.com/developers/guides/advanced/confirmation#how-does-transaction-expiration-work}{https://solana.com/developers/guides/advanced/confirmation\#how-does-transaction-expiration-work}.
+
+\subsubsection{Transaction Deduplication for short term replay protection}
+One can argue that while long term replay protection is good, it is not enough. For example, if a transaction is sent to the network and is attempted for execution in two consecutive slots within the 150 slot window, transaction expiration described above will not help. This is where transaction deduplication comes in. The validator maintains a list of transactions that have been executed in the last 150 slots, the "blockhash queue". If a transaction is attempted to be executed again within this window, it will be rejected.
+
+\todo{Talk about durable nonces and how they are used in solana (hardware wallets). These are "long lived transactions" which all txs in ethereum are.}
+
+\section{The Transaction Processing Unit (TPU)}
 \section{Proof of History: VDF based transaction ordering}
 \section{Entries, Slots, Bank}
+
+In Solana, a blockhash is generated at the end of a slot $s$ and represents a cryptographic digest of the bank state at that slot. The exact method of computing it is found in the `bank.rs` file in the Solana codebase.
+
+The high level idea remains as follows:
+
+$$
+\text{BlockHash}_s = \text{Hash}(\text{BankHashComponents}_s)
+$$
+
+If we look deeper into the components of the \texttt{BankHashComponents}, we can see that it is a struct that contains the following fields (\href{https://github.com/anza-xyz/agave/blob/535456856619786b7ac47b5b50b0a730e571365d/runtime/src/bank/bank_hash_details.rs#L119-L127}{code reference}):
+
+\begin{lstlisting}[language=Rust, caption=BankHashComponents before SIMD-0223] 
+pub struct BankHashComponents {
+    pub parent_bank_hash: String, // 32 bytes hash of previous bank
+    pub accounts_delta_hash: String, // 32 bytes merkle root hash of accounts deltas
+    pub signature_count: u64, // 8 bytes, number of signatures in this slot
+    pub last_blockhash: String, // 32 bytes, the last blockhash which upcoming transactions will refer to
+    pub epoch_accounts_hash: Option<String>, // 32 bytes, the epoch accounts hash
+    pub accounts: AccountsDetails, // Internally, a vector of accounts and details
+}
+\end{lstlisting}
+
+Let's dig deeper into what each of the above fields mean:
+\begin{itemize}
+    \item \textbf{Parent bank hash}: The hash of the parent bank, which is the previous block in the chain.
+    \item \textbf{Accounts delta hash}: The hash of the accounts that have changed in this slot. This is a merkle tree hash of the accounts that have changed in this slot. Remember, this is not the same as the epoch accounts hash, which is a hash of all accounts at the end of an epoch. Rather, this only presents the changes in the accounts in this slot.
+    \item \textbf{Signature count}: The number of signatures in this slot.
+    \item \textbf{Last blockhash}: The "last blockhash" that upcoming transactions will refer.
+    \item \textbf{Epoch accounts hash}: The merkle hash of the accounts at the end of an epoch. This is populated only at the end of an epoch.
+    \item \textbf{Accounts}: The accounts that have changed in this slot and their details.
+\end{itemize}
+
+The transactions' non-replayability is ensured by the \texttt{last\_blockhash} field. Basically, the transactions encode a reference to the last blockhash, which is the hash of the previous block. This ensures that the transactions are non-replayable and can only be executed once. A transaction for example would be constructed as follows:
+
+\begin{lstlisting}[language=Rust, caption=Example creation of a transaction requiring reference to a recent blockhash] 
+let tx = system_transaction::transfer(mint_keypair, &dest_keypair, 1, bank.last_blockhash());
+\end{lstlisting}
+
+\subimport{./}{state-commitments.tex}

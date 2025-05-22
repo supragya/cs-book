@@ -1,11 +1,11 @@
 # Fdb version 4
-["makeindex build/book.idx"] 1747654956.83028 "build/book.idx" "build/book.ind" "build/book" 1747662333.70454 0
-  "build/book.idx" 1747662333.5184 763 2fe6e758c5516b806db2937d2ca6b0d2 "pdflatex"
+["makeindex build/book.idx"] 1747931732.59384 "build/book.idx" "build/book.ind" "build/book" 1747932775.25082 0
+  "build/book.idx" 1747932775.0714 763 2fe6e758c5516b806db2937d2ca6b0d2 "pdflatex"
   (generated)
   "build/book.ilg"
   "build/book.ind"
   (rewritten before read)
-["pdflatex"] 1747662331.26705 "/Users/supragyaraj/Projects/supragya/cs-book/book.tex" "build/book.pdf" "book" 1747662333.70466 0
+["pdflatex"] 1747932772.44863 "/Users/supragyaraj/Projects/supragya/cs-book/book.tex" "build/book.pdf" "book" 1747932775.25091 0
   "./cover.tex" 1737534910.03832 765 97f085dd6b46a6b25358f0e2818f77af ""
   "/Users/supragyaraj/Projects/supragya/cs-book/book.tex" 1747658859.45571 1453 4c4e74231080f22c969c986683f69517 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
@@ -229,7 +229,7 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1737534719.55242 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1737534681 8221423 9d1c8bab91b881429f1feda663038d24 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "adverserial-distributed-systems/./async-transactions/async_transactions.tex" 1747662331.02223 13129 dc8b633063b53aafe7f17c5cf59f594b ""
+  "adverserial-distributed-systems/./async-transactions/async_transactions.tex" 1747826730.47197 13196 7dc0664e57d9c475a97b0cc1ad9ea3cf ""
   "adverserial-distributed-systems/./ethereum/./eip-2935.tex" 1737534910.02168 1786 013fae77c3c0c1b48c8b39ef24a5129b ""
   "adverserial-distributed-systems/./ethereum/./pos-block.tex" 1737534910.02182 1399 75aa7d01661763b6278a12c6c6f098c6 ""
   "adverserial-distributed-systems/./ethereum/ethereum.tex" 1744550546.303 8547 13283d6976784228af4f8deeee874137 ""
@@ -239,7 +239,8 @@
   "adverserial-distributed-systems/./general-problems/general-problems.tex" 1737534910.02573 2323 9c697ac5cc3b9655116015115e67eed0 ""
   "adverserial-distributed-systems/./layer2/./plasma.tex" 1737534910.02614 2715 daabab6208845870159910712fe7b48e ""
   "adverserial-distributed-systems/./layer2/layer2.tex" 1737534910.02608 6449 2476a948672c869a127222ff3be362f4 ""
-  "adverserial-distributed-systems/./solana/solana.tex" 1737534910.02802 2247 3f1f6d5e159d1d56e308dcbc5f307c68 ""
+  "adverserial-distributed-systems/./solana/./state-commitments.tex" 1747914696.83022 6822 0ac2c6ae34d75cfb615badc8162365e8 ""
+  "adverserial-distributed-systems/./solana/solana.tex" 1747932769.27425 6555 09bb8facecc83a9a9b25500a5350d5eb ""
   "adverserial-distributed-systems/adverserial.tex" 1747205786.37075 202 8019a61f9676cc08955f2651adf75f86 ""
   "adverserial-distributed-systems/ethereum/assets/block-merge.png" 1737534910.02156 70647 2d50e099a33b013570054fe31f053b67 ""
   "adverserial-distributed-systems/ethereum/assets/rlp-encoding-first-byte.png" 1744432235.12443 204547 20aa29d1eb487ecdee8db3b58565c272 ""
@@ -247,12 +248,13 @@
   "adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png" 1737534910.02504 1452455 90a7c5b82c6a5db5d7043908dc2bd81b ""
   "adverserial-distributed-systems/general-problems/assets/tragedy-of-the-commons.png" 1737534910.02563 423087 dccd23f763cfecc71a889645cd83cc4b ""
   "adverserial-distributed-systems/solana/assets/blockchain-trilemma.png" 1737534910.02793 621425 9afcbd035c65b4c10d53c73eff0189ea ""
+  "adverserial-distributed-systems/solana/assets/merkle-proof-example.png" 1747889215.51508 43833 c9a5fe99e3819b436ba98488f7af6678 ""
   "book.tex" 1747658859.45571 1453 4c4e74231080f22c969c986683f69517 ""
   "bookstyle.sty" 1737534910.02828 1845 71dd97eab32fed0991ebd4e931496620 ""
-  "build/book.aux" 1747662333.52716 23188 9f2f099f8991aff3e095fb74960e0087 "pdflatex"
-  "build/book.ind" 1747654956.91261 919 7950e61cb054e04628def99d09ee3907 "makeindex build/book.idx"
-  "build/book.out" 1747662333.52893 23997 bc7a8c2b885126ec27f1514665191f15 "pdflatex"
-  "build/book.toc" 1747662333.52914 11820 729e06d42968f0fa8fa9821fe27a862c "pdflatex"
+  "build/book.aux" 1747932775.07969 25829 19caab4dbe2ed71efa1bec5b9cbfc3fd "pdflatex"
+  "build/book.ind" 1747931732.68811 919 7950e61cb054e04628def99d09ee3907 "makeindex build/book.idx"
+  "build/book.out" 1747932775.08161 25228 bc671fbec4f4e8bdcfa70b3374e278cb "pdflatex"
+  "build/book.toc" 1747932775.08186 12640 cf5b77c1888bc4833d4976da388677ae "pdflatex"
   "cover.tex" 1737534910.03832 765 97f085dd6b46a6b25358f0e2818f77af ""
   "listings-rust.sty" 1737534910.03841 12270 7c444cbfed7aa42b3ddcd0885e4a539c ""
   "listings-solidity.sty" 1744373033.83626 2418 9967218d95ed64b7d9a691f72fd55fe3 ""
