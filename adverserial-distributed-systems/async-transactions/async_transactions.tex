@@ -78,14 +78,14 @@ $$
 
 We can denote this partial execution using $E_{j, k} = (S, F_{Partial})$.
 
-At this point, if a different set of solvers $S'_{j, 0}, S'_{j, 1}, ... S'_{j, K}$ are able to execute the actions $\Psi_{j, K+1}, \Psi_{j, K+2}, ... \Psi_{j, N-1}$ for a fee of $F'_{j, K+1}, F'_{j, K+2}, ... F'_{j, N-1}$. Similar to above, the cumulative fee for executing the actions $\{\Psi_{j, 0}, \Psi_{j, 1}, ... \Psi_{j, K-1}\}$ is a sum of solver fees and dApp option premiums:
+At this point, if a different set of solvers $S'_{j, 0}, S'_{j, 1}, ... S'_{j, K}$ are able to execute the actions $\Psi_{j, 0}, \Psi_{j, 1}, ... \Psi_{j, K-1}$ for a fee of $F'_{j, 0}, F'_{j, 1}, ... F'_{j, K-1}$. Similar to above, the cumulative fee for executing the actions $\{\Psi_{j, 0}, \Psi_{j, 1}, ... \Psi_{j, K-1}\}$ is a sum of solver fees and dApp option premiums:
 $$
 F'_{Partial} = \mathlarger{\sum}_{k = 0}^{k = K-1}F'_{j, k} + \mathlarger{\sum}_{k = 0}^{k = K-1} \mathlarger{\sum}_{l = 0}^{l = ops(j, k)}P'_{j, k, l}
 $$
 
 We can denote this partial execution using $E'_{j, k} = (S', F'_{Partial})$.
 
-\textbf{Execution forking}: We say execution $E'$ is preferred over $E$ if $F'_{Partial} < F_{Partial} - R$ where $R$ is the sum of all partial refund of premium one can get upon surrendering the execution's dApp options, the \textbf{premium refund} described below.
+\textbf{Execution forking}: We say execution $E'$ is preferred over $E$ if one can use lesser total fee for executing the chain $[0, K)$, i.e. $F'_{Partial} < F_{Partial} - R$ where $R$ is the sum of all partial refund of premium one can get upon surrendering the execution's dApp options in $E$, the \textbf{premium refund} described below.
 
 This rule does not stand just for partial execution, but also for the entire execution of the intent.
 
