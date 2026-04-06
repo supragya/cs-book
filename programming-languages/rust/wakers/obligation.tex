@@ -1,0 +1,195 @@
+%% Part III: The rule. The one obligation every future carries, and what happens when it is broken.
+
+\section{The Wake Obligation}
+\label{sec:wakers-ch7}
+
+\textit{Returning \code{Pending} is a promise. Everything in the earlier sections depends on futures keeping it, and nothing in the language enforces it.}
+
+\begin{definition}{Waker-driven executor}{waker-driven-executor}
+    \index{Waker-driven executor}
+    An executor is \emph{waker-driven} if, after a task's first poll, it polls the task again only when the task's waker has been called since the previous poll. In Tokio's terms: a task is polled only from a run queue, and enters one only by being spawned or woken.
+\end{definition}
+
+Tokio, smol, \code{futures::executor}, pollster, Embassy, glommio, monoio and \code{wasm-bindgen-futures} are all waker-driven. Section~\ref{sec:wakers-ch8} tests several of them.
+
+\begin{axiom}{The Wake Obligation}{wake-obligation}
+    \index{Wake Obligation}
+    A future that returns \code{Poll::Pending} must ensure that the waker from the most recent call to \code{poll} will be called once the future can make progress.
+    \source{the documentation of \texttt{Future::poll}, which also says that \texttt{poll} should not be called repeatedly in a tight loop, but only after the future has signalled readiness through \texttt{wake()}.}
+\end{axiom}
+
+\begin{axiom}{No promise of readiness}{no-promise-of-readiness}
+    Being polled is not evidence that progress is possible. Executors and combinators may poll a future that nobody woke.
+    \source{not a single document, but universal practice: \texttt{tokio::join!} and \texttt{select!} poll every unfinished branch whenever their task is polled (Lemma~\ref{lem:shared-fate}), and no executor promises otherwise.}
+\end{axiom}
+
+\subsection{Three ways to keep the obligation}
+
+\begin{enumerate}
+    \item \textbf{Store} the waker in a waker slot that will be called: a socket, a timer, a channel's waiting list, another thread.
+    \item \textbf{Delegate} by passing the context to an inner future that stores it. Every \code{.await} does this, which is why ordinary \code{async fn} code cannot break the obligation.
+    \item \textbf{Self-wake} before returning: \code{cx.waker().wake\_by\_ref(); return Poll::Pending;} means ``re-queue me straight away.'' This is how \code{tokio::task::yield\_now()} works. Executors must accept a wake that arrives during a poll; Tokio marks the task notified and reschedules it once \code{poll} returns.
+\end{enumerate}
+
+\subsection{Lost wakes}
+
+\begin{definition}{Lost wake}{lost-wake}
+    \index{Lost wake}
+    A \emph{lost wake} occurs when the event a future is waiting for happens after the future has checked for it but before its waker has been stored. The event source finds no waker to call, and the future goes on waiting.
+\end{definition}
+
+\begin{lemma}{Atomic check-and-store}{atomic-check-and-store}
+    A leaf future avoids lost wakes if it checks for readiness and stores its waker as one step with respect to the event source---for example, under the same lock the event source takes before reading the waker.
+    \why If the event fires before the step, the check sees it, and the future returns \code{Ready}. If it fires after, the waker is already stored, and the event source calls it. Nothing can fall between the two. The timer in Section~\ref{sec:wakers-ch17} does exactly this.
+\end{lemma}
+
+\subsection{Two further rules}
+
+\begin{itemize}
+    \item \textbf{Keep the latest waker.} The waker can change between polls: tasks move between threads, and combinators wrap wakers. Axiom~\ref{ax:wake-obligation} refers to the waker from the \emph{most recent} poll. \code{old.will\_wake(cx.waker())} lets a future skip the clone when nothing changed, and Tokio's own leaf futures do this.
+    \item \textbf{Re-check every time.} By Axiom~\ref{ax:no-promise-of-readiness}, a poll may be spurious, so a future must check its condition on every poll and return \code{Pending} again if needed.
+\end{itemize}
+
+\begin{lemma}{Twice is harmless, zero is fatal}{twice-harmless-zero-fatal}
+    An extra call to \code{wake()} costs at most one extra poll. A missing call may leave the task unpolled forever.
+    \why An extra wake leads to a poll in which the future re-checks and returns \code{Pending} (Axiom~\ref{ax:no-promise-of-readiness}). A missing wake is the subject of Lemma~\ref{lem:stranding}.
+\end{lemma}
+
+\begin{quotebox}{Summary}
+    \begin{itemize}
+        \item The Wake Obligation (Axiom~\ref{ax:wake-obligation}): returning \code{Pending} promises a future call of the latest waker.
+        \item Keep it by storing, delegating or self-waking. Avoid lost wakes with an atomic check-and-store (Lemma~\ref{lem:atomic-check-and-store}).
+        \item Expect spurious polls (Axiom~\ref{ax:no-promise-of-readiness}). Extra wakes are cheap; missing wakes are fatal (Lemma~\ref{lem:twice-harmless-zero-fatal}).
+    \end{itemize}
+\end{quotebox}
+
+\section{Stranded tasks}
+\label{sec:wakers-ch8}
+
+\textit{Breaking the Wake Obligation doesn't crash anything. It produces the quietest possible failure: a task that stops, forever, holding everything it owned.}
+
+\begin{definition}{Stranded task}{stranded-task}
+    \index{Stranded task}
+    A task is \emph{stranded} when it has returned \code{Pending} and no code will ever call its waker.
+\end{definition}
+
+\begin{lemma}{Stranding}{stranding}
+    On a waker-driven executor, a stranded task is never polled again.
+    \why By Definition~\ref{def:waker-driven-executor}, after its first poll the task is polled again only if its waker is called. By Definition~\ref{def:stranded-task}, that never happens. The executor never searches its tasks for ones that might be ready.
+\end{lemma}
+
+\begin{corollary}{Contagion}{contagion}
+    A stranded task never releases what it owns---memory, buffers, open sockets---and every task awaiting its \code{JoinHandle} is stranded in turn.
+\end{corollary}
+
+Contagion is why the symptom of a stranding bug often appears far from its cause. A stranded task can still be reached in three ways:
+
+\begin{itemize}
+    \item \textbf{\code{abort()}} on its handle: the runtime schedules the task itself, in order to drop it.
+    \item \textbf{Runtime shutdown}, which drops every task.
+    \item \textbf{\code{tokio::time::timeout}}: the timeout's own sleep stores the \emph{same task's} waker in the timer system (Lemma~\ref{lem:one-waker-per-task}), so at the deadline the task is polled again and the timeout returns an error.
+\end{itemize}
+
+\begin{definition}{Accidental rescue}{accidental-rescue}
+    \index{Accidental rescue}
+    An \emph{accidental rescue} happens when a future that breaks the Wake Obligation keeps working only because another future in the same task keeps waking that task.
+\end{definition}
+
+\begin{lemma}{Shared fate}{shared-fate}
+    Inside \code{join!} or \code{select!}, a future that never stores its waker is still re-polled whenever any sibling's waker is called.
+    \why All the futures share the task's waker (Lemma~\ref{lem:one-waker-per-task}). Waking the task re-polls it from the top (Corollary~\ref{cor:whole-task-repoll}), and these macros poll every unfinished branch. The rescue disappears when the future is moved into its own \code{spawn}, or into a \code{FuturesUnordered}, which only re-polls children whose own wrapped waker was called.
+\end{lemma}
+
+\subsection{Is the Stranding lemma true of every runtime?}
+
+To check, a deliberately broken future was run on several configurations. It becomes ready 100 milliseconds after it is created, but its \code{poll} returns \code{Pending} without storing the waker. Each run was given two seconds (Listing~\ref{lst:wakers-A.3}).
+
+\begin{table}[H]
+    \centering\small
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{5cm} X >{\raggedright\arraybackslash}p{3cm}}
+        \toprule
+        \textbf{Executor} & \textbf{How it decides when to poll} & \textbf{Result} \\
+        \midrule
+        Tokio, \texttt{current\_thread} & Waker-driven & \textcolor{red!70!black}{\textbf{stranded}} \\
+        Tokio, multi-thread, via \texttt{spawn} & Waker-driven & \textcolor{red!70!black}{\textbf{stranded}} \\
+        \texttt{futures::executor::block\_on} & Waker-driven: waker unparks the thread & \textcolor{red!70!black}{\textbf{stranded}} \\
+        \texttt{smol::block\_on} & Waker-driven & \textcolor{red!70!black}{\textbf{stranded}} \\
+        \texttt{pollster::block\_on} & Waker-driven: waker signals a condition variable & \textcolor{red!70!black}{\textbf{stranded}} \\
+        \texttt{cassette::block\_on} & Not waker-driven: polls in a loop & \textcolor{StmtLemma}{\textbf{finished at 102 ms}} \\
+        Tokio, \texttt{join!(broken, heartbeat)} & Waker-driven; a sibling wakes the task every 10 ms & \textcolor{StmtProposition}{\textbf{accidental rescue}} \\
+        \bottomrule
+    \end{tabularx}
+    \caption{A future that never stores its waker, on seven configurations.}
+    \label{tab:wakers-8.1}
+\end{table}
+
+\begin{itemize}
+    \item Every waker-driven executor stranded the task, as Lemma~\ref{lem:stranding} predicts. Embassy, glommio, monoio and \code{wasm-bindgen-futures} are waker-driven in the same way. (async-std, once a common example, was discontinued in 2025 in favour of smol.\footnote{\url{https://docs.rs/crate/async-std/latest}})
+    \item The exceptions poll everything on every pass of a loop: \code{cassette}, built for embedded state machines, or a game loop that polls each frame with \code{Waker::noop()}. There, a missing waker costs nothing, but every pending future costs CPU on every pass---the design the \code{Future} documentation steers away from.
+    \item A future cannot know which kind of executor will run it, so it must not rely on the exceptions.
+\end{itemize}
+
+\begin{proposition}{The Wake Obligation, in practice}{wake-obligation-in-practice}
+    If my future returns \code{Pending}, I must make sure the task's waker gets called once progress is possible. If nobody calls it, a waker-driven executor will never poll that task again, unless something else happens to wake the same task. And I may be polled without being woken, so I always re-check my condition.
+\end{proposition}
+
+Because stranding is silent, tooling helps. \emph{tokio-console}\index{tokio-console} warns about tasks that have lost their waker---dropped it without ever calling it---and about tasks that wake themselves suspiciously often.\footnote{\url{https://github.com/tokio-rs/console}}
+
+\begin{quotebox}{Summary}
+    \begin{itemize}
+        \item A stranded task is never polled again (Lemma~\ref{lem:stranding}), never frees its resources, and strands its awaiters (Corollary~\ref{cor:contagion}).
+        \item \code{abort()}, shutdown and \code{timeout} can still reach it. A sibling can rescue it by accident (Lemma~\ref{lem:shared-fate}).
+        \item Every waker-driven executor tested behaved as predicted.
+    \end{itemize}
+\end{quotebox}
+
+\section{Silent sources}
+\label{sec:wakers-ch9}
+
+\textit{Sometimes the thing you're waiting on has no way to say it's ready. The Wake Obligation still applies, so something else has to call the waker.}
+
+\begin{definition}{Silent source}{silent-source}
+    \index{Silent source}
+    A \emph{silent source} is an event source that cannot notify anyone when its state changes: a hardware status register, a C library with no callbacks, a flag written by another system.
+\end{definition}
+
+The options, from cheapest to most expensive:
+
+\begin{table}[H]
+    \centering\small
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm} X >{\raggedright\arraybackslash}p{3.2cm}}
+        \toprule
+        \textbf{Approach} & \textbf{How} & \textbf{Cost} \\
+        \midrule
+        \textbf{1. Find a file descriptor} & More things expose one than you might expect: \texttt{eventfd}, \texttt{timerfd}, \texttt{pidfd}, \texttt{inotify}, the ``get socket'' calls of libpq and D-Bus. Wrap it in \texttt{tokio::io::unix::AsyncFd}; it is then not silent at all. & \textcolor{StmtLemma}{\textbf{Free while waiting}} \\
+        \textbf{2. Interval polling} & Check; if not ready, \texttt{sleep(T).await} and check again. The timer holds the waker. & See Lemma~\ref{lem:interval-polling-trade-off} \\
+        \textbf{3. Delegate to a thread} & \texttt{spawn\_blocking(move || dev.blocking\_read()).await}. The pool thread calls the waker. One dedicated thread can also watch many sources. & One thread per pending wait \\
+        \textbf{4. Self-wake loop} & \texttt{yield\_now().await} in a loop. This keeps the obligation, and other tasks run in between. & \textcolor{red!70!black}{\textbf{A full core when nothing else is queued}} \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Ways to wait on a silent source.}
+    \label{tab:wakers-9.1}
+\end{table}
+
+\begin{lemma}{Interval polling trade-off}{interval-polling-trade-off}
+    Polling a silent source every $T$ adds at most $T$ of latency, and costs $1/T$ wake-ups per second for as long as the wait lasts.
+    \why If the source becomes ready just after a check, it is noticed at the next check, $T$ later. Each check is one timer firing and one poll.
+\end{lemma}
+
+With $T = 5$\,ms, that is at most 5\,ms of extra latency and 200 wake-ups a second:
+
+\begin{lstlisting}[caption={Interval polling: the timer is the waker.}, label=lst:wakers-9.1]
+async fn wait_ready(dev: &Dev) -> u32 {
+    loop {
+        if let Some(v) = dev.try_read() { return v; }
+        tokio::time::sleep(Duration::from_millis(5)).await;   // the timer holds our waker
+    }
+}
+\end{lstlisting}
+
+\begin{quotebox}{Summary}
+    \begin{itemize}
+        \item Prefer a real notification, ideally a file descriptor.
+        \item Otherwise, trade latency against CPU (Lemma~\ref{lem:interval-polling-trade-off}), use a thread, or---for very short waits only---self-wake.
+    \end{itemize}
+\end{quotebox}

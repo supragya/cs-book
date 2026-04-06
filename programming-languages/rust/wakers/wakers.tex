@@ -1,0 +1,67 @@
+\chapter{Async Rust: the Waker}
+\label{ch:wakers}
+
+Most explanations of async Rust stop just where it gets interesting. A future returns \code{Pending}; ``the runtime'' polls it again ``when it's ready.'' This chapter is about the gap between those two sentences:
+
+\begin{itemize}
+    \item what exactly happens between \code{Pending} and the next poll;
+    \item who decides when it happens;
+    \item what it costs.
+\end{itemize}
+
+The answer turns on one small type, \code{std::task::Waker}. Following it leads through an executor's run queues, an operating-system call most Rust programmers never see, a clock-like structure for timers, and a second, unrelated type that is also called a waker.
+
+\section*{How this chapter is organized}
+
+\begin{itemize}
+    \item \textbf{Foundations} (Sections~\ref{sec:wakers-ch1}--\ref{sec:wakers-ch4}): the idea of a waker, the operating-system services it rests on, and the types involved.
+    \item \textbf{Watching it work} (Sections~\ref{sec:wakers-ch5}--\ref{sec:wakers-ch6}): two real tasks, followed through their whole lives.
+    \item \textbf{The rule} (Sections~\ref{sec:wakers-ch7}--\ref{sec:wakers-ch9}): the one obligation every future carries, and what happens when it is broken.
+    \item \textbf{Inside Tokio} (Sections~\ref{sec:wakers-ch10}--\ref{sec:wakers-ch13}): run queues, the driver, mio, and the second kind of waker.
+    \item \textbf{Why it scales} (Sections~\ref{sec:wakers-ch14}--\ref{sec:wakers-ch16}): epoll, the timer wheel, and measurements.
+    \item \textbf{Doing it yourself} (Sections~\ref{sec:wakers-ch17}--\ref{sec:wakers-ch18}): a complete executor, and common mistakes.
+\end{itemize}
+
+\section*{How to read the numbered statements}
+
+To keep the argument precise, the text uses five kinds of numbered statement, numbered within each section:
+
+\begin{description}
+    \item[Definition] gives a name to something, so it can be referred to exactly. Several terms are coined for this chapter, such as \emph{waker slot}, \emph{wake path}, \emph{stranded task} and \emph{driver duty}.
+    \item[Axiom] is a fact taken as given, from the operating system, the Rust language or its documentation. Axioms are not proved here, but each one says where it comes from.
+    \item[Lemma] is a consequence derived from definitions and axioms. Each comes with a short argument, marked \textit{Why}.
+    \item[Corollary] follows immediately from the lemma before it.
+    \item[Proposition] restates several results together, in practical form.
+\end{description}
+
+Every defined term also appears in the index at the end of the book.
+
+\begin{alertbox}{A note on versions.}
+    Descriptions of Tokio's internals come from the source of Tokio 1.54.1 and mio 1.2.5; standard-library details come from Rust 1.97. Internals can change between versions; the axioms and lemmas will not. Every number in the text was measured, and the program that measured it is in Section~\ref{sec:wakers-programs}.
+\end{alertbox}
+
+\subimport{}{foundations.tex}
+\subimport{}{watching.tex}
+\subimport{}{obligation.tex}
+\subimport{}{tokio.tex}
+\subimport{}{scaling.tex}
+\subimport{}{diy.tex}
+\subimport{}{programs.tex}
+
+\begin{refbox}{Further Resources}
+    \small
+    \begin{description}
+        \item [Future::poll]: \href{https://doc.rust-lang.org/std/future/trait.Future.html}{https://doc.rust-lang.org/std/future/trait.Future.html}
+        \item [std::task::Waker and Context]: \href{https://doc.rust-lang.org/std/task/struct.Waker.html}{https://doc.rust-lang.org/std/task/struct.Waker.html} (source in \texttt{core/src/task/wake.rs})
+        \item [Tokio 1.54.1 source]: \href{https://github.com/tokio-rs/tokio/tree/tokio-1.54.1}{https://github.com/tokio-rs/tokio/tree/tokio-1.54.1}. The scheduler is in \texttt{runtime/scheduler/} (\texttt{multi\_thread/worker.rs}, \texttt{queue.rs}, \texttt{park.rs}, \texttt{current\_thread/mod.rs}), the I/O driver in \texttt{runtime/io/} (\texttt{driver.rs}, \texttt{scheduled\_io.rs}), the time driver in \texttt{runtime/time/}, and tasks in \texttt{runtime/task/core.rs}.
+        \item [Tokio runtime documentation]: \href{https://docs.rs/tokio/latest/tokio/runtime}{https://docs.rs/tokio/latest/tokio/runtime}
+        \item [mio 1.2.5 source]: \href{https://github.com/tokio-rs/mio/tree/v1.2.5}{https://github.com/tokio-rs/mio/tree/v1.2.5} (\texttt{src/sys/unix/selector/}, \texttt{src/sys/unix/waker/}, \texttt{src/sys/windows/afd.rs})
+        \item [epoll(7)]: \href{https://man7.org/linux/man-pages/man7/epoll.7.html}{https://man7.org/linux/man-pages/man7/epoll.7.html}, and \textit{epoll\_ctl(2)}
+        \item [Making the Tokio scheduler 10x faster (2019)]: \href{https://tokio.rs/blog/2019-10-scheduler}{https://tokio.rs/blog/2019-10-scheduler}
+        \item [New Timer implementation (2018)]: \href{https://tokio.rs/blog/2018-03-timers}{https://tokio.rs/blog/2018-03-timers}
+        \item [tokio-console]: \href{https://github.com/tokio-rs/console}{https://github.com/tokio-rs/console}
+        \item [async-std discontinued in favour of smol]: \href{https://docs.rs/crate/async-std/latest}{https://docs.rs/crate/async-std/latest}
+        \item [The Async Book]: \href{https://rust-lang.github.io/async-book}{https://rust-lang.github.io/async-book}
+        \item [Reactor pattern]: \href{https://en.wikipedia.org/wiki/Reactor_pattern}{https://en.wikipedia.org/wiki/Reactor\_pattern}
+    \end{description}
+\end{refbox}

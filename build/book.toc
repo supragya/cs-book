@@ -73,27 +73,70 @@
 \contentsline {chapter}{\numberline {8}Golang}{39}{chapter.8}%
 \contentsline {chapter}{\numberline {9}Rust}{41}{chapter.9}%
 \contentsline {section}{\numberline {9.1}Iterators}{41}{section.9.1}%
-\contentsline {chapter}{\numberline {10}Solidity}{43}{chapter.10}%
-\contentsline {section}{\numberline {10.1}The memory model}{43}{section.10.1}%
-\contentsline {subsection}{\numberline {10.1.1}Memory types: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {calldata}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {memory}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {storage}}}}{43}{subsection.10.1.1}%
-\contentsline {subsection}{\numberline {10.1.2}The on-chain storage}{43}{subsection.10.1.2}%
-\contentsline {subsubsection}{Static sized object representation}{43}{section*.7}%
-\contentsline {subsubsection}{Dynamically sized object representation}{44}{section*.8}%
-\contentsline {section}{\numberline {10.2}Function and their modifiers}{44}{section.10.2}%
-\contentsline {subsection}{\numberline {10.2.1}Visibility Modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {private}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {internal}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {external}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {public}}}}{44}{subsection.10.2.1}%
-\contentsline {subsection}{\numberline {10.2.2}Function Modifiers for preconditions and postconditions}{44}{subsection.10.2.2}%
-\contentsline {subsection}{\numberline {10.2.3}Special modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {view}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {pure}}} and \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {payable}}}}{45}{subsection.10.2.3}%
-\contentsline {section}{\numberline {10.3}The EIP-721 Standard: Non-Fungible Tokens (NFTs)}{45}{section.10.3}%
-\contentsline {section}{\numberline {10.4}Exercise Solutions}{46}{section.10.4}%
-\contentsline {chapter}{\numberline {11}Binary Search}{47}{chapter.11}%
-\contentsline {section}{\numberline {11.1}Basic: Minimize $k$ such that $f(k)$ is true}{47}{section.11.1}%
-\contentsline {section}{\numberline {11.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {feasible(x) -> bool}}}}{47}{section.11.2}%
-\contentsline {subsection}{\numberline {11.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{47}{subsection.11.2.1}%
-\contentsline {subsection}{\numberline {11.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{48}{subsection.11.2.2}%
-\contentsline {subsection}{\numberline {11.2.3}Problem [SplitM]: Split array into $m$ subarrays}{48}{subsection.11.2.3}%
-\contentsline {section}{\numberline {11.3}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {enough(x) -> bool}}}}{49}{section.11.3}%
-\contentsline {subsection}{\numberline {11.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{49}{subsection.11.3.1}%
-\contentsline {chapter}{\numberline {12}Dynamic Programming}{51}{chapter.12}%
-\contentsline {section}{\numberline {12.1}Memoization}{51}{section.12.1}%
-\contentsline {section}{\numberline {12.2}Most important subproblems}{52}{section.12.2}%
-\contentsline {chapter}{Alphabetical Index}{53}{section*.9}%
+\contentsline {chapter}{\numberline {10}Async Rust: the Waker}{43}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Why wakers exist}{44}{section.10.1}%
+\contentsline {section}{\numberline {10.2}What the operating system provides}{45}{section.10.2}%
+\contentsline {subsection}{\numberline {10.2.1}Two worlds: your program and the kernel}{45}{subsection.10.2.1}%
+\contentsline {subsection}{\numberline {10.2.2}Threads and the scheduler}{45}{subsection.10.2.2}%
+\contentsline {subsection}{\numberline {10.2.3}Ways for a thread to wait}{46}{subsection.10.2.3}%
+\contentsline {subsection}{\numberline {10.2.4}File descriptors}{46}{subsection.10.2.4}%
+\contentsline {subsection}{\numberline {10.2.5}Blocking and non-blocking I/O}{46}{subsection.10.2.5}%
+\contentsline {subsection}{\numberline {10.2.6}Interrupts and buffers}{47}{subsection.10.2.6}%
+\contentsline {subsection}{\numberline {10.2.7}Readiness and completion}{47}{subsection.10.2.7}%
+\contentsline {subsection}{\numberline {10.2.8}Signals}{47}{subsection.10.2.8}%
+\contentsline {subsection}{\numberline {10.2.9}Waking a waiting thread on purpose}{47}{subsection.10.2.9}%
+\contentsline {section}{\numberline {10.3}Futures, tasks and wakers}{48}{section.10.3}%
+\contentsline {section}{\numberline {10.4}What \texttt {poll} receives}{50}{section.10.4}%
+\contentsline {section}{\numberline {10.5}Two tasks, start to finish}{51}{section.10.5}%
+\contentsline {section}{\numberline {10.6}Who calls \texttt {wake()}}{53}{section.10.6}%
+\contentsline {section}{\numberline {10.7}The Wake Obligation}{54}{section.10.7}%
+\contentsline {subsection}{\numberline {10.7.1}Three ways to keep the obligation}{55}{subsection.10.7.1}%
+\contentsline {subsection}{\numberline {10.7.2}Lost wakes}{55}{subsection.10.7.2}%
+\contentsline {subsection}{\numberline {10.7.3}Two further rules}{55}{subsection.10.7.3}%
+\contentsline {section}{\numberline {10.8}Stranded tasks}{56}{section.10.8}%
+\contentsline {subsection}{\numberline {10.8.1}Is the Stranding lemma true of every runtime?}{56}{subsection.10.8.1}%
+\contentsline {section}{\numberline {10.9}Silent sources}{57}{section.10.9}%
+\contentsline {section}{\numberline {10.10}The runtime at a glance}{58}{section.10.10}%
+\contentsline {section}{\numberline {10.11}Driver duty}{60}{section.10.11}%
+\contentsline {subsection}{\numberline {10.11.1}Two different things called ``poll''}{60}{subsection.10.11.1}%
+\contentsline {subsection}{\numberline {10.11.2}The single-threaded runtime}{61}{subsection.10.11.2}%
+\contentsline {section}{\numberline {10.12}mio: where Tokio meets the operating system}{62}{section.10.12}%
+\contentsline {subsection}{\numberline {10.12.1}Without epoll}{63}{subsection.10.12.1}%
+\contentsline {section}{\numberline {10.13}Two kinds of wake}{64}{section.10.13}%
+\contentsline {section}{\numberline {10.14}Inside epoll}{65}{section.10.14}%
+\contentsline {section}{\numberline {10.15}Inside the timer wheel}{66}{section.10.15}%
+\contentsline {subsection}{\numberline {10.15.1}A worked example}{67}{subsection.10.15.1}%
+\contentsline {section}{\numberline {10.16}Idle cost and event cost}{68}{section.10.16}%
+\contentsline {subsection}{\numberline {10.16.1}Measurement}{68}{subsection.10.16.1}%
+\contentsline {section}{\numberline {10.17}A hundred-line executor}{69}{section.10.17}%
+\contentsline {section}{\numberline {10.18}Common mistakes}{72}{section.10.18}%
+\contentsline {section}{\numberline {10.19}The whole story in one page}{72}{section.10.19}%
+\contentsline {section}{\numberline {10.20}The programs behind the measurements}{73}{section.10.20}%
+\contentsline {subsection}{\numberline {10.20.1}mio on its own}{73}{subsection.10.20.1}%
+\contentsline {subsection}{\numberline {10.20.2}The eventfd wake-up}{74}{subsection.10.20.2}%
+\contentsline {subsection}{\numberline {10.20.3}A future that never stores its waker}{74}{subsection.10.20.3}%
+\contentsline {subsection}{\numberline {10.20.4}Idle cost and event cost}{75}{subsection.10.20.4}%
+\contentsline {chapter}{\numberline {11}Solidity}{77}{chapter.11}%
+\contentsline {section}{\numberline {11.1}The memory model}{77}{section.11.1}%
+\contentsline {subsection}{\numberline {11.1.1}Memory types: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {calldata}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {memory}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {storage}}}}{77}{subsection.11.1.1}%
+\contentsline {subsection}{\numberline {11.1.2}The on-chain storage}{77}{subsection.11.1.2}%
+\contentsline {subsubsection}{Static sized object representation}{77}{section*.9}%
+\contentsline {subsubsection}{Dynamically sized object representation}{78}{section*.10}%
+\contentsline {section}{\numberline {11.2}Function and their modifiers}{78}{section.11.2}%
+\contentsline {subsection}{\numberline {11.2.1}Visibility Modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {private}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {internal}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {external}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {public}}}}{78}{subsection.11.2.1}%
+\contentsline {subsection}{\numberline {11.2.2}Function Modifiers for preconditions and postconditions}{78}{subsection.11.2.2}%
+\contentsline {subsection}{\numberline {11.2.3}Special modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {view}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {pure}}} and \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {payable}}}}{79}{subsection.11.2.3}%
+\contentsline {section}{\numberline {11.3}The EIP-721 Standard: Non-Fungible Tokens (NFTs)}{79}{section.11.3}%
+\contentsline {section}{\numberline {11.4}Exercise Solutions}{80}{section.11.4}%
+\contentsline {chapter}{\numberline {12}Binary Search}{81}{chapter.12}%
+\contentsline {section}{\numberline {12.1}Basic: Minimize $k$ such that $f(k)$ is true}{81}{section.12.1}%
+\contentsline {section}{\numberline {12.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {feasible(x) -> bool}}}}{81}{section.12.2}%
+\contentsline {subsection}{\numberline {12.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{81}{subsection.12.2.1}%
+\contentsline {subsection}{\numberline {12.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{82}{subsection.12.2.2}%
+\contentsline {subsection}{\numberline {12.2.3}Problem [SplitM]: Split array into $m$ subarrays}{82}{subsection.12.2.3}%
+\contentsline {section}{\numberline {12.3}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt {enough(x) -> bool}}}}{83}{section.12.3}%
+\contentsline {subsection}{\numberline {12.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{83}{subsection.12.3.1}%
+\contentsline {chapter}{\numberline {13}Dynamic Programming}{85}{chapter.13}%
+\contentsline {section}{\numberline {13.1}Memoization}{85}{section.13.1}%
+\contentsline {section}{\numberline {13.2}Most important subproblems}{86}{section.13.2}%
+\contentsline {chapter}{Alphabetical Index}{87}{section*.11}%

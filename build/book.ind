@@ -1,5 +1,6 @@
 \begin{theindex}
 
+  \item Accidental rescue, \hyperpage{56}
   \item asynchronous model, \hyperpage{16}
 
   \indexspace
@@ -8,32 +9,55 @@
 
   \indexspace
 
+  \item Completion model, \hyperpage{47}
   \item Consensus, \hyperpage{15}
   \item Consistency, \hyperpage{14}
+  \item Context, \hyperpage{50}
   \item Crash fault, \hyperpage{15}
 
   \indexspace
 
+  \item Driver, \hyperpage{60}
+  \item Driver duty, \hyperpage{52}
+
+  \indexspace
+
+  \item epoll, \hyperpage{65}
+  \item Event cost, \hyperpage{68}
+  \item eventfd, \hyperpage{46}
   \item Eventual Consistency, \hyperpage{14}
   \item Eventual Liveness, \hyperpage{14}
+  \item Executor, \hyperpage{44}
 
   \indexspace
 
   \item Fail Stop, \hyperpage{15}
+  \item File descriptor, \hyperpage{46}
   \item FLP Impossibility Theorem, \hyperpage{16}
+  \item Future, \hyperpage{44}
+
+  \indexspace
+
+  \item Idle cost, \hyperpage{68}
 
   \indexspace
 
   \item Lamport Clocks, \hyperpage{16}
+  \item Leaf future, \hyperpage{49}
+  \item LIFO slot, \hyperpage{60}
   \item Liveness, \hyperpage{14}
+  \item Local wake, \hyperpage{52}
+  \item Lost wake, \hyperpage{55}
 
   \indexspace
 
   \item Message Buffer, \hyperpage{17}
+  \item mio, \hyperpage{62}
 
   \indexspace
 
   \item Node honesty, \hyperpage{14}
+  \item Non-blocking I/O, \hyperpage{46}
 
   \indexspace
 
@@ -42,14 +66,41 @@
   \indexspace
 
   \item Partial Order, \hyperpage{16}
+  \item Poll, \hyperpage{44}
 
   \indexspace
 
+  \item Raw waker, \hyperpage{50}
+  \item Reactor, \hyperpage{60}
+  \item Readiness model, \hyperpage{47}
+  \item Remote wake, \hyperpage{52}
+
+  \indexspace
+
+  \item Silent source, \hyperpage{57}
+  \item Stranded task, \hyperpage{56}
   \item Strong consistency, \hyperpage{14}
   \item Strong liveness, \hyperpage{14}
+  \item System call, \hyperpage{45}
 
   \indexspace
 
+  \item Task, \hyperpage{48}
+  \item Task-level wake, \hyperpage{64}
+  \item Thread-level wake, \hyperpage{64}
+  \item Timer wheel, \hyperpage{66}
+  \item Token (mio), \hyperpage{62}
+  \item tokio-console, \hyperpage{57}
   \item True crash fault, \hyperpage{15}
+
+  \indexspace
+
+  \item Wake Obligation, \hyperpage{54}
+  \item Wake path, \hyperpage{51}
+  \item Wake source, \hyperpage{53}
+  \item Waker, \hyperpage{44}
+  \item Waker slot, \hyperpage{51}
+  \item Waker-driven executor, \hyperpage{54}
+  \item Work stealing, \hyperpage{60}
 
 \end{theindex}

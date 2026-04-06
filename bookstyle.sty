@@ -2,7 +2,7 @@
 \RequirePackage{sansmath}
 \RequirePackage{soul}
 \RequirePackage{tcolorbox}
-\tcbuselibrary{skins,breakable}
+\tcbuselibrary{skins,breakable,theorems}
 
 \definecolor{Primary1}{HTML}{1FABD5}
 \definecolor{Primary2}{HTML}{1D8DB0}
@@ -42,3 +42,25 @@ fonttitle=\bfseries,#1}
 boxrule=0mm,leftrule=2mm,boxsep=0mm,arc=0mm,outer arc=0mm,attach title to upper,
 after title={\ }, coltitle=Primary2,colback=yellow!20,colframe=black, title={#2},
 fonttitle=\bfseries,#1}
+
+%% NUMBERED STATEMENTS
+% Definitions, axioms, lemmas, corollaries and propositions share one counter,
+% numbered within the section: \begin{lemma}{Name}{slug} ... \end{lemma},
+% referenced as Lemma~\ref{lem:slug}. Prefixes: def, ax, lem, cor, prop.
+\colorlet{StmtDefinition}{Primary3}
+\colorlet{StmtAxiom}{violet!80!black}
+\colorlet{StmtLemma}{green!45!black}
+\colorlet{StmtProposition}{orange!85!black}
+\tcbset{statement/.style={breakable, enhanced, sharp corners, parbox=false,
+  boxrule=0mm, leftrule=1.5mm, boxsep=0mm, left=3mm, right=2mm, top=1.5mm, bottom=1.5mm,
+  colback=#1!6, colframe=#1, coltitle=#1, fonttitle=\bfseries,
+  attach title to upper, after title={.\ }, separator sign none,
+  description delimiters parenthesis, description font=\mdseries\bfseries}}
+\newtcbtheorem[number within=section]{definition}{Definition}{statement=StmtDefinition}{def}
+\newtcbtheorem[use counter from=definition]{axiom}{Axiom}{statement=StmtAxiom}{ax}
+\newtcbtheorem[use counter from=definition]{lemma}{Lemma}{statement=StmtLemma}{lem}
+\newtcbtheorem[use counter from=definition]{corollary}{Corollary}{statement=StmtLemma}{cor}
+\newtcbtheorem[use counter from=definition]{proposition}{Proposition}{statement=StmtProposition}{prop}
+% Inside a statement: the argument for a lemma, and where an axiom comes from.
+\newcommand{\why}{\par\smallskip\textit{Why.}\ }
+\newcommand{\source}[2][Source]{\par\smallskip{\small\color{gray!90!black}#1: #2}}

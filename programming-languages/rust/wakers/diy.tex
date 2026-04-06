@@ -1,0 +1,180 @@
+%% Part VI: Doing it yourself. A working executor, and the mistakes to avoid.
+
+\section{A hundred-line executor}
+\label{sec:wakers-ch17}
+
+\textit{Everything in this chapter fits into a program short enough to read in one sitting: a timer future that stores its waker, and an executor whose idea of ``wake'' is ``send me back to the queue.''}
+
+Listing~\ref{lst:wakers-17.1} uses only the standard library. One simplification: its timer spawns a thread per timer to stand in for a driver, which keeps the example self-contained. Real runtimes never do this; they use the wheel of Section~\ref{sec:wakers-ch15}, and a waiting task never has a thread of its own (Lemma~\ref{lem:idle-cost-memory-only}).
+
+\begin{lstlisting}[caption={A complete executor and timer.}, label=lst:wakers-17.1]
+use std::future::Future;
+use std::pin::Pin;
+use std::sync::mpsc::{sync_channel, Receiver, SyncSender};
+use std::sync::{Arc, Mutex};
+use std::task::{Context, Poll, Wake, Waker};
+use std::thread;
+use std::time::Duration;
+
+// ---------- A leaf future: a timer ----------
+struct Shared {
+    done: bool,
+    waker: Option<Waker>,
+}
+
+pub struct Timer {
+    shared: Arc<Mutex<Shared>>,
+}
+
+impl Timer {
+    pub fn new(dur: Duration) -> Self {
+        let shared = Arc::new(Mutex::new(Shared { done: false, waker: None }));
+        let s = shared.clone();
+        // Stand-in for a real reactor: a thread that "fires" later.
+        thread::spawn(move || {
+            thread::sleep(dur);
+            let mut st = s.lock().unwrap();
+            st.done = true;
+            if let Some(w) = st.waker.take() {
+                w.wake(); // "buzz the pager"
+            }
+        });
+        Timer { shared }
+    }
+}
+
+impl Future for Timer {
+    type Output = ();
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<()> {
+        let mut st = self.shared.lock().unwrap();
+        if st.done {
+            return Poll::Ready(());
+        }
+        // Not ready: remember WHO to wake. Always store the latest waker.
+        st.waker = Some(cx.waker().clone());
+        Poll::Pending
+    }
+}
+
+// ---------- A tiny executor ----------
+type BoxFut = Pin<Box<dyn Future<Output = ()> + Send>>;
+
+struct Task {
+    fut: Mutex<Option<BoxFut>>,
+    queue: SyncSender<Arc<Task>>,
+}
+
+impl Wake for Task {
+    // What "wake" means for THIS executor: put me back on the run queue.
+    fn wake(self: Arc<Self>) {
+        let q = self.queue.clone();
+        q.send(self).expect("run queue full");
+    }
+}
+
+fn spawn(f: impl Future<Output = ()> + Send + 'static, tx: &SyncSender<Arc<Task>>) {
+    let task = Arc::new(Task {
+        fut: Mutex::new(Some(Box::pin(f))),
+        queue: tx.clone(),
+    });
+    tx.send(task).unwrap();
+}
+
+fn run(rx: Receiver<Arc<Task>>) {
+    // Blocks (sleeps) when the queue is empty -- no busy spinning.
+    while let Ok(task) = rx.recv() {
+        let mut slot = task.fut.lock().unwrap();
+        if let Some(mut fut) = slot.take() {
+            let waker = Waker::from(task.clone());
+            let mut cx = Context::from_waker(&waker);
+            if fut.as_mut().poll(&mut cx).is_pending() {
+                *slot = Some(fut); // park it until someone calls wake()
+            }
+        }
+    }
+}
+
+fn main() {
+    let (tx, rx) = sync_channel(100);
+    spawn(async {
+        println!("A: start");
+        Timer::new(Duration::from_millis(300)).await;
+        println!("A: woke up after 300ms");
+    }, &tx);
+    spawn(async {
+        println!("B: start");
+        Timer::new(Duration::from_millis(100)).await;
+        println!("B: woke up after 100ms");
+    }, &tx);
+    drop(tx);
+    run(rx);
+    println!("all tasks done, executor exits");
+}
+\end{lstlisting}
+
+Running it prints:
+
+\begin{lstlisting}[language={}, numbers=none]
+A: start
+B: start
+B: woke up after 100ms
+A: woke up after 300ms
+all tasks done, executor exits
+\end{lstlisting}
+
+Where each idea from the chapter appears in the listing:
+
+\begin{itemize}
+    \item \textbf{Leaf future (Definition~\ref{def:leaf-future}):} \code{Timer}, the only code that stores a waker.
+    \item \textbf{Clone to keep (Lemma~\ref{lem:clone-to-keep}):} \code{st.waker = Some(cx.waker().clone())}.
+    \item \textbf{Atomic check-and-store (Lemma~\ref{lem:atomic-check-and-store}):} the \code{done} check and the waker store happen under the same lock that the timer thread takes before calling the waker.
+    \item \textbf{Waker slot (Definition~\ref{def:waker-slot}):} the \code{waker} field of \code{Shared}.
+    \item \textbf{Raw waker (Definition~\ref{def:raw-waker}):} built safely by implementing \code{Wake} for \code{Task} and calling \code{Waker::from(task.clone())}.
+    \item \textbf{Waker-driven executor (Definition~\ref{def:waker-driven-executor}):} \code{run} polls only tasks received from the queue, and \code{wake} is the only way back onto it.
+    \item \textbf{Remote wake:} the timer thread calls the waker; the executor thread is blocked in \code{recv()}, which costs no CPU (Axiom~\ref{ax:free-blocking}).
+    \item \textbf{Independence:} the timer and the executor know nothing about each other. The only thing they share is the \code{Waker}.
+\end{itemize}
+
+When the last task finishes, every sender to the queue has been dropped, \code{recv()} fails, and the loop exits.
+
+\section{Common mistakes}
+\label{sec:wakers-ch18}
+
+\begin{table}[H]
+    \centering\small
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.2cm} X >{\raggedright\arraybackslash}p{1.8cm}}
+        \toprule
+        \textbf{Belief or habit} & \textbf{What is actually true} & \textbf{See} \\
+        \midrule
+        ``\texttt{wake()} runs the task.'' & It only schedules it. The poll happens later, on whichever thread the executor chooses. \texttt{wake()} must be cheap and must not block. & Def.~\ref{def:waker} \\
+        ``Each waker is a background thread.'' & It is two pointers in a waker slot. Idle cost is memory only. & Lemma~\ref{lem:idle-cost-memory-only} \\
+        ``The kernel calls my waker.'' & The kernel returns from a system call; Rust code calls the waker. & Lemma~\ref{lem:wakers-called-from-user-space} \\
+        Storing only the first waker & Store the latest on every \texttt{Pending}; use \texttt{will\_wake} to avoid needless clones. & Axiom~\ref{ax:wake-obligation} \\
+        Checking, then storing, separately & A lost wake can fall between the two. & Lemma~\ref{lem:atomic-check-and-store} \\
+        Calling \texttt{wake\_by\_ref()} on every poll & Occasionally a deliberate yield; every time, a busy loop. & Table~\ref{tab:wakers-9.1} \\
+        Blocking inside async code & \texttt{std::fs::read} or \texttt{thread::sleep} in a task blocks the whole worker. Use \texttt{tokio::fs}, \texttt{tokio::time::sleep} or \texttt{spawn\_blocking}. & Section~\ref{sec:wakers-ch16} \\
+        ``It works inside \texttt{join!}.'' & Possibly an accidental rescue. & Lemma~\ref{lem:shared-fate} \\
+        Spawning onto \texttt{current\_thread} from elsewhere & Nothing runs unless some thread is in \texttt{block\_on}. & Cor.~\ref{cor:no-block-on-no-progress} \\
+        Testing a future by hand & \texttt{Waker::noop()}, stable since Rust 1.85, provides a do-nothing waker for polling once in a unit test. & --- \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Misconceptions and their corrections.}
+    \label{tab:wakers-18.1}
+\end{table}
+
+\section{The whole story in one page}
+\label{sec:wakers-afterword}
+
+A worker thread takes a task from its run queue and polls it, handing over a \code{Context} that holds the task's \code{Waker}. Through each \code{.await}, the context travels down the task's tree of futures to the leaf that is actually waiting. If the leaf can't finish, it leaves a clone of the waker in a waker slot---a socket's reader slot, a slot in the timer wheel, a blocking job's handle---and returns \code{Pending}, which bubbles back up to the worker.
+
+When the worker runs out of tasks, it goes on driver duty. It asks the timer wheel for the next deadline and sleeps in mio's \code{Poll::poll}, which on Linux is \code{epoll\_wait}, with that deadline as the timeout. Three things can end the sleep:
+
+\begin{itemize}
+    \item the kernel reporting that a socket is ready;
+    \item the timeout expiring;
+    \item another thread performing a thread-level wake through \code{mio::Waker}.
+\end{itemize}
+
+In each case, ordinary Rust code then calls the right task's \code{wake()}. The task goes back onto a run queue, is polled again, and this time the leaf returns \code{Ready}, and the \code{async fn} continues where it paused.
+
+Two facts summarize the rest. If nobody ever calls that waker, the task is stranded and never polled again (Lemma~\ref{lem:stranding}). And because a waiting task's idle cost is memory only (Lemma~\ref{lem:idle-cost-memory-only}), a single thread can hold hundreds of thousands of them.
