@@ -1,11 +1,11 @@
 %% The programs behind the measurements quoted in this chapter.
 
-\section{The programs behind the measurements}
+\subsection{The programs behind the measurements}
 \label{sec:wakers-programs}
 
 Each program below was compiled and run to produce the results quoted in the text, with Rust 1.97, Tokio 1.54.1 and mio 1.2.5 on Linux. Listing~\ref{lst:wakers-17.1} is the fifth program.
 
-\subsection{mio on its own}
+\subsubsection{mio on its own}
 
 \begin{itemize}
     \item Dependencies: \code{mio = \{ version = "1", features = ["os-poll", "net"] \}}.
@@ -56,7 +56,7 @@ fn main() -> std::io::Result<()> {
 }
 \end{lstlisting}
 
-\subsection{The eventfd wake-up}
+\subsubsection{The eventfd wake-up}
 
 \begin{itemize}
     \item Dependencies: \code{tokio = \{ version = "1", features = ["full"] \}}.
@@ -71,7 +71,7 @@ async fn main() {
 }
 \end{lstlisting}
 
-\subsection{A future that never stores its waker}
+\subsubsection{A future that never stores its waker}
 
 \begin{itemize}
     \item Dependencies: \code{tokio} (full), \code{futures = "0.3"}, \code{smol = "2"}, \code{pollster = "0.4"}, \code{cassette = "0.3"}.
@@ -128,7 +128,7 @@ fn main() {
 }
 \end{lstlisting}
 
-\subsection{Idle cost and event cost}
+\subsubsection{Idle cost and event cost}
 
 \begin{itemize}
     \item Dependencies: \code{tokio} (full).

@@ -1,9 +1,9 @@
 %% Part II: Watching it work. Two real tasks, followed one step at a time.
 
-\section{Two tasks, start to finish}
+\subsection{Two tasks, start to finish}
 \label{sec:wakers-ch5}
 
-\textit{Two tasks that look identical in source code can take completely different routes back to life. Following both, step by step, shows how the pieces fit, and supplies the vocabulary for the rest of the chapter.}
+\textit{Two tasks that look identical in source code can take completely different routes back to life. Following both, step by step, shows how the pieces fit, and supplies the vocabulary for the rest of the section.}
 
 The program in Listing~\ref{lst:wakers-5.1} runs on Tokio's \code{current\_thread} runtime, which has a single worker thread:
 
@@ -53,9 +53,9 @@ Four terms will make the walkthrough easier to follow.
 
 Table~\ref{tab:wakers-5.1} follows the program from spawn to completion. The last column shows which waker slots are occupied after each step.
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{r X >{\raggedright\arraybackslash}p{2.7cm} >{\raggedright\arraybackslash}p{2.5cm}}
+    \begin{tabularx}{\linewidth}{r Y >{\raggedright\arraybackslash}p{2.7cm} >{\raggedright\arraybackslash}p{2.5cm}}
         \toprule
         \textbf{\#} & \textbf{What happens} & \textbf{Worker thread} & \textbf{Occupied slots} \\
         \midrule
@@ -107,7 +107,7 @@ A waits forever, with no error and no CPU use. Section~\ref{sec:wakers-ch8} is a
     \end{itemize}
 \end{quotebox}
 
-\section{Who calls \texorpdfstring{\texttt{wake()}}{wake()}}
+\subsection{Who calls \texorpdfstring{\texttt{wake()}}{wake()}}
 \label{sec:wakers-ch6}
 
 \textit{It's tempting to imagine the operating system reaching in to wake a task. It never does. Every waker is called by ordinary Rust code, and many wake-ups never involve the operating system at all.}
@@ -124,9 +124,9 @@ A waits forever, with no error and no CPU use. Section~\ref{sec:wakers-ch8} is a
 
 There is no official list of wake sources, and there cannot be one: any code holding a waker may call it. In practice, every wake path starts at one of eight sources:
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.3cm} X X}
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.3cm} Y Y}
         \toprule
         \textbf{Wake source} & \textbf{Covers} & \textbf{Who calls \texttt{wake()}} \\
         \midrule
@@ -163,3 +163,18 @@ Files deserve a final word, since they surprise people:
         \item Wakers may be called from any thread (Corollary~\ref{cor:wakers-cross-threads}).
     \end{itemize}
 \end{quotebox}
+
+\begin{Exercise}[title={Wake paths}]
+    \begin{enumerate}
+        \item In Table~\ref{tab:wakers-5.1}, step 6 needs a write to an eventfd but step 10 does not. Explain why, naming the statement involved.
+        \item On Tokio's multi-thread runtime, classify each wake as local or remote: (a) a timer expires and the worker on driver duty wakes the sleeping task; (b) a \code{spawn\_blocking} job finishes; (c) a task running on worker 1 sends on a channel that a task last polled on worker 2 is waiting on; (d) a thread you started with \code{std::thread::spawn} calls a stored waker.
+        \item Which of the eight wake sources of Table~\ref{tab:wakers-6.1} ends each of these waits: \code{rx.recv().await} on a \code{tokio::sync::mpsc} channel; \code{tokio::signal::ctrl\_c().await}; \code{interval.tick().await}; \code{tokio::fs::read(path).await}?
+    \end{enumerate}
+\end{Exercise}
+\begin{Answer}
+    \begin{enumerate}
+        \item Step 6 is a remote wake, made on the pool thread while the only worker sleeps in \code{epoll\_wait}. Pushing task B onto a queue changes only memory, which the kernel cannot see, so the waker must also make a descriptor in the epoll set ready (Lemma~\ref{lem:remote-wakes-need-a-poke}). Step 10 is a local wake, made by the worker itself while on driver duty: that thread is already awake and simply polls A next.
+        \item By Definition~\ref{def:local-remote-wake}: (a) local, since the worker on driver duty is one of the runtime's own threads; (b) remote, since blocking-pool threads are not workers; (c) local, since the wake is made on worker 1, so the waiting task lands in worker 1's LIFO slot, wherever it last ran; (d) remote.
+        \item The channel: source 4, another task (the sender's \code{send} calls the waker). \code{ctrl\_c}: source 6, signals, whose handler writes to a pipe, so it arrives as source 1. \code{interval.tick}: source 3, time. \code{tokio::fs::read}: source 2, the blocking pool.
+    \end{enumerate}
+\end{Answer}

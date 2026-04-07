@@ -1,6 +1,6 @@
 %% Part IV: Inside Tokio. Run queues, driver duty, mio, and the second kind of wake.
 
-\section{The runtime at a glance}
+\subsection{The runtime at a glance}
 \label{sec:wakers-ch10}
 
 \textit{Tokio's default runtime spreads tasks across several worker threads, each with its own queue, and balances the load by stealing. Figure~\ref{fig:wakers-10.1} shows the whole structure.}
@@ -24,10 +24,10 @@
         \node[anchor=west, text=gray] at ({#1+236},255) {\dots};
         \node[anchor=north west, inner sep=0, text width=4.3cm, text=gray] at ({#1+16},280) {#6};
     }
-    \begin{tikzpicture}[x=0.017cm, y=-0.019cm, font=\sffamily\scriptsize, >={Stealth}]
+    \figurefonts\resizebox{\linewidth}{!}{\begin{tikzpicture}[x=0.017cm, y=-0.019cm, font=\sffamily\scriptsize, >={Stealth}]
         % other threads
         \draw[rounded corners=6pt, draw=StmtAxiom, fill=StmtAxiom!8, line width=0.6pt] (20,20) rectangle (290,106);
-        \node[anchor=north west, inner sep=0, text width=4.3cm] at (36,32) {\small\textbf{Other threads}\\[2pt] \textcolor{gray}{blocking pool, main(), any non-worker}\\[2pt] \texttt{spawn()} $\cdot$ \texttt{wake()}};
+        \node[anchor=north west, inner sep=0, text width=4.3cm] at (36,32) {{\small\textbf{Other threads}}\\[2pt] \textcolor{gray}{blocking pool, main(), any non-worker}\\[2pt] \texttt{spawn()} $\cdot$ \texttt{wake()}};
         \draw[->, gray, thick] (290,63) -- (326,63);
         % global inject queue
         \draw[rounded corners=6pt, draw=StmtProposition, fill=orange!8, line width=0.6pt] (330,20) rectangle (920,106);
@@ -63,7 +63,7 @@
         % owned tasks
         \draw[rounded corners=6pt, draw=gray!60, dashed, fill=white, line width=0.6pt] (20,420) rectangle (300,648);
         \node[anchor=north west, inner sep=0, text width=4.3cm] at (36,432) {\small\textbf{OwnedTasks}\\[4pt] \scriptsize\textcolor{gray}{A list of every live task, including idle ones parked on a waker.\\[4pt] Not a queue. Never scanned to decide what to poll; used only for abort, shutdown and metrics.\\[4pt] A task that's not queued and not woken just sits here.}};
-    \end{tikzpicture}
+    \end{tikzpicture}}
     \caption{Tokio's multi-thread runtime, simplified. The \texttt{current\_thread} runtime of Section~\ref{sec:wakers-ch5} is the same picture with one worker and no stealing.}
     \label{fig:wakers-10.1}
 \end{figure}
@@ -82,9 +82,9 @@ The parts of the figure:
 
 Where a woken task lands depends on who woke it:
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm} X >{\raggedright\arraybackslash}p{2.6cm}}
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm} Y >{\raggedright\arraybackslash}p{2.6cm}}
         \toprule
         \textbf{Kind of wake} & \textbf{Where the task goes} & \textbf{In Section~\ref{sec:wakers-ch5}} \\
         \midrule
@@ -117,7 +117,7 @@ Each structure exists for a reason:
     \end{itemize}
 \end{quotebox}
 
-\section{Driver duty}
+\subsection{Driver duty}
 \label{sec:wakers-ch11}
 
 \textit{``Reactor'' is the traditional name for the part of a runtime that waits for events. In Tokio it isn't a component or a thread. It is a duty that a worker takes up when it has nothing else to do.}
@@ -136,13 +136,13 @@ A little history clarifies the names:
     \item In the multi-thread runtime, the first idle worker to take the driver's lock goes on driver duty; other idle workers sleep on a condition variable.
 \end{itemize}
 
-\subsection{Two different things called ``poll''}
+\subsubsection{Two different things called ``poll''}
 
 Tokio sits on a library called mio (Section~\ref{sec:wakers-ch12}), whose main type is \code{Poll}, with a method also named \code{poll}. The two have nothing in common:
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{1.8cm} >{\raggedright\arraybackslash}p{4.6cm} X}
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{1.8cm} >{\raggedright\arraybackslash}p{4.6cm} Y}
         \toprule
          & \textbf{\texttt{Future::poll(cx)}} & \textbf{\texttt{mio::Poll::poll(\&mut events, timeout)}} \\
         \midrule
@@ -179,7 +179,7 @@ idle worker -> park()
     \item \textbf{Files} never pass through any driver (Axiom~\ref{ax:files-always-ready}).
 \end{itemize}
 
-\subsection{The single-threaded runtime}
+\subsubsection{The single-threaded runtime}
 
 The \code{current\_thread} runtime has no worker threads. Its only executor is whichever thread calls \code{block\_on}, typically the main thread, and that thread owns the driver outright, with no lock.
 
@@ -194,9 +194,9 @@ loop {
 }
 \end{lstlisting}
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.4cm} X X}
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.4cm} Y Y}
         \toprule
          & \textbf{Multi-thread} & \textbf{\texttt{current\_thread}} \\
         \midrule
@@ -229,7 +229,7 @@ In practice:
     \end{itemize}
 \end{quotebox}
 
-\section{mio: where Tokio meets the operating system}
+\subsection{mio: where Tokio meets the operating system}
 \label{sec:wakers-ch12}
 
 \textit{Between Tokio and the kernel sits a small library that knows nothing about futures. Seeing exactly where it begins and ends removes most of the mystery from async I/O.}
@@ -251,9 +251,9 @@ The work divides into two questions:
     \why mio places the token in the \code{data} field of the epoll registration, which the kernel returns verbatim. Listing~\ref{lst:wakers-12.1} shows it happening.
 \end{lemma}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.6cm} X}
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.6cm} Y}
         \toprule
         \textbf{your code} & \texttt{sock.read(\&mut buf).await} \\
         \midrule
@@ -297,9 +297,9 @@ Two observations:
     \item The \code{EPOLLET} flag shows that mio always registers in edge-triggered mode, so whoever reads must keep reading until the operating system says \code{WouldBlock}.
 \end{itemize}
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.4cm} X}
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.4cm} Y}
         \toprule
         \textbf{Not mio's job} & \textbf{Who does it} \\
         \midrule
@@ -314,7 +314,7 @@ Two observations:
     \label{tab:wakers-12.1}
 \end{table}
 
-\subsection{Without epoll}
+\subsubsection{Without epoll}
 
 epoll exists only on Linux. mio picks a backend at compile time, so there is no runtime cost, and Tokio's code above mio is identical everywhere:
 
@@ -344,7 +344,7 @@ The libuv library beneath Node.js uses the same technique.
     \end{itemize}
 \end{quotebox}
 
-\section{Two kinds of wake}
+\subsection{Two kinds of wake}
 \label{sec:wakers-ch13}
 
 \textit{mio has a type called \code{Waker}. It shares nothing with \code{std::task::Waker} but the name, and understanding both completes the story of step 6 in Section~\ref{sec:wakers-ch5}.}
@@ -354,9 +354,9 @@ The libuv library beneath Node.js uses the same technique.
     A \emph{task-level wake} makes a task runnable by putting it on a run queue; it is what \code{std::task::Waker} does. A \emph{thread-level wake} makes a blocked thread runnable by making a descriptor ready; it is what \code{mio::Waker} does.
 \end{definition}
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm} X X}
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm} Y Y}
         \toprule
          & \textbf{\texttt{std::task::Waker}} & \textbf{\texttt{mio::Waker}} \\
         \midrule
@@ -413,3 +413,20 @@ epoll_ctl(3, EPOLL_CTL_ADD, 4, {EPOLLIN|EPOLLET, data=0})   <- registered as Tok
         \item A remote wake to a sleeping worker needs both, in that order (Lemma~\ref{lem:two-stage-remote-wake}). Repeated thread-level wakes coalesce (Lemma~\ref{lem:wake-coalescing}).
     \end{itemize}
 \end{quotebox}
+
+\begin{Exercise}[title={Inside Tokio}]
+    \begin{enumerate}
+        \item Why can't another worker steal the task in a worker's LIFO slot, and what stops two tasks that keep waking each other from monopolising a worker through that slot?
+        \item A program builds a \code{current\_thread} runtime, gives its \code{Handle} to another thread that spawns tasks with it, and never calls \code{block\_on}. What happens to those tasks?
+        \item In Listing~\ref{lst:wakers-13.2}, why does the eventfd's event carry \code{data=0}? If two pool threads both finish jobs before the sleeping thread runs, how many events does \code{epoll\_wait} return for the eventfd?
+        \item In one sentence each, what do \code{Future::poll} and \code{mio::Poll::poll} do, and which of them may block?
+    \end{enumerate}
+\end{Exercise}
+\begin{Answer}
+    \begin{enumerate}
+        \item The LIFO slot exists so that a task woken by the one just polled runs next, on the same core, while the data it needs is still in cache; only the local run queue is stealable. To stay fair, a worker takes at most three tasks in a row from its LIFO slot before going back to its local queue (Section~\ref{sec:wakers-ch10}).
+        \item Nothing runs. A \code{current\_thread} runtime has no worker threads: it polls tasks, handles I/O and fires timers only while some thread is inside its \code{block\_on} (Corollary~\ref{cor:no-block-on-no-progress}). The tasks wait in the inject queue until a thread enters \code{block\_on}.
+        \item The eventfd is the \code{mio::Waker}, registered as Token(0), Tokio's \code{TOKEN\_WAKEUP}; the token comes back unchanged in epoll's \code{data} field (Lemma~\ref{lem:token-round-trip}). Two writes before the thread runs produce a single event: each write only adds to the eventfd's counter, and the descriptor sits on the ready list at most once until \code{epoll\_wait} collects it (Lemma~\ref{lem:wake-coalescing}).
+        \item \code{Future::poll} asks a future to make as much progress as it can and never blocks; it returns \code{Pending} instead. \code{mio::Poll::poll} is a thin wrapper around \code{epoll\_wait} (or its equivalent) and blocks the calling thread until an event arrives or the timeout passes (Table~\ref{tab:wakers-11.1}).
+    \end{enumerate}
+\end{Answer}

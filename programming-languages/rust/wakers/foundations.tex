@@ -1,6 +1,6 @@
 %% Part I: Foundations. What a waker is, what the operating system offers, and what a waker belongs to.
 
-\section{Why wakers exist}
+\subsection{Why wakers exist}
 \label{sec:wakers-ch1}
 
 \textit{A future in Rust does nothing on its own. Something has to ask it to make progress, and when it can't, something has to decide when to ask again. The waker is how that decision gets made.}
@@ -51,12 +51,12 @@ A restaurant pager is a fair picture of the arrangement:
     \end{itemize}
 \end{quotebox}
 
-\section{What the operating system provides}
+\subsection{What the operating system provides}
 \label{sec:wakers-ch2}
 
 \textit{An async runtime adds no new powers to a computer. It is an arrangement of a handful of services that every modern operating system kernel already offers. This section introduces them in plain terms, and states the few facts about them that later sections depend on.}
 
-\subsection{Two worlds: your program and the kernel}
+\subsubsection{Two worlds: your program and the kernel}
 
 \begin{itemize}
     \item A running program lives in \emph{user space}. It can compute, and read and write its own memory, but it cannot touch hardware: not the network card, not the disk, not the clock.
@@ -64,9 +64,9 @@ A restaurant pager is a fair picture of the arrangement:
     \item To get something only the kernel can do---read a socket, open a file, wait for time to pass---a program makes a \emph{system call}\index{System call}. The program stops, the kernel does the work, and control returns with an answer. Each crossing costs a little time.
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
-    \begin{tikzpicture}[font=\sffamily\footnotesize, >={Stealth},
+    \figurefonts\resizebox{\linewidth}{!}{\begin{tikzpicture}[font=\sffamily\footnotesize, >={Stealth},
         inner/.style={draw=gray!40, fill=white, rounded corners=2pt, align=center, minimum height=1cm, text width=#1}]
         % user space
         \draw[rounded corners=4pt, draw=Primary3, fill=Primary1!10] (0,3.6) rectangle (15,5.4);
@@ -89,7 +89,7 @@ A restaurant pager is a fair picture of the arrangement:
         % hardware
         \draw[rounded corners=4pt, draw=gray!40, fill=gray!8] (0,-1.2) rectangle (15,-0.4);
         \node[anchor=west] at (0.2,-0.8) {\textcolor{gray}{\textbf{HARDWARE}}\qquad network card $\cdot$ disk $\cdot$ clock $\cdot$ CPU cores};
-    \end{tikzpicture}
+    \end{tikzpicture}}
     \caption{The three layers. Programs talk to the kernel through system calls; hardware gets the kernel's attention through interrupts.}
     \label{fig:wakers-2.1}
 \end{figure}
@@ -99,7 +99,7 @@ A restaurant pager is a fair picture of the arrangement:
     \source{the design of every general-purpose operating system that Rust targets.}
 \end{axiom}
 
-\subsection{Threads and the scheduler}
+\subsubsection{Threads and the scheduler}
 
 \begin{itemize}
     \item A \emph{thread} is a single line of execution inside a program.
@@ -119,7 +119,7 @@ A restaurant pager is a fair picture of the arrangement:
 
 Together, these two axioms state the problem async programming solves: waiting is free for a \emph{thread}, but there can't be one thread per waiting operation. Async lets a few threads serve a very large number of waiting tasks.
 
-\subsection{Ways for a thread to wait}
+\subsubsection{Ways for a thread to wait}
 
 \begin{itemize}
     \item \textbf{Sleep} for a fixed time.
@@ -129,7 +129,7 @@ Together, these two axioms state the problem async programming solves: waiting i
 
 Most of these waits accept a \emph{timeout}: a deadline after which the thread wakes regardless. This small feature is how async runtimes implement every timer (Section~\ref{sec:wakers-ch15}).
 
-\subsection{File descriptors}
+\subsubsection{File descriptors}
 
 \begin{definition}{File descriptor}{file-descriptor}
     \index{File descriptor}
@@ -148,7 +148,7 @@ Many different things are file descriptors:
 
 Because so much is a file descriptor, ``wait until one of these descriptors is ready'' is a very general tool.
 
-\subsection{Blocking and non-blocking I/O}
+\subsubsection{Blocking and non-blocking I/O}
 
 \begin{definition}{Non-blocking I/O}{non-blocking-io}
     \index{Non-blocking I/O}
@@ -157,7 +157,7 @@ Because so much is a file descriptor, ``wait until one of these descriptors is r
 
 By default, reading from a socket with no data blocks the thread. Async runtimes put every socket in non-blocking mode, because a worker thread stuck inside one read would stop serving every other task.
 
-\subsection{Interrupts and buffers}
+\subsubsection{Interrupts and buffers}
 
 When a network packet arrives:
 
@@ -169,7 +169,7 @@ When a network packet arrives:
 
 The program is not involved until it next asks. If it never asks, the bytes wait in the buffer.
 
-\subsection{Readiness and completion}
+\subsubsection{Readiness and completion}
 
 \begin{definition}{Readiness model}{readiness-model}
     \index{Readiness model}
@@ -192,7 +192,7 @@ Readiness mirrors the idea of Section~\ref{sec:wakers-ch1} exactly: instead of a
 
 Programs that need to read files without blocking must therefore either hand the read to a separate thread, or use a completion interface.
 
-\subsection{Signals}
+\subsubsection{Signals}
 
 \begin{itemize}
     \item A \emph{signal} is the kernel interrupting a program to announce an event: Ctrl-C was pressed, or a child process exited.
@@ -200,7 +200,7 @@ Programs that need to read files without blocking must therefore either hand the
     \item A handler can run at almost any moment, so it may do only a few safe things. A common technique is to write a single byte to a pipe, turning the signal into an ordinary readiness event.
 \end{itemize}
 
-\subsection{Waking a waiting thread on purpose}
+\subsubsection{Waking a waiting thread on purpose}
 
 \begin{axiom}{Kernel blindness}{kernel-blindness}
     A thread blocked waiting on a set of descriptors becomes runnable only when one of them becomes ready, its timeout passes, or a signal interrupts it. The kernel cannot see changes to a program's memory, so a change in memory alone never wakes it.
@@ -215,9 +215,9 @@ To wake such a thread deliberately, a program keeps one extra descriptor in the 
     \item \textbf{post a dummy completion} on Windows.
 \end{itemize}
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.4cm} X >{\raggedright\arraybackslash}p{3.2cm}}
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.4cm} Y >{\raggedright\arraybackslash}p{3.2cm}}
         \toprule
         \textbf{Kernel service} & \textbf{In plain English} & \textbf{Where it is used} \\
         \midrule
@@ -235,7 +235,7 @@ To wake such a thread deliberately, a program keeps one extra descriptor in the 
         Deliberate wake-ups (Axiom~\ref{ax:kernel-blindness}) & Make a descriptor ready on purpose & Sections~\ref{sec:wakers-ch5}, \ref{sec:wakers-ch13} \\
         \bottomrule
     \end{tabularx}
-    \caption{The kernel services this chapter relies on.}
+    \caption{The kernel services this section relies on.}
     \label{tab:wakers-2.1}
 \end{table}
 
@@ -248,7 +248,7 @@ To wake such a thread deliberately, a program keeps one extra descriptor in the 
     \end{itemize}
 \end{quotebox}
 
-\section{Futures, tasks and wakers}
+\subsection{Futures, tasks and wakers}
 \label{sec:wakers-ch3}
 
 \textit{Executors don't really poll individual futures, and wakers don't really wake them. Both deal in tasks. Getting this right early prevents several confusions later.}
@@ -290,6 +290,55 @@ Everything inside the \code{async} block is a future, and so is every \code{asyn
     Waking a task re-polls it from its top-level future. There is no way to wake a single inner future, except through a combinator, such as \code{FuturesUnordered}, that gives each child its own wrapped waker.
 \end{corollary}
 
+Figure~\ref{fig:wakers-3.1} draws Listing~\ref{lst:wakers-3.1} as a tree, and shows the last three statements at once.
+
+\begin{figure}[htbp]
+    \centering
+    \figurefonts\resizebox{\linewidth}{!}{\begin{tikzpicture}[font=\sffamily\footnotesize, >={Stealth},
+        fut/.style={draw=gray!60, fill=white, rounded corners=3pt, align=center, inner sep=4pt, minimum height=0.9cm, text width=#1},
+        fut/.default=2.2cm,
+        leaf/.style={fut=#1, draw=StmtLemma, fill=green!8, line width=0.7pt},
+        leaf/.default=2.2cm,
+        poll/.style={->, gray, thick},
+        lbl/.style={font=\sffamily\scriptsize\itshape, text=gray, fill=white, inner sep=1pt}]
+        % executor
+        \node[fut=3.8cm, draw=Primary3, fill=Primary1!12] (exec) at (7.5,1.7) {\textbf{Executor}\\ \texttt{poll(task, cx)}};
+        % the task
+        \draw[dashed, rounded corners=6pt, draw=Primary3, line width=0.6pt] (0,0.75) rectangle (15,-6.0);
+        \node[anchor=north west, text=Primary3] at (0.15,0.65) {\textbf{Task}\enspace one top-level future + scheduling state};
+        \node[fut=4.4cm] (root) at (7.5,-0.55) {\texttt{async \{ ... \}}\\ \textcolor{gray}{top-level future: one state machine}};
+        % level 1: what the async block awaits
+        \node[fut] (fetch) at (2.2,-2.6) {\texttt{fetch(url)}};
+        \node[fut] (join) at (7.2,-2.6) {\texttt{tokio::join!(..)}};
+        \node[fut] (tout) at (12.5,-2.6) {\texttt{timeout(d, ..)}};
+        % level 2
+        \node[leaf] (sock) at (2.2,-4.7) {\texttt{TcpStream} read\\ \textcolor{StmtLemma}{socket}};
+        \node[fut=1.9cm] (parse) at (5.6,-4.7) {\texttt{parse(resp)}};
+        \node[leaf] (sleep) at (8.6,-4.7) {\texttt{sleep(5 ms)}\\ \textcolor{StmtLemma}{timer}};
+        \node[fut=1.7cm] (save) at (11.1,-4.7) {\texttt{save(a)}};
+        \node[leaf=1.9cm] (deadline) at (13.7,-4.7) {\texttt{Sleep} until \texttt{d}\\ \textcolor{StmtLemma}{timer}};
+        \node[text=gray] at (11.1,-5.6) {\dots};
+        % polls flow down, all with the same cx
+        \draw[poll] (exec) -- (root) node[midway, right, lbl] {the task's waker, in \texttt{cx}};
+        \draw[poll] (root) -- (fetch) node[midway, lbl] {.await};
+        \draw[poll] (root) -- (join) node[midway, lbl] {.await};
+        \draw[poll] (root) -- (tout) node[midway, lbl] {.await};
+        \draw[poll] (fetch) -- (sock);
+        \draw[poll] (join) -- (parse);
+        \draw[poll] (join) -- (sleep);
+        \draw[poll] (tout) -- (save);
+        \draw[poll] (tout) -- (deadline);
+        % a wake goes back to the executor, which re-polls from the top
+        \draw[->, StmtProposition, thick, dashed] (deadline.east) -- (15.6,-4.7) |- (exec.east)
+            node[pos=0.75, above, text=StmtProposition, font=\sffamily\scriptsize\bfseries] {wake(): re-poll the whole task from the top};
+        % legend
+        \node[leaf=0.35cm, minimum height=0.35cm, inner sep=0pt] (key) at (0.5,-6.55) {};
+        \node[anchor=west, text=gray] at (0.8,-6.55) {leaf future: stores a clone of the task's one waker. Every arrow is a \texttt{poll} with the same \texttt{cx}.};
+    \end{tikzpicture}}
+    \caption{The task of Listing~\ref{lst:wakers-3.1} as a tree of futures. Only the leaves store a waker, all of them the same task's (Lemma~\ref{lem:one-waker-per-task}), and any wake re-polls from the top (Corollary~\ref{cor:whole-task-repoll}).}
+    \label{fig:wakers-3.1}
+\end{figure}
+
 Three practical consequences follow:
 
 \begin{itemize}
@@ -300,16 +349,47 @@ Three practical consequences follow:
 
 \begin{alertbox}{Under the hood: a task in memory.}
     In Tokio, a task is a single heap allocation with three parts (from \texttt{runtime/task/core.rs}):
-\begin{lstlisting}[language={}, numbers=none]
-Cell
-+-- Header     state (atomic: running, notified, complete, cancelled, ref count)
-|              queue_next (an intrusive link, so the task itself sits in run queues)
-|              vtable (poll / schedule / dealloc for this concrete future type)
-+-- Core       scheduler handle, task id, spawn location
-|              stage: Running(your future) -> Finished(output) -> Consumed
-+-- Trailer    links in the runtime's list of all tasks
-               the JoinHandle's waker, called when the task finishes
-\end{lstlisting}
+
+    \medskip
+    {\centering\figurefonts\resizebox{\linewidth}{!}{\begin{tikzpicture}[font=\sffamily\footnotesize, >={Stealth},
+        band/.style={anchor=north west, inner sep=0, text width=8.1cm, font=\sffamily\scriptsize},
+        part/.style={anchor=center, font=\sffamily\footnotesize\bfseries},
+        st/.style={draw=StmtLemma, fill=green!8, rounded corners=2pt, font=\ttfamily\scriptsize, inner sep=3pt},
+        note/.style={font=\sffamily\scriptsize, text=gray}]
+        % the allocation
+        \node[anchor=south west, inner sep=0] at (3.0,0.12) {\textbf{Cell}\enspace\textcolor{gray}{one heap allocation per task}};
+        \fill[StmtDefinition!12] (3.0,0) rectangle (4.5,-2.0);
+        \fill[orange!12] (3.0,-2.0) rectangle (4.5,-4.0);
+        \fill[StmtAxiom!10] (3.0,-4.0) rectangle (4.5,-5.4);
+        \draw[gray!60, line width=0.6pt, fill=none] (3.0,0) rectangle (13.0,-5.4);
+        \draw[gray!60] (3.0,-2.0) -- (13.0,-2.0) (3.0,-4.0) -- (13.0,-4.0) (4.5,0) -- (4.5,-5.4);
+        \node[part, text=StmtDefinition] at (3.75,-1.0) {Header};
+        \node[part, text=orange!80!black] at (3.75,-3.0) {Core};
+        \node[part, text=StmtAxiom] at (3.75,-4.7) {Trailer};
+        % header fields
+        \node[band] at (4.7,-0.2) {\texttt{state}\enspace\textcolor{gray}{atomic: running, notified, complete, cancelled, ref count}\\[5pt]
+            \texttt{queue\_next}\enspace\textcolor{gray}{intrusive link: the task itself sits in run queues}\\[5pt]
+            \texttt{vtable}\enspace\textcolor{gray}{poll / schedule / dealloc for this future type}};
+        % core fields, with the stage's life cycle
+        \node[band] at (4.7,-2.2) {\textcolor{gray}{scheduler handle, task id, spawn location}\\[5pt] \texttt{stage}\enspace\textcolor{gray}{your future lives here:}};
+        \node[st] (run) at (5.9,-3.45) {Running(future)};
+        \node[st] (fin) at (8.6,-3.45) {Finished(output)};
+        \node[st] (con) at (11.1,-3.45) {Consumed};
+        \draw[->, gray] (run) -- (fin);
+        \draw[->, gray] (fin) -- (con);
+        % trailer fields
+        \node[band] at (4.7,-4.2) {\textcolor{gray}{links in the runtime's list of all tasks}\\[5pt] \textcolor{gray}{the}\enspace\texttt{JoinHandle}\textcolor{gray}{'s waker, called when the task finishes}};
+        % a waker points at the header
+        \node[draw=Primary3, fill=Primary1!12, rounded corners=3pt, align=center, inner sep=4pt] (waker) at (1.1,-1.0) {\textbf{Waker}\\ \texttt{data}\,$\cdot$\,\texttt{vtable}};
+        \draw[->, Primary3, thick] (waker.east) -- (3.0,-1.0) node[midway, above, note, text=Primary3] {data};
+        \node[note, align=center, text width=2.2cm] at (1.1,-2.25) {\texttt{wake()} finds the task with no lookup};
+        % the JoinHandle points at the allocation
+        \node[draw=StmtAxiom, fill=StmtAxiom!8, rounded corners=3pt, align=center, inner sep=4pt] (jh) at (11.0,-6.35) {\textbf{JoinHandle}\\ \textcolor{gray}{a small future}};
+        \draw[->, StmtAxiom, thick] (jh.east) -- (13.5,-6.35) |- (13.0,-3.0) node[pos=0.35, right, note, text=StmtAxiom] {output};
+        \draw[->, StmtAxiom, thick, dashed] (jh.north) -- (11.0,-5.4) node[midway, left, note, text=StmtAxiom] {awaiter's waker};
+    \end{tikzpicture}}\par}
+    \medskip
+
     \begin{itemize}
         \item A Tokio waker's data pointer points at this \code{Header}, which is how \code{wake()} knows which task to queue without a lookup.
         \item Your future is just the \code{stage} field. When it completes, it is dropped and its output stored in the same place.
@@ -325,7 +405,7 @@ Cell
     \end{itemize}
 \end{quotebox}
 
-\section{What \texorpdfstring{\texttt{poll}}{poll} receives}
+\subsection{What \texorpdfstring{\texttt{poll}}{poll} receives}
 \label{sec:wakers-ch4}
 
 \textit{Every call to \code{poll} comes with a \code{Context}, and inside it is the task's waker. The two types have deliberately different lifetimes and threading rules, and the difference explains a line found in every leaf future.}
@@ -389,3 +469,20 @@ Two design choices are visible in the listing:
         \item A waker is a data pointer plus four executor-supplied functions.
     \end{itemize}
 \end{quotebox}
+
+\begin{Exercise}[title={Futures, tasks and wakers}]
+    \begin{enumerate}
+        \item When data arrives on a socket, why can't the kernel simply call the waiting task's waker itself? Name the statement this follows from, and say who does call it.
+        \item A leaf future is handed \code{cx: \&mut Context<'\_>} in \code{poll}. Why can't it keep \code{cx}, or the \code{\&Waker} it borrows, until its event arrives? What must it do instead, and which property of \code{Waker} makes that work?
+        \item In Listing~\ref{lst:wakers-3.1}, suppose \code{fetch(url)} has finished and the task is paused inside \code{tokio::join!}. How many wakers does the task have, and which futures hold a clone of one? When the 5\,ms sleep fires, which futures are polled?
+        \item Why does epoll reject a regular file with \code{EPERM}, and how does \code{tokio::fs::read} wait for a file without blocking a worker?
+    \end{enumerate}
+\end{Exercise}
+\begin{Answer}
+    \begin{enumerate}
+        \item By Kernel passivity (Axiom~\ref{ax:kernel-passivity}) the kernel never runs a program's own functions, signal handlers aside. All it can do is make the readiness call (\code{epoll\_wait}) return. Ordinary Rust code then calls the waker: in Tokio, the worker on driver duty, which maps the event's token to the socket's waker slot (Lemma~\ref{lem:wakers-called-from-user-space}).
+        \item A \code{Context} is valid only for one call to \code{poll}: the borrow ends when \code{poll} returns, and \code{Context} is neither \code{Send} nor \code{Sync} (Definition~\ref{def:context}). The future must clone the waker, \code{cx.waker().clone()}, and store the clone in a waker slot (Lemma~\ref{lem:clone-to-keep}). This works because \code{Waker} is an owned \code{Clone + Send + Sync} type that can be kept indefinitely and called from any thread (Axiom~\ref{ax:wakers-travel}).
+        \item There is exactly one waker, the task's (Lemma~\ref{lem:one-waker-per-task}). While paused in \code{join!}, the 5\,ms \code{sleep} is the leaf that holds a clone of it, in a timer-wheel entry. When the sleep fires, the whole task is re-polled from the top (Corollary~\ref{cor:whole-task-repoll}): the \code{async} block, which resumes at its \code{join!}, which polls each unfinished branch: \code{parse(resp)} if it is still pending, and the sleep, which now returns \code{Ready}. \code{fetch(url)} is not polled again; it has already completed and its output is stored in the state machine.
+        \item A regular file is always ``ready'' to the kernel, even when a read will wait for the disk, so readiness says nothing useful and epoll refuses it (Axiom~\ref{ax:files-always-ready}). \code{tokio::fs::read} runs the ordinary blocking \code{read} on a thread of the blocking pool. The task awaits the job's handle, and the pool thread calls the task's waker when the read returns: a remote wake (wake source 2 in Table~\ref{tab:wakers-6.1}).
+    \end{enumerate}
+\end{Answer}

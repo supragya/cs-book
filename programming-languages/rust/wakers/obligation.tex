@@ -1,6 +1,6 @@
 %% Part III: The rule. The one obligation every future carries, and what happens when it is broken.
 
-\section{The Wake Obligation}
+\subsection{The Wake Obligation}
 \label{sec:wakers-ch7}
 
 \textit{Returning \code{Pending} is a promise. Everything in the earlier sections depends on futures keeping it, and nothing in the language enforces it.}
@@ -23,7 +23,7 @@ Tokio, smol, \code{futures::executor}, pollster, Embassy, glommio, monoio and \c
     \source{not a single document, but universal practice: \texttt{tokio::join!} and \texttt{select!} poll every unfinished branch whenever their task is polled (Lemma~\ref{lem:shared-fate}), and no executor promises otherwise.}
 \end{axiom}
 
-\subsection{Three ways to keep the obligation}
+\subsubsection{Three ways to keep the obligation}
 
 \begin{enumerate}
     \item \textbf{Store} the waker in a waker slot that will be called: a socket, a timer, a channel's waiting list, another thread.
@@ -31,7 +31,7 @@ Tokio, smol, \code{futures::executor}, pollster, Embassy, glommio, monoio and \c
     \item \textbf{Self-wake} before returning: \code{cx.waker().wake\_by\_ref(); return Poll::Pending;} means ``re-queue me straight away.'' This is how \code{tokio::task::yield\_now()} works. Executors must accept a wake that arrives during a poll; Tokio marks the task notified and reschedules it once \code{poll} returns.
 \end{enumerate}
 
-\subsection{Lost wakes}
+\subsubsection{Lost wakes}
 
 \begin{definition}{Lost wake}{lost-wake}
     \index{Lost wake}
@@ -43,7 +43,7 @@ Tokio, smol, \code{futures::executor}, pollster, Embassy, glommio, monoio and \c
     \why If the event fires before the step, the check sees it, and the future returns \code{Ready}. If it fires after, the waker is already stored, and the event source calls it. Nothing can fall between the two. The timer in Section~\ref{sec:wakers-ch17} does exactly this.
 \end{lemma}
 
-\subsection{Two further rules}
+\subsubsection{Two further rules}
 
 \begin{itemize}
     \item \textbf{Keep the latest waker.} The waker can change between polls: tasks move between threads, and combinators wrap wakers. Axiom~\ref{ax:wake-obligation} refers to the waker from the \emph{most recent} poll. \code{old.will\_wake(cx.waker())} lets a future skip the clone when nothing changed, and Tokio's own leaf futures do this.
@@ -63,7 +63,7 @@ Tokio, smol, \code{futures::executor}, pollster, Embassy, glommio, monoio and \c
     \end{itemize}
 \end{quotebox}
 
-\section{Stranded tasks}
+\subsection{Stranded tasks}
 \label{sec:wakers-ch8}
 
 \textit{Breaking the Wake Obligation doesn't crash anything. It produces the quietest possible failure: a task that stops, forever, holding everything it owned.}
@@ -100,13 +100,13 @@ Contagion is why the symptom of a stranding bug often appears far from its cause
     \why All the futures share the task's waker (Lemma~\ref{lem:one-waker-per-task}). Waking the task re-polls it from the top (Corollary~\ref{cor:whole-task-repoll}), and these macros poll every unfinished branch. The rescue disappears when the future is moved into its own \code{spawn}, or into a \code{FuturesUnordered}, which only re-polls children whose own wrapped waker was called.
 \end{lemma}
 
-\subsection{Is the Stranding lemma true of every runtime?}
+\subsubsection{Is the Stranding lemma true of every runtime?}
 
 To check, a deliberately broken future was run on several configurations. It becomes ready 100 milliseconds after it is created, but its \code{poll} returns \code{Pending} without storing the waker. Each run was given two seconds (Listing~\ref{lst:wakers-A.3}).
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{5cm} X >{\raggedright\arraybackslash}p{3cm}}
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{5cm} Y >{\raggedright\arraybackslash}p{3cm}}
         \toprule
         \textbf{Executor} & \textbf{How it decides when to poll} & \textbf{Result} \\
         \midrule
@@ -143,7 +143,7 @@ Because stranding is silent, tooling helps. \emph{tokio-console}\index{tokio-con
     \end{itemize}
 \end{quotebox}
 
-\section{Silent sources}
+\subsection{Silent sources}
 \label{sec:wakers-ch9}
 
 \textit{Sometimes the thing you're waiting on has no way to say it's ready. The Wake Obligation still applies, so something else has to call the waker.}
@@ -155,9 +155,9 @@ Because stranding is silent, tooling helps. \emph{tokio-console}\index{tokio-con
 
 The options, from cheapest to most expensive:
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm} X >{\raggedright\arraybackslash}p{3.2cm}}
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm} Y >{\raggedright\arraybackslash}p{3.2cm}}
         \toprule
         \textbf{Approach} & \textbf{How} & \textbf{Cost} \\
         \midrule
@@ -193,3 +193,50 @@ async fn wait_ready(dev: &Dev) -> u32 {
         \item Otherwise, trade latency against CPU (Lemma~\ref{lem:interval-polling-trade-off}), use a thread, or---for very short waits only---self-wake.
     \end{itemize}
 \end{quotebox}
+
+\begin{Exercise}[title={Keeping the Wake Obligation}]
+    \begin{enumerate}
+        \item The future below waits for a flag that another thread sets by calling \code{set()}. It sometimes hangs forever under load. Find the bug and fix it.
+\begin{lstlisting}
+struct Flag { set: AtomicBool, waker: Mutex<Option<Waker>> }
+
+impl Flag {
+    fn set(&self) {
+        self.set.store(true, Ordering::SeqCst);
+        if let Some(w) = self.waker.lock().unwrap().take() { w.wake(); }
+    }
+}
+
+struct WaitFlag(Arc<Flag>);
+impl Future for WaitFlag {
+    type Output = ();
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<()> {
+        if self.0.set.load(Ordering::SeqCst) { return Poll::Ready(()); }
+        *self.0.waker.lock().unwrap() = Some(cx.waker().clone());
+        Poll::Pending
+    }
+}
+\end{lstlisting}
+        \item \code{Broken} from Listing~\ref{lst:wakers-A.3} never stores its waker, yet \code{tokio::time::timeout(Duration::from\_secs(1), Broken::new()).await} returns after one second. Explain why, and say what it returns.
+        \item A colleague's hand-written future ``works fine in production'', where it always runs inside a \code{tokio::select!} next to a heartbeat timer. What experiment would show whether it keeps the Wake Obligation?
+        \item A device becomes ready at an unpredictable moment, and you poll it every $T = 20$\,ms. What is the worst added latency, and how many wake-ups per second does the wait cost?
+    \end{enumerate}
+\end{Exercise}
+\begin{Answer}
+    \begin{enumerate}
+        \item A lost wake (Definition~\ref{def:lost-wake}). If \code{set()} runs entirely between \code{poll}'s \code{load} and its store of the waker, \code{set()} finds no waker to call; \code{poll} then stores the waker and returns \code{Pending}, and nobody will ever wake the task. The fix is to make the check and the store one step with respect to the setter (Lemma~\ref{lem:atomic-check-and-store}). The simplest version stores the waker first and then checks again:
+\begin{lstlisting}
+fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<()> {
+    if self.0.set.load(Ordering::SeqCst) { return Poll::Ready(()); }
+    *self.0.waker.lock().unwrap() = Some(cx.waker().clone());
+    // Re-check: if set() ran before we stored the waker, we see it now.
+    if self.0.set.load(Ordering::SeqCst) { return Poll::Ready(()); }
+    Poll::Pending
+}
+\end{lstlisting}
+        If \code{set()} stored the flag before the second \code{load}, the future sees it. Otherwise \code{set()} takes the lock after the waker was stored, finds it, and wakes the task. Holding the mutex across both the check and the store, and setting the flag under the same mutex in \code{set()}, works equally well.
+        \item \code{timeout} contains its own \code{Sleep}, a leaf that stores the \emph{same task's} waker in the timer wheel (Lemma~\ref{lem:one-waker-per-task}). At the deadline the timer fires, the task is re-polled, \code{timeout} polls \code{Broken} once more (still \code{Pending}), sees the deadline has passed, and returns \code{Err(Elapsed)}. The task was rescued by its sibling timer, not by \code{Broken}.
+        \item Remove the possibility of an accidental rescue (Definition~\ref{def:accidental-rescue}, Lemma~\ref{lem:shared-fate}): run the future alone, either in its own \code{tokio::spawn} or under \code{futures::executor::block\_on}, with an outer time limit as in Listing~\ref{lst:wakers-A.3}. If it then hangs after its event has happened, it breaks the Wake Obligation and was only working because the heartbeat kept waking the task.
+        \item By Lemma~\ref{lem:interval-polling-trade-off}: at most 20\,ms of added latency, and $1/T = 50$ wake-ups per second for as long as the wait lasts.
+    \end{enumerate}
+\end{Answer}

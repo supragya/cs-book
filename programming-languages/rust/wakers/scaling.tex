@@ -1,6 +1,6 @@
 %% Part V: Why it scales. Two data structures that make waiting free, and the measurements to prove it.
 
-\section{Inside epoll}
+\subsection{Inside epoll}
 \label{sec:wakers-ch14}
 
 \textit{A worker can sleep while ten thousand sockets wait, then wake for the one that matters, without examining the other 9,999. The reason lies in two lists the kernel keeps.}
@@ -11,10 +11,10 @@
 \end{description}
 \index{epoll}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     % Coordinates follow a 700 x 270 grid; y grows downwards.
-    \begin{tikzpicture}[x=0.022cm, y=-0.022cm, font=\sffamily\scriptsize, >={Stealth}]
+    \figurefonts\resizebox{\linewidth}{!}{\begin{tikzpicture}[x=0.022cm, y=-0.022cm, font=\sffamily\scriptsize, >={Stealth}]
         % interest list
         \draw[rounded corners=6pt, draw=gray!50, fill=white, line width=0.6pt] (10,10) rectangle (280,260);
         \node[anchor=north west, inner sep=0] at (26,22) {\small\textbf{Interest list}};
@@ -44,7 +44,7 @@
         \draw[rounded corners=6pt, draw=StmtLemma, fill=green!6, line width=0.6pt] (568,62) rectangle (690,182);
         \node[anchor=north west, inner sep=0, text width=2.3cm] at (580,74) {\small\textbf{epoll\_wait}\\[3pt] \scriptsize\textcolor{StmtLemma}{returns 3 events}\\[6pt] driver calls\\ 3 $\times$ \texttt{wake()}};
         \node[anchor=north west, inner sep=0, text=gray, text width=6.6cm] at (390,204) {Work done is proportional to the 3 ready sockets, not to the thousands being watched.};
-    \end{tikzpicture}
+    \end{tikzpicture}}
     \caption{epoll's two lists. Highlighted squares are the sockets that just received data.}
     \label{fig:wakers-14.1}
 \end{figure}
@@ -54,7 +54,7 @@
     \why Descriptors join the ready list as their events happen, through the kernel's callback. \code{epoll\_wait} only copies out the ready list; it never walks the interest list.
 \end{lemma}
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
     \begin{tabular}{r c r}
         \toprule
@@ -77,7 +77,7 @@
     \end{itemize}
 \end{quotebox}
 
-\section{Inside the timer wheel}
+\subsection{Inside the timer wheel}
 \label{sec:wakers-ch15}
 
 \textit{Timers in Tokio are not a kernel feature. Every \code{sleep} and \code{timeout} lives in a single user-space structure built like a clock with six hands, and its next deadline becomes \code{epoll\_wait}'s timeout.}
@@ -104,11 +104,11 @@
 
 Coarse timers \emph{cascade}: when the window of a higher-level slot arrives, its timers are re-filed into finer levels, and they finally fire from level 0.
 
-\subsection{A worked example}
+\subsubsection{A worked example}
 
 At time zero, five timers are created, with deadlines of 3\,ms, 70\,ms, 300\,ms, 5\,s and 90\,s. Figure~\ref{fig:wakers-15.1} shows where Tokio's placement rule puts them.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     % Coordinates follow a 774 x 308 grid; y grows downwards. Slot i of a level starts at x = 118 + 10i.
     \newcommand{\wklevel}[4]{% top y, name, slot size, occupied slots
@@ -119,7 +119,7 @@ At time zero, five timers are created, with deadlines of 3\,ms, 70\,ms, 300\,ms,
         \foreach \s in {#4}{\fill[rounded corners=0.5pt, StmtLemma] ({118+10*\s},#1) rectangle ++(8,26);}
         \draw[StmtProposition, line width=0.9pt, rounded corners=1pt] (116,{#1-2}) rectangle ++(12,30);
     }
-    \begin{tikzpicture}[x=0.02cm, y=-0.02cm, font=\sffamily\scriptsize]
+    \figurefonts\resizebox{\linewidth}{!}{\begin{tikzpicture}[x=0.02cm, y=-0.02cm, font=\sffamily\scriptsize]
         \wklevel{20}{Level 0}{64 $\times$ 1 ms}{3}
         \wklevel{116}{Level 1}{64 $\times$ 64 ms}{1,4}
         \wklevel{212}{Level 2}{64 $\times$ 4.1 s}{1,21}
@@ -134,16 +134,16 @@ At time zero, five timers are created, with deadlines of 3\,ms, 70\,ms, 300\,ms,
         \node[anchor=north, align=center, inner sep=1pt] at (132,250) {\textcolor{StmtLemma}{\textbf{5 s}}\\ \textcolor{gray}{\tiny slot 1}};
         \draw[StmtLemma] (332,239) -- (332,250);
         \node[anchor=north, align=center, inner sep=1pt] at (332,250) {\textcolor{StmtLemma}{\textbf{90 s}}\\ \textcolor{gray}{\tiny slot 21}};
-    \end{tikzpicture}
+    \end{tikzpicture}}
     \caption{Five timers placed at time zero. The first three of the six levels are shown; the orange outline marks the current slot on each level.}
     \label{fig:wakers-15.1}
 \end{figure}
 
 Table~\ref{tab:wakers-15.1} follows time forward. Each row is one return from \code{epoll\_wait}, and each touches only the single slot that came due.
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{r r X}
+    \begin{tabularx}{\linewidth}{r r Y}
         \toprule
         \textbf{Time} & \textbf{Timeout} & \textbf{What the driver does} \\
         \midrule
@@ -177,7 +177,7 @@ Table~\ref{tab:wakers-15.1} follows time forward. Each row is one return from \c
     \end{itemize}
 \end{quotebox}
 
-\section{Idle cost and event cost}
+\subsection{Idle cost and event cost}
 \label{sec:wakers-ch16}
 
 \textit{A waker is not a thread, and a waiting task runs nothing. That claim follows from the axioms; this section states it precisely and then measures it.}
@@ -197,7 +197,7 @@ Table~\ref{tab:wakers-15.1} follows time forward. Each row is one return from \c
     \why epoll returns only ready descriptors (Lemma~\ref{lem:event-proportional-waiting}); the timer wheel touches only the due slot (Lemmas~\ref{lem:constant-time-insert}, \ref{lem:constant-time-next-deadline}); the token leads straight to the waker slot (Lemma~\ref{lem:token-round-trip}); and the run queue holds only woken tasks.
 \end{lemma}
 
-\subsection{Measurement}
+\subsubsection{Measurement}
 
 The test ran on a two-core Linux machine with Tokio 1.54.1, a four-worker runtime and a release build (Listing~\ref{lst:wakers-A.4}):
 
@@ -208,7 +208,7 @@ The test ran on a two-core Linux machine with Tokio 1.54.1, a four-worker runtim
     \item finally, write one byte to one more socket and time its task's wake-up.
 \end{enumerate}
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
     \begin{tabular}{l r r r}
         \toprule
@@ -245,3 +245,20 @@ The real limits on an async server therefore lie elsewhere:
         \item Measured: 109,000 waiters in about 50 MiB, with no extra threads, no idle CPU, and an 84\,$\mu$s wake-up.
     \end{itemize}
 \end{quotebox}
+
+\begin{Exercise}[title={Why it scales}]
+    \begin{enumerate}
+        \item At time zero, a 200\,ms timer is created. Using Tokio's placement rule, on which level and slot of the timer wheel is it filed? When is it cascaded, into which slot, and when does it fire?
+        \item A server holds 50,000 idle WebSocket connections, each with a task waiting in \code{read().await}, when one message arrives. Which costs grow with the 50,000, and which do not?
+        \item Why would a runtime built on \code{poll(2)} instead of epoll fail Lemma~\ref{lem:event-proportional-waiting}?
+        \item From Table~\ref{tab:wakers-16.1}, estimate the user-space memory per sleeping task and per socket task.
+    \end{enumerate}
+\end{Exercise}
+\begin{Answer}
+    \begin{enumerate}
+        \item $200 = 3 \times 64 + 8$. ``Now'' (0) and the deadline first differ in the level-1 group of 6 bits, so the timer is filed on level 1, slot 3 (Lemma~\ref{lem:constant-time-insert}). When level-1 slot 3's window opens at $3 \times 64 = 192$\,ms, it is cascaded into level-0 slot $200 \bmod 64 = 8$, and it fires at 200\,ms. This matches the pattern of Table~\ref{tab:wakers-15.1}.
+        \item Memory grows: each connection costs a task allocation, its socket state with waker slots, a file descriptor, and kernel socket buffers. The cost of the one message does not (Lemma~\ref{lem:event-cost-independent}): \code{epoll\_wait} returns one event (Lemma~\ref{lem:event-proportional-waiting}), its token leads straight to that socket's waker slot (Lemma~\ref{lem:token-round-trip}), and only that task is queued and polled. The idle connections cost no CPU (Lemma~\ref{lem:idle-cost-memory-only}).
+        \item \code{poll(2)} takes the whole descriptor set on every call and the kernel checks every descriptor in it, so each wait costs work proportional to the number of descriptors watched, not to the number that are ready.
+        \item Timers: $(39.7 - 2.9)\,\text{MiB} / 100{,}000 \approx 386$ bytes per sleeping task, including its timer entry. Sockets: $(49.9 - 39.7)\,\text{MiB} / 9{,}000 \approx 1.2$\,KB per socket task (two descriptors each), not counting the kernel's socket memory.
+    \end{enumerate}
+\end{Answer}

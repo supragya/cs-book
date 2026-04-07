@@ -1,9 +1,9 @@
 %% Part VI: Doing it yourself. A working executor, and the mistakes to avoid.
 
-\section{A hundred-line executor}
+\subsection{A hundred-line executor}
 \label{sec:wakers-ch17}
 
-\textit{Everything in this chapter fits into a program short enough to read in one sitting: a timer future that stores its waker, and an executor whose idea of ``wake'' is ``send me back to the queue.''}
+\textit{Everything in this section fits into a program short enough to read in one sitting: a timer future that stores its waker, and an executor whose idea of ``wake'' is ``send me back to the queue.''}
 
 Listing~\ref{lst:wakers-17.1} uses only the standard library. One simplification: its timer spawns a thread per timer to stand in for a driver, which keeps the example self-contained. Real runtimes never do this; they use the wheel of Section~\ref{sec:wakers-ch15}, and a waiting task never has a thread of its own (Lemma~\ref{lem:idle-cost-memory-only}).
 
@@ -122,7 +122,7 @@ A: woke up after 300ms
 all tasks done, executor exits
 \end{lstlisting}
 
-Where each idea from the chapter appears in the listing:
+Where each idea from this section appears in the listing:
 
 \begin{itemize}
     \item \textbf{Leaf future (Definition~\ref{def:leaf-future}):} \code{Timer}, the only code that stores a waker.
@@ -137,12 +137,12 @@ Where each idea from the chapter appears in the listing:
 
 When the last task finishes, every sender to the queue has been dropped, \code{recv()} fails, and the loop exits.
 
-\section{Common mistakes}
+\subsection{Common mistakes}
 \label{sec:wakers-ch18}
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering\small
-    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.2cm} X >{\raggedright\arraybackslash}p{1.8cm}}
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.2cm} Y >{\raggedright\arraybackslash}p{1.8cm}}
         \toprule
         \textbf{Belief or habit} & \textbf{What is actually true} & \textbf{See} \\
         \midrule
@@ -162,7 +162,50 @@ When the last task finishes, every sender to the queue has been dropped, \code{r
     \label{tab:wakers-18.1}
 \end{table}
 
-\section{The whole story in one page}
+\begin{Exercise}[title={Building an executor}]
+    \begin{enumerate}
+        \item In Listing~\ref{lst:wakers-17.1}, suppose \code{Timer::poll} stored the waker only on its first poll (\code{if st.waker.is\_none()}). Does this program still work? When would that change break a future?
+        \item Why does \code{run} return once both tasks have finished? What happens if \code{main} keeps a clone of \code{tx} alive?
+        \item Write a \code{yield\_now()} future for this executor: it returns \code{Pending} once, asking to be polled again straight away, and \code{Ready} the second time.
+        \item Write a unit test that polls a fresh \code{Timer} once, without any executor, and asserts that it is pending.
+    \end{enumerate}
+\end{Exercise}
+\begin{Answer}
+    \begin{enumerate}
+        \item This program still works: every poll of a task is given a waker for the same \code{Arc<Task>}, so the first waker stays valid. It breaks the Wake Obligation, though, which refers to the waker from the most recent poll (Axiom~\ref{ax:wake-obligation}). It fails when the waker changes between polls, for example inside \code{FuturesUnordered} or \code{select!} implementations that wrap the waker, when the future is moved into another task, or on runtimes whose wakers identify the worker. Store the latest waker, using \code{will\_wake} to skip needless clones.
+        \item Each \code{Task} holds a \code{SyncSender}, and \code{main} drops its own \code{tx}. When a task finishes, its future is dropped and, once the last \code{Arc<Task>} (including any waker) is gone, so is its sender. With every sender dropped, \code{recv()} returns an error and the loop ends. If \code{main} kept a \code{tx} alive, \code{recv()} would block forever after the last task: the program would hang, using no CPU.
+        \item The future wakes itself before returning \code{Pending} (the self-wake of Section~\ref{sec:wakers-ch7}):
+\begin{lstlisting}
+struct YieldNow { yielded: bool }
+
+impl Future for YieldNow {
+    type Output = ();
+    fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<()> {
+        if self.yielded {
+            return Poll::Ready(());
+        }
+        self.yielded = true;
+        cx.waker().wake_by_ref(); // back onto the run queue right away
+        Poll::Pending
+    }
+}
+
+fn yield_now() -> YieldNow { YieldNow { yielded: false } }
+\end{lstlisting}
+        The wake arrives during the poll, while \code{run} still holds the task's \code{fut} lock. That is fine: \code{wake} only sends the \code{Arc<Task>} on the channel, and \code{run} receives it after the current iteration has put the future back and released the lock.
+        \item \code{Waker::noop()}, stable since Rust 1.85, gives a waker that does nothing; \code{Timer} is \code{Unpin}, so \code{Pin::new} works:
+\begin{lstlisting}
+#[test]
+fn fresh_timer_is_pending() {
+    let mut timer = Timer::new(Duration::from_secs(60));
+    let mut cx = Context::from_waker(Waker::noop());
+    assert!(Pin::new(&mut timer).poll(&mut cx).is_pending());
+}
+\end{lstlisting}
+    \end{enumerate}
+\end{Answer}
+
+\subsection{The whole story in one page}
 \label{sec:wakers-afterword}
 
 A worker thread takes a task from its run queue and polls it, handing over a \code{Context} that holds the task's \code{Waker}. Through each \code{.await}, the context travels down the task's tree of futures to the leaf that is actually waiting. If the leaf can't finish, it leaves a clone of the waker in a waker slot---a socket's reader slot, a slot in the timer wheel, a blocking job's handle---and returns \code{Pending}, which bubbles back up to the worker.

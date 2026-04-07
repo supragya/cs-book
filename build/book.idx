@@ -4,54 +4,54 @@
 \indexentry{Strong liveness|hyperpage}{14}
 \indexentry{Liveness|hyperpage}{14}
 \indexentry{Eventual Liveness|hyperpage}{14}
-\indexentry{Node honesty|hyperpage}{14}
+\indexentry{Node honesty|hyperpage}{15}
 \indexentry{Crash fault|hyperpage}{15}
 \indexentry{Fail Stop|hyperpage}{15}
 \indexentry{True crash fault|hyperpage}{15}
 \indexentry{Omission fault|hyperpage}{15}
 \indexentry{Byzantine fault|hyperpage}{15}
-\indexentry{Consensus|hyperpage}{15}
-\indexentry{FLP Impossibility Theorem|hyperpage}{16}
-\indexentry{Lamport Clocks|hyperpage}{16}
-\indexentry{Partial Order|hyperpage}{16}
-\indexentry{asynchronous model|hyperpage}{16}
-\indexentry{Message Buffer|hyperpage}{17}
-\indexentry{Future|hyperpage}{44}
-\indexentry{Poll|hyperpage}{44}
-\indexentry{Executor|hyperpage}{44}
-\indexentry{Waker|hyperpage}{44}
-\indexentry{System call|hyperpage}{45}
-\indexentry{File descriptor|hyperpage}{46}
-\indexentry{eventfd|hyperpage}{46}
-\indexentry{Non-blocking I/O|hyperpage}{46}
-\indexentry{Readiness model|hyperpage}{47}
-\indexentry{Completion model|hyperpage}{47}
-\indexentry{Task|hyperpage}{48}
-\indexentry{Leaf future|hyperpage}{49}
-\indexentry{Context|hyperpage}{50}
-\indexentry{Raw waker|hyperpage}{50}
-\indexentry{Waker slot|hyperpage}{51}
-\indexentry{Wake path|hyperpage}{51}
-\indexentry{Driver duty|hyperpage}{52}
-\indexentry{Local wake|hyperpage}{52}
-\indexentry{Remote wake|hyperpage}{52}
-\indexentry{Wake source|hyperpage}{53}
-\indexentry{Waker-driven executor|hyperpage}{54}
-\indexentry{Wake Obligation|hyperpage}{54}
-\indexentry{Lost wake|hyperpage}{55}
-\indexentry{Stranded task|hyperpage}{56}
-\indexentry{Accidental rescue|hyperpage}{56}
-\indexentry{tokio-console|hyperpage}{57}
-\indexentry{Silent source|hyperpage}{57}
-\indexentry{LIFO slot|hyperpage}{60}
-\indexentry{Work stealing|hyperpage}{60}
-\indexentry{Driver|hyperpage}{60}
-\indexentry{Reactor|hyperpage}{60}
-\indexentry{mio|hyperpage}{62}
-\indexentry{Token (mio)|hyperpage}{62}
-\indexentry{Task-level wake|hyperpage}{64}
-\indexentry{Thread-level wake|hyperpage}{64}
-\indexentry{epoll|hyperpage}{65}
-\indexentry{Timer wheel|hyperpage}{66}
-\indexentry{Idle cost|hyperpage}{68}
-\indexentry{Event cost|hyperpage}{68}
+\indexentry{Consensus|hyperpage}{16}
+\indexentry{FLP Impossibility Theorem|hyperpage}{17}
+\indexentry{Lamport Clocks|hyperpage}{17}
+\indexentry{Partial Order|hyperpage}{17}
+\indexentry{asynchronous model|hyperpage}{18}
+\indexentry{Message Buffer|hyperpage}{19}
+\indexentry{Future|hyperpage}{46}
+\indexentry{Poll|hyperpage}{46}
+\indexentry{Executor|hyperpage}{46}
+\indexentry{Waker|hyperpage}{47}
+\indexentry{System call|hyperpage}{48}
+\indexentry{File descriptor|hyperpage}{49}
+\indexentry{eventfd|hyperpage}{49}
+\indexentry{Non-blocking I/O|hyperpage}{49}
+\indexentry{Readiness model|hyperpage}{50}
+\indexentry{Completion model|hyperpage}{50}
+\indexentry{Task|hyperpage}{51}
+\indexentry{Leaf future|hyperpage}{53}
+\indexentry{Context|hyperpage}{55}
+\indexentry{Raw waker|hyperpage}{55}
+\indexentry{Waker slot|hyperpage}{57}
+\indexentry{Wake path|hyperpage}{57}
+\indexentry{Driver duty|hyperpage}{57}
+\indexentry{Local wake|hyperpage}{57}
+\indexentry{Remote wake|hyperpage}{57}
+\indexentry{Wake source|hyperpage}{59}
+\indexentry{Waker-driven executor|hyperpage}{61}
+\indexentry{Wake Obligation|hyperpage}{61}
+\indexentry{Lost wake|hyperpage}{62}
+\indexentry{Stranded task|hyperpage}{62}
+\indexentry{Accidental rescue|hyperpage}{63}
+\indexentry{tokio-console|hyperpage}{64}
+\indexentry{Silent source|hyperpage}{64}
+\indexentry{LIFO slot|hyperpage}{68}
+\indexentry{Work stealing|hyperpage}{68}
+\indexentry{Driver|hyperpage}{68}
+\indexentry{Reactor|hyperpage}{68}
+\indexentry{mio|hyperpage}{71}
+\indexentry{Token (mio)|hyperpage}{71}
+\indexentry{Task-level wake|hyperpage}{73}
+\indexentry{Thread-level wake|hyperpage}{73}
+\indexentry{epoll|hyperpage}{75}
+\indexentry{Timer wheel|hyperpage}{76}
+\indexentry{Idle cost|hyperpage}{78}
+\indexentry{Event cost|hyperpage}{78}
