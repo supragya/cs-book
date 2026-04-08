@@ -117,3 +117,10 @@ fonttitle=\sffamily\bfseries,#1}
     \global\advance\lst@newlines\m@ne
     \lst@newlinetrue}%
 }{}}
+
+%% ALGORITHMS (algorithm + algpseudocode)
+% Grey, right-aligned comments; small pseudocode so long lines fit the measure.
+\AtBeginDocument{\@ifpackageloaded{algpseudocode}{%
+  \algrenewcommand\algorithmiccomment[1]{\hfill{\color{gray!90!black}\footnotesize$\triangleright$ #1}}%
+  \algrenewcommand\alglinenumber[1]{{\color{gray}\scriptsize #1}}%
+  \AddToHook{env/algorithmic/begin}{\small}}{}}

@@ -23,7 +23,7 @@
   \indexspace
 
   \item epoll, \hyperpage{75}
-  \item Event cost, \hyperpage{78}
+  \item Event cost, \hyperpage{85}
   \item eventfd, \hyperpage{49}
   \item Eventual Consistency, \hyperpage{14}
   \item Eventual Liveness, \hyperpage{14}
@@ -38,7 +38,7 @@
 
   \indexspace
 
-  \item Idle cost, \hyperpage{78}
+  \item Idle cost, \hyperpage{85}
 
   \indexspace
 
@@ -89,6 +89,8 @@
   \item Task-level wake, \hyperpage{73}
   \item Thread-level wake, \hyperpage{73}
   \item Timer wheel, \hyperpage{76}
+    \subitem filing deadline, \hyperpage{77}
+    \subitem lazy extension, \hyperpage{84}
   \item Token (mio), \hyperpage{71}
   \item tokio-console, \hyperpage{64}
   \item True crash fault, \hyperpage{15}

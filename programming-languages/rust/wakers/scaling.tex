@@ -87,22 +87,280 @@
     Tokio's timer wheel has six levels of 64 slots. A level-0 slot spans 1 millisecond, and each level above is 64 times coarser: 64\,ms, about 4.1\,s, 4.4\,min, 4.7\,h and 12.4 days. Together the levels span $64^6$ milliseconds, a little over two years. Each level also keeps a 64-bit mask recording which of its slots are occupied.
 \end{definition}
 
+The design follows the hierarchical timing wheels of Varghese and Lauck.\footnote{G.~Varghese and A.~Lauck, ``Hashed and Hierarchical Timing Wheels'', \emph{IEEE/ACM Transactions on Networking}, 1997.} The rest of this subsection takes the wheel apart: what it stores, and the algorithms that insert a timer, remove one, find the next deadline, and advance time. Everything here is read from \texttt{runtime/time/wheel/} and \texttt{runtime/time/entry.rs} in Tokio 1.54.1. Behind the \code{tokio\_unstable} flag, the multi-thread runtime also has an alternative time driver that keeps a wheel per worker; this subsection describes the default driver, which has a single wheel behind a mutex.
+
+\subsubsection{Ticks and the wheel's clock}
+
+\begin{itemize}
+    \item The wheel counts time in \emph{ticks} of one millisecond, from the moment the runtime's driver started.
+    \item A deadline is rounded \emph{up} to the next whole tick (\code{deadline\_to\_tick} adds 999,999 nanoseconds before truncating), so a timer never fires early.
+    \item The wheel keeps its own clock, \code{elapsed}: the tick up to which it has processed timers. It only moves forward, and only inside the advance algorithm below. Every placement decision is made relative to \code{elapsed}, not to the wall-clock ``now''.
+\end{itemize}
+
+At level $\ell$, a slot spans $64^{\ell}$ ticks and the whole level spans $64^{\ell+1}$. Writing a tick as a 36-bit number split into six 6-bit groups, group $\ell$ is exactly the slot index at level $\ell$.
+
+\subsubsection{What the wheel stores}
+
+\begin{description}
+    \item[Wheel] \code{elapsed}; six \code{Level}s; and a \code{pending} list of timers that are due but not yet fired.
+    \item[Level] An array of 64 slots, each an \emph{intrusive} doubly linked list (the links live inside the timer entries themselves, so adding or unlinking an entry allocates nothing), plus \code{occupied}, a 64-bit mask whose bit $s$ is set exactly when slot $s$ is non-empty.
+    \item[Timer entry] Shared between the \code{Sleep} and the wheel. Besides the stored waker, it carries two deadlines, defined next.
+\end{description}
+
+\begin{definition}{Filing deadline, true deadline}{filing-true-deadline}
+    \index{Timer wheel!filing deadline}
+    A timer's \emph{true deadline} (in Tokio, the value in the entry's atomic \code{state}) is when it should fire. Its \emph{filing deadline} (\code{registered\_when}) is the deadline the wheel used to choose its level and slot, or the marker \textsc{Deregistered} once it has moved to the pending list. The two are equal when a timer is inserted; they differ only after the deadline is moved later (Lemma~\ref{lem:lazy-extension}). The pseudocode below writes them as $x.\mathit{when}$ and $x.\mathit{filed}$.
+\end{definition}
+
+A \code{Sleep} creates its timer entry and inserts it on its \emph{first poll}, not when it is constructed: a \code{sleep(..)} that is created and dropped without being polled never touches the wheel.
+
+\subsubsection{Insertion: choosing a level and a slot}
+
+The level is the 6-bit group of the highest bit in which the wheel's clock and the deadline differ; the slot is the deadline's value in that group. Figure~\ref{fig:wakers-15.2} works one case, and Algorithm~\ref{alg:wakers-level-for} gives the rule.
+
+\begin{figure}[htbp]
+    \centering
+    \figurefonts\resizebox{\linewidth}{!}{\begin{tikzpicture}[font=\sffamily\footnotesize, >={Stealth},
+        grp/.style={draw=gray!50, fill=white, minimum width=1.5cm, minimum height=0.6cm, font=\ttfamily\footnotesize},
+        same/.style={grp, fill=gray!12, text=gray},
+        diff/.style={grp, draw=StmtProposition, fill=orange!12, line width=0.8pt},
+        rowlbl/.style={anchor=east, font=\sffamily\footnotesize}]
+        \foreach \g [count=\i from 0] in {5,4,3,2,1,0}{
+            \node[text=gray, font=\sffamily\scriptsize] at ({1.7*\i},0.65) {group \g};
+        }
+        % elapsed = 4096
+        \node[rowlbl] at (-1.0,0) {\code{elapsed} $= 4096$};
+        \foreach \v [count=\i from 0] in {0,0,0,1}{\node[same] at ({1.7*\i},0) {\v};}
+        \node[diff] at (6.8,0) {0};
+        \node[grp] at (8.5,0) {0};
+        % when = 5000
+        \node[rowlbl] at (-1.0,-0.9) {deadline $= 5000$};
+        \foreach \v [count=\i from 0] in {0,0,0,1}{\node[same] at ({1.7*\i},-0.9) {\v};}
+        \node[diff] (slot) at (6.8,-0.9) {14};
+        \node[grp] at (8.5,-0.9) {8};
+        % xor | 63
+        \node[rowlbl] at (-1.0,-1.8) {XOR, then $\mathbin{|}\,63$};
+        \foreach \v [count=\i from 0] in {0,0,0,0}{\node[same] at ({1.7*\i},-1.8) {\v};}
+        \node[diff] at (6.8,-1.8) {14};
+        \node[grp] at (8.5,-1.8) {63};
+        % annotations
+        \draw[gray] (-0.75,-2.35) -- (5.85,-2.35);
+        \node[text=gray, align=center] at (2.55,-2.7) {groups 5--2 agree: same level-1 window};
+        \draw[->, StmtProposition, thick] (6.8,-2.15) -- (6.8,-2.9) node[below, align=center, text=StmtProposition, font=\sffamily\footnotesize\bfseries] {highest differing group is 1:\\ level 1, slot 14};
+        \node[anchor=west, text=gray, text width=2.3cm] at (9.35,-1.8) {forced on: the level is never below 0};
+    \end{tikzpicture}}
+    \caption{Choosing a level and slot for a deadline of 5,000 ticks when the wheel's clock is at 4,096, as in step 6 of Table~\ref{tab:wakers-15.1}. Each box is one 6-bit group of the tick, in decimal.}
+    \label{fig:wakers-15.2}
+\end{figure}
+
+\begin{algorithm}[htbp]
+    \caption{Choosing a level and a slot.}
+    \label{alg:wakers-level-for}
+    \begin{algorithmic}[1]
+        \Statex {\color{gray!90!black}\footnotesize Tokio: \texttt{level\_for}, \texttt{slot\_for}}
+        \Function{LevelFor}{$e, w$}\Comment{$e$: wheel clock; $w$: deadline; both in ticks}
+            \State $m \gets (e \oplus w) \mathbin{|} 63$\Comment{set bits 0--5, so the result is at least level 0}
+            \If{$m \ge 2^{36}$}
+                \State \Return $5$\Comment{more than $64^6$ ticks away: the top level}
+            \EndIf
+            \State \Return $\lfloor \log_2 m \rfloor \operatorname{div} 6$\Comment{group of the highest differing bit}
+        \EndFunction
+        \Statex
+        \Function{SlotFor}{$w, \ell$}
+            \State \Return $\lfloor w / 64^{\ell} \rfloor \bmod 64$\Comment{group $\ell$ of $w$}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[htbp]
+    \caption{Inserting a timer, under the driver lock.}
+    \label{alg:wakers-insert}
+    \begin{algorithmic}[1]
+        \Statex {\color{gray!90!black}\footnotesize Tokio: \texttt{Wheel::insert}, called from \texttt{reregister}}
+        \Function{Insert}{$x$}
+            \State $w \gets x.\mathit{when}$;\enspace $x.\mathit{filed} \gets w$
+            \If{$w \le \mathit{elapsed}$}
+                \State \Return \textsc{Elapsed}\Comment{already due: the caller fires it at once}
+            \EndIf
+            \State $\ell \gets \Call{LevelFor}{\mathit{elapsed}, w}$;\enspace $s \gets \Call{SlotFor}{w, \ell}$
+            \State push $x$ onto the front of $\mathit{slot}_\ell[s]$
+            \State $\mathit{occupied}_\ell \gets \mathit{occupied}_\ell \mathbin{|} 2^{s}$
+            \If{$w < \mathit{next\_wake}$}\Comment{earlier than the parked thread will wake}
+                \State unpark the thread on driver duty\Comment{a thread-level wake}
+            \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+The last step matters on a busy runtime. A worker on driver duty sleeps in \code{epoll\_wait} with a timeout computed from the wheel's earlier next deadline, stored as \code{next\_wake}. A new timer that is due sooner must cut that sleep short, which is a thread-level wake (Definition~\ref{def:task-thread-level-wake}).
+
+\begin{lemma}{Placement}{wheel-placement}
+    A timer filed at level $\ell$ below the top agrees with the wheel's clock in every group above $\ell$, and is greater in group $\ell$. It therefore lies in the current window of level $\ell$, in a slot strictly after the one that holds the clock.
+    \why By Algorithm~\ref{alg:wakers-level-for}, group $\ell$ holds the highest bit in which they differ, so all higher groups agree. The deadline is later than the clock, so at that highest differing bit the deadline has the 1; its group $\ell$, which is its slot, is therefore the larger. At level 0 the same holds, since the deadline differs from the clock only in group 0.
+\end{lemma}
+
 \begin{lemma}{Constant-time insert}{constant-time-insert}
     Adding a timer takes constant time, however many timers exist.
-    \why The level is chosen from the highest 6-bit group in which ``now'' and the deadline differ; the slot from the deadline's bits at that level. The timer is appended to that slot's list. None of this depends on the number of timers.
+    \why Algorithm~\ref{alg:wakers-insert} is an XOR, a leading-zero count, a shift, a push onto the front of a linked list and a bit set. None of it looks at other timers.
+\end{lemma}
+
+\subsubsection{Deletion}
+
+Most timers never fire. A \code{timeout} around a request that succeeds in 3\,ms is dropped long before its deadline, and dropping a \code{Sleep} removes its timer from the wheel (Algorithm~\ref{alg:wakers-remove}). Removal sets the entry's state to finished \emph{without} calling its waker: nobody is waiting any more.
+
+\begin{algorithm}[htbp]
+    \caption{Removing a timer.}
+    \label{alg:wakers-remove}
+    \begin{algorithmic}[1]
+        \Statex {\color{gray!90!black}\footnotesize Tokio: \texttt{Wheel::remove}, from \texttt{clear\_entry} (a dropped \texttt{Sleep}) or \texttt{reregister}}
+        \Function{Remove}{$x$}
+            \If{$x.\mathit{filed} = \textsc{Deregistered}$}
+                \State unlink $x$ from $\mathit{pending}$;\enspace \Return\Comment{due, but not yet fired}
+            \EndIf
+            \State $\ell \gets \Call{LevelFor}{\mathit{elapsed}, x.\mathit{filed}}$;\enspace $s \gets \Call{SlotFor}{x.\mathit{filed}, \ell}$
+            \State unlink $x$ from $\mathit{slot}_\ell[s]$\Comment{doubly linked: no search}
+            \If{$\mathit{slot}_\ell[s]$ is now empty}
+                \State $\mathit{occupied}_\ell \gets \mathit{occupied}_\ell \mathbin{\&} \lnot 2^{s}$
+            \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+Removal stores nothing about where the timer was filed: it recomputes the level from the filing deadline and the wheel's clock \emph{now}. That is only correct because of the next lemma.
+
+\begin{lemma}{Stable filing}{stable-filing}
+    From the moment a timer is filed until its slot is processed, \textsc{LevelFor}$(\mathit{elapsed}, x.\mathit{filed})$ keeps returning the level it is filed on.
+    \why The clock moves only in the advance algorithm (Algorithm~\ref{alg:wakers-advance}): either to the start of the next due slot, or to ``now'' when nothing is due by then. Neither move passes the start of any occupied slot without processing it. So until the timer's slot is processed, the clock stays in the same level-$\ell$ window and before the timer's slot, and Lemma~\ref{lem:wheel-placement} goes on giving the same level.
+\end{lemma}
+
+\begin{lemma}{Constant-time removal}{constant-time-remove}
+    Removing a timer takes constant time, however many timers exist.
+    \why By Lemma~\ref{lem:stable-filing}, Algorithm~\ref{alg:wakers-remove} finds the right slot without searching. Unlinking from a doubly linked list and clearing a bit take constant time.
+\end{lemma}
+
+\subsubsection{Finding the next deadline}
+
+The driver needs one number before it sleeps: the tick at which the wheel next has work to do. Algorithm~\ref{alg:wakers-next} finds it without looking at a single timer.
+
+\begin{algorithm}[htbp]
+    \caption{Finding the next expiration.}
+    \label{alg:wakers-next}
+    \begin{algorithmic}[1]
+        \Statex {\color{gray!90!black}\footnotesize Tokio: \texttt{Level::next\_occupied\_slot}, \texttt{Wheel::next\_expiration}}
+        \Function{NextOccupiedSlot}{$\ell, e$}
+            \If{$\mathit{occupied}_\ell = 0$}
+                \State \Return \textsc{None}
+            \EndIf
+            \State $n \gets (\lfloor e / 64^{\ell} \rfloor \bmod 64) + 1$\Comment{start just after the clock's slot}
+            \State $r \gets \operatorname{rotr}(\mathit{occupied}_\ell, n)$\Comment{rotate the 64-bit mask right by $n$}
+            \State \Return $(\operatorname{tzcnt}(r) + n) \bmod 64$\Comment{first occupied slot, wrapping round}
+        \EndFunction
+        \Statex
+        \Function{NextExpiration}{}
+            \If{$\mathit{pending}$ is not empty}
+                \State \Return $(0, 0, \mathit{elapsed})$\Comment{something is already due}
+            \EndIf
+            \For{$\ell \gets 0$ \textbf{to} $5$}\Comment{lowest level first}
+                \State $s \gets \Call{NextOccupiedSlot}{\ell, \mathit{elapsed}}$
+                \If{$s \ne \textsc{None}$}
+                    \State $d \gets \mathit{elapsed}$ rounded down to a multiple of $64^{\ell+1}$, plus $s \cdot 64^{\ell}$
+                    \If{$d \le \mathit{elapsed}$}
+                        \State $d \gets d + 64^{\ell+1}$\Comment{top level only: the next rotation}
+                    \EndIf
+                    \State \Return $(\ell, s, d)$\Comment{$d$ is the slot's \emph{start}}
+                \EndIf
+            \EndFor
+            \State \Return \textsc{None}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{figure}[htbp]
+    \centering
+    \newcommand{\wkmask}[3]{% y, clock slot, caption text
+        \foreach \s in {0,...,63}{\fill[rounded corners=0.3pt, gray!15] ({0.2*\s},#1) rectangle ++(0.16,0.45);}
+        \foreach \s in {10,40}{\fill[rounded corners=0.3pt, StmtLemma] ({0.2*\s},#1) rectangle ++(0.16,0.45);}
+        \draw[StmtProposition, line width=0.8pt, rounded corners=0.5pt] ({0.2*#2-0.03},{#1-0.03}) rectangle ++(0.22,0.51);
+        \node[anchor=east, align=right] at (-0.2,{#1+0.22}) {#3};
+    }
+    \figurefonts\resizebox{\linewidth}{!}{\begin{tikzpicture}[font=\sffamily\footnotesize, >={Stealth}]
+        \foreach \t in {0,10,20,30,40,50,63}{\node[text=gray, font=\sffamily\scriptsize] at ({0.2*\t+0.08},0.75) {\t};}
+        \wkmask{0}{20}{clock in slot 20}
+        \draw[->, StmtProposition, thick] ({0.2*21+0.08},-0.15) -- ({0.2*40+0.08},-0.15);
+        \node[anchor=west, text=StmtProposition] at ({0.2*40+0.4},-0.15) {19 trailing zeros: slot $21 + 19 = 40$};
+        \wkmask{-1.3}{41}{clock in slot 41}
+        \draw[->, StmtProposition, thick] ({0.2*42+0.08},-1.45) -- (12.9,-1.45);
+        \draw[->, StmtProposition, thick] (-0.05,-1.6) -- ({0.2*10+0.08},-1.6);
+        \node[anchor=west, text=StmtProposition] at ({0.2*10+0.4},-1.65) {wraps round: slot $(42 + 32) \bmod 64 = 10$};
+    \end{tikzpicture}}
+    \caption{\textsc{NextOccupiedSlot} on a level whose slots 10 and 40 are occupied (green). Rotating the mask so that the slot after the clock's (orange) becomes bit 0, the count of trailing zeros is the distance to the next occupied slot. These are cases from Tokio's own tests.}
+    \label{fig:wakers-15.3}
+\end{figure}
+
+Two details in Algorithm~\ref{alg:wakers-next} deserve a word.
+
+\begin{itemize}
+    \item \textbf{The deadline returned is a slot's start, not a timer's.} At level 0 the two coincide. At a higher level, reaching the slot's start means it is time to cascade the slot's timers to finer levels, not to fire them.
+    \item \textbf{The scan skips the clock's own slot.} By Lemma~\ref{lem:wheel-placement}, below the top level that slot is always empty. Only the top level, which acts as a ring for deadlines more than $64^6$ ticks away, can have a timer there, and that timer is a whole rotation in the future. (Tokio 1.54 made this explicit with the ``$+1$''.)
+\end{itemize}
+
+\begin{lemma}{Lowest level first}{lowest-level-first}
+    If any timer is filed at level $\ell$, the next occupied slot of level $\ell$ starts before every occupied slot of every higher level. So the first level with an occupied slot gives the wheel's next expiration.
+    \why By Lemma~\ref{lem:wheel-placement}, every level-$\ell$ timer lies inside the current level-$\ell$ window, which ends at the next multiple of $64^{\ell+1}$ after the clock. A timer at a higher level $\ell'$ is greater than the clock in group $\ell'$, so its slot starts at or after that same boundary. Tokio checks this property with an assertion in debug builds.
 \end{lemma}
 
 \begin{lemma}{Constant-time next deadline}{constant-time-next-deadline}
-    Finding the next deadline takes at most one bit operation per level: six in all.
-    \why On each level, a rotate of the occupied-slot mask followed by a count of trailing zeros finds the next non-empty slot.
+    Finding the next deadline takes at most one rotate and one trailing-zero count per level: six of each in all, however many timers exist.
+    \why Algorithm~\ref{alg:wakers-next} reads only the six occupancy masks, and by Lemma~\ref{lem:lowest-level-first} stops at the first non-empty one.
 \end{lemma}
+
+\subsubsection{Advancing time: firing and cascading}
+
+After every wake-up, the time driver reads the clock and advances the wheel to it (Algorithm~\ref{alg:wakers-advance}). Each due slot is taken off whole. Its timers that are due move to the pending list; the rest are filed again, relative to the slot's start.
+
+\begin{algorithm}[htbp]
+    \caption{Advancing the wheel to tick $t$.}
+    \label{alg:wakers-advance}
+    \begin{algorithmic}[1]
+        \Statex {\color{gray!90!black}\footnotesize Tokio: \texttt{Wheel::poll}, \texttt{Wheel::process\_expiration}}
+        \Function{Advance}{$t$}
+            \Loop
+                \State $E \gets \Call{NextExpiration}{}$
+                \If{$E = \textsc{None}$ \textbf{or} $E.d > t$}
+                    \State $\mathit{elapsed} \gets t$;\enspace \textbf{break}\Comment{nothing more is due}
+                \EndIf
+                \State $(\ell, s, d) \gets E$
+                \State $L \gets \mathit{slot}_\ell[s]$;\enspace $\mathit{slot}_\ell[s] \gets \emptyset$;\enspace clear bit $s$ of $\mathit{occupied}_\ell$
+                \ForAll{$x \in L$}
+                    \If{$x.\mathit{when} \le d$}
+                        \State $x.\mathit{filed} \gets \textsc{Deregistered}$;\enspace move $x$ to $\mathit{pending}$\Comment{due}
+                    \Else
+                        \State $x.\mathit{filed} \gets x.\mathit{when}$;\enspace $\ell' \gets \Call{LevelFor}{d, x.\mathit{when}}$\Comment{cascade}
+                        \State push $x$ onto $\mathit{slot}_{\ell'}[\Call{SlotFor}{x.\mathit{when}, \ell'}]$ and set its bit
+                    \EndIf
+                \EndFor
+                \State $\mathit{elapsed} \gets d$
+            \EndLoop
+            \State \Return $\mathit{pending}$\Comment{the driver fires each one}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{itemize}
+    \item \textbf{Taking the whole slot first} matters at the top level: a timer more than a full rotation away is filed straight back into the same slot, and must not be processed again in the same pass.
+    \item \textbf{Firing} a pending timer marks it finished and takes its waker. The driver collects up to 32 wakers, drops its lock, calls them, and takes the lock again, so no waker ever runs while the timer lock is held.
+    \item \textbf{The driver's loop} is: compute \textsc{NextExpiration}, sleep in \code{epoll\_wait} for that long (rounded up to a whole millisecond), then call \textsc{Advance} with the current tick.
+\end{itemize}
 
 \begin{lemma}{Timers are timeouts}{timers-are-timeouts}
-    A timer fires when the driver runs at or after its deadline and calls the wakers in the due slot. On an idle runtime this happens because \code{epoll\_wait}'s timeout expires; on a busy one, a worker's periodic non-blocking check of the driver (Table~\ref{tab:wakers-11.1}) can also do it.
-    \why The time driver passes ``time until the next deadline'' (Lemma~\ref{lem:constant-time-next-deadline}) as the timeout (Listing~\ref{lst:wakers-11.1}), and after every return from the layers below it, processes whatever timers are due. Timers have no kernel object of their own.
+    A timer fires when the driver runs at or after its deadline and advances the wheel past it. On an idle runtime this happens because \code{epoll\_wait}'s timeout expires; on a busy one, a worker's periodic non-blocking check of the driver (Table~\ref{tab:wakers-11.1}) can also do it.
+    \why The time driver passes ``time until the next expiration'' (Lemma~\ref{lem:constant-time-next-deadline}) as the timeout (Listing~\ref{lst:wakers-11.1}), and after every return from the layers below it, runs Algorithm~\ref{alg:wakers-advance}. Timers have no kernel object of their own.
 \end{lemma}
 
-Coarse timers \emph{cascade}: when the window of a higher-level slot arrives, its timers are re-filed into finer levels, and they finally fire from level 0.
+\begin{corollary}{Bounded cascades}{bounded-cascades}
+    A timer inserted at level $\ell$ is filed again at most $\ell$ times before it fires, unless its deadline is moved later or lies more than $64^6$ ticks ahead.
+    \why When a level-$\ell$ slot starting at $d$ is processed, each of its timers lies in $[d, d + 64^{\ell})$, so it agrees with $d$ in every group from $\ell$ up: \textsc{LevelFor}$(d, \cdot)$ returns a level below $\ell$. Each cascade therefore goes down at least one level, and level 0 fires.
+\end{corollary}
 
 \subsubsection{A worked example}
 
@@ -170,10 +428,79 @@ Table~\ref{tab:wakers-15.1} follows time forward. Each row is one return from \c
     \item Adding ten thousand more timers adds work only at the moments when some of them are due.
 \end{itemize}
 
+\subsubsection{Moving a deadline}
+
+\code{Sleep::reset} moves a timer's deadline. Servers do this constantly: an idle timeout is pushed back every time a packet arrives on the connection. Moving a deadline later is by far the common case, and Tokio makes it almost free (Algorithm~\ref{alg:wakers-reset}).
+
+\begin{algorithm}[htbp]
+    \caption{Moving a timer's deadline to $w'$.}
+    \label{alg:wakers-reset}
+    \begin{algorithmic}[1]
+        \Statex {\color{gray!90!black}\footnotesize Tokio: \texttt{TimerEntry::reset}, \texttt{StateCell::extend\_expiration}}
+        \Function{Reset}{$x, w'$}
+            \If{$x$ has not fired \textbf{and} $w' \ge x.\mathit{when}$}
+                \State $x.\mathit{when} \gets w'$\Comment{one compare-and-swap: no lock, wheel untouched}
+                \State \Return
+            \EndIf
+            \State lock the driver\Comment{an earlier deadline, or the timer already fired}
+            \State \Call{Remove}{$x$};\enspace $x.\mathit{when} \gets w'$
+            \If{\Call{Insert}{$x$} $=$ \textsc{Elapsed}}
+                \State fire $x$ and call its waker
+            \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{lemma}{Lazy extension}{lazy-extension}
+    \index{Timer wheel!lazy extension}
+    Moving a timer's deadline later costs one atomic compare-and-swap, with no lock and no change to the wheel. The timer still fires on time; the price is at most one extra re-filing, paid when its old slot comes due.
+    \why The timer stays filed under its old, earlier filing deadline, so its slot comes due no later than the new deadline: it can never fire late. When that slot is processed, Algorithm~\ref{alg:wakers-advance} finds $x.\mathit{when} > d$ and files the timer again by its true deadline. From there it behaves like a timer inserted at that moment.
+\end{lemma}
+
+The model used to check Table~\ref{tab:wakers-15.1} shows it on one timer. Insert a 70\,ms timer at tick 0: it is filed at level 1, slot 1. At tick 10, reset it to 300\,ms: nothing in the wheel changes. Then:
+
+\begin{table}[htbp]
+    \centering\small
+    \begin{tabularx}{\linewidth}{r Y}
+        \toprule
+        \textbf{Time} & \textbf{What the driver does} \\
+        \midrule
+        64 ms & Level-1 slot 1 due. The true deadline (300) is later than the slot's start (64), so the timer is filed again, at level 1, slot 4: the one extra step \\
+        256 ms & Level-1 slot 4 due: cascade into level-0 slot 44, exactly as for a timer created for 300\,ms \\
+        300 ms & \textbf{Fire} \\
+        \bottomrule
+    \end{tabularx}
+    \caption{A 70\,ms timer reset to 300\,ms at tick 10. The reset took no lock; the timer cost one extra re-filing at 64\,ms.}
+    \label{tab:wakers-15.2}
+\end{table}
+
+Moving a deadline \emph{earlier} cannot be lazy: the timer is filed too late to fire on time. Tokio then takes the driver lock, removes the timer and inserts it again (Algorithms~\ref{alg:wakers-remove} and \ref{alg:wakers-insert}), both in constant time, and the insert may cut the driver's sleep short.
+
+\begin{table}[htbp]
+    \centering\small
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm} Y >{\raggedright\arraybackslash}p{3.0cm}}
+        \toprule
+        \textbf{Operation} & \textbf{Cost} & \textbf{Why} \\
+        \midrule
+        Insert & $O(1)$, lock & Lemma~\ref{lem:constant-time-insert} \\
+        Remove (drop a \texttt{Sleep}) & $O(1)$, lock & Lemma~\ref{lem:constant-time-remove} \\
+        Move the deadline later & $O(1)$, no lock & Lemma~\ref{lem:lazy-extension} \\
+        Move the deadline earlier & $O(1)$, lock & Remove, then insert \\
+        Next deadline & six rotates and trailing-zero counts at most & Lemma~\ref{lem:constant-time-next-deadline} \\
+        Advance & $O(1)$ per due slot, plus $O(1)$ per timer in it & Algorithm~\ref{alg:wakers-advance} \\
+        Re-filings per timer & at most its starting level & Corollary~\ref{cor:bounded-cascades} \\
+        \bottomrule
+    \end{tabularx}
+    \caption{The cost of every timer-wheel operation. None depends on how many timers exist.}
+    \label{tab:wakers-15.3}
+\end{table}
+
 \begin{quotebox}{Summary}
     \begin{itemize}
-        \item Six levels of 64 slots (Definition~\ref{def:timer-wheel}); constant-time insert and next-deadline (Lemmas~\ref{lem:constant-time-insert}, \ref{lem:constant-time-next-deadline}).
-        \item Timers cascade from coarse to fine levels, and fire as \code{epoll\_wait} timeouts (Lemma~\ref{lem:timers-are-timeouts}).
+        \item Six levels of 64 slots (Definition~\ref{def:timer-wheel}). A timer's level is the 6-bit group of the highest bit in which its deadline differs from the wheel's clock (Algorithm~\ref{alg:wakers-level-for}).
+        \item Insert, remove and next-deadline are all constant time (Lemmas~\ref{lem:constant-time-insert}, \ref{lem:constant-time-remove}, \ref{lem:constant-time-next-deadline}). Removal can recompute a timer's slot because filings are stable (Lemma~\ref{lem:stable-filing}).
+        \item Advancing processes one slot at a time: due timers fire, the rest cascade down, at most once per level (Corollary~\ref{cor:bounded-cascades}). Timers fire as \code{epoll\_wait} timeouts (Lemma~\ref{lem:timers-are-timeouts}).
+        \item Moving a deadline later is lock-free and lazy (Lemma~\ref{lem:lazy-extension}).
     \end{itemize}
 \end{quotebox}
 
@@ -252,6 +579,8 @@ The real limits on an async server therefore lie elsewhere:
         \item A server holds 50,000 idle WebSocket connections, each with a task waiting in \code{read().await}, when one message arrives. Which costs grow with the 50,000, and which do not?
         \item Why would a runtime built on \code{poll(2)} instead of epoll fail Lemma~\ref{lem:event-proportional-waiting}?
         \item From Table~\ref{tab:wakers-16.1}, estimate the user-space memory per sleeping task and per socket task.
+        \item A level-0 occupancy mask has slots 5 and 60 set, and the wheel's clock is at tick 130. Run \textsc{NextOccupiedSlot} and \textsc{NextExpiration} (Algorithm~\ref{alg:wakers-next}) by hand: which slot do they find, and at what tick does it come due?
+        \item A handler wraps each request in \code{timeout(Duration::from\_secs(5), ...)}, and almost every request finishes in about 3\,ms. Which timer-wheel operations does a typical request cost, and does its timer ever cascade?
     \end{enumerate}
 \end{Exercise}
 \begin{Answer}
@@ -260,5 +589,7 @@ The real limits on an async server therefore lie elsewhere:
         \item Memory grows: each connection costs a task allocation, its socket state with waker slots, a file descriptor, and kernel socket buffers. The cost of the one message does not (Lemma~\ref{lem:event-cost-independent}): \code{epoll\_wait} returns one event (Lemma~\ref{lem:event-proportional-waiting}), its token leads straight to that socket's waker slot (Lemma~\ref{lem:token-round-trip}), and only that task is queued and polled. The idle connections cost no CPU (Lemma~\ref{lem:idle-cost-memory-only}).
         \item \code{poll(2)} takes the whole descriptor set on every call and the kernel checks every descriptor in it, so each wait costs work proportional to the number of descriptors watched, not to the number that are ready.
         \item Timers: $(39.7 - 2.9)\,\text{MiB} / 100{,}000 \approx 386$ bytes per sleeping task, including its timer entry. Sockets: $(49.9 - 39.7)\,\text{MiB} / 9{,}000 \approx 1.2$\,KB per socket task (two descriptors each), not counting the kernel's socket memory.
+        \item The scan starts at $n = (130 \bmod 64) + 1 = 3$. Rotating the mask right by 3 moves slot 5 to bit 2 and slot 60 to bit 57, so there are 2 trailing zeros and the slot is $(2 + 3) \bmod 64 = 5$. The clock rounded down to a multiple of 64 is 128, so the slot comes due at tick $128 + 5 = 133$. Slot 60 is not next, even though it is ``after'' slot 5 in the array: the scan starts from the clock's slot (2), not from slot 0.
+        \item Two constant-time operations, each under the driver lock, and nothing else. When the \code{Timeout}'s \code{Sleep} is first polled, \textsc{Insert} files it about 5,000 ticks ahead: at level 2, or at level 3 if those 5,000 ticks cross a multiple of $64^3$ (Algorithm~\ref{alg:wakers-level-for}). When the request finishes, the \code{Timeout} is dropped and \textsc{Remove} unlinks it (Lemma~\ref{lem:constant-time-remove}). Its slot is never reached, so it never cascades and never fires.
     \end{enumerate}
 \end{Answer}

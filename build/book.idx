@@ -53,5 +53,7 @@
 \indexentry{Thread-level wake|hyperpage}{73}
 \indexentry{epoll|hyperpage}{75}
 \indexentry{Timer wheel|hyperpage}{76}
-\indexentry{Idle cost|hyperpage}{78}
-\indexentry{Event cost|hyperpage}{78}
+\indexentry{Timer wheel!filing deadline|hyperpage}{77}
+\indexentry{Timer wheel!lazy extension|hyperpage}{84}
+\indexentry{Idle cost|hyperpage}{85}
+\indexentry{Event cost|hyperpage}{85}
