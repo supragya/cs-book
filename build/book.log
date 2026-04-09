@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.11.16)  16 NOV 2026 16:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.11.16)  16 NOV 2026 16:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1605,93 +1605,113 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
  [4{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-5.enc}
 ]
-Overfull \hbox (1.29202pt too wide) detected at line 128
- []\T1/XCharter-TLF/m/n/10.95 103
- []
-
-
-Overfull \hbox (1.29202pt too wide) detected at line 129
- []\T1/XCharter-TLF/m/n/10.95 103
- []
-
-
-Overfull \hbox (1.29202pt too wide) detected at line 130
- []\T1/XCharter-TLF/m/n/10.95 103
+Overfull \hbox (1.29202pt too wide) detected at line 132
+ []\T1/XCharter-TLF/m/n/10.95 100
  []
 
 
 Overfull \hbox (1.29202pt too wide) detected at line 133
- []\T1/XCharter-TLF/m/n/10.95 104
- []
-
-
-Overfull \hbox (1.29202pt too wide) detected at line 134
- []\T1/XCharter-TLF/m/n/10.95 104
+ []\T1/XCharter-TLF/m/n/10.95 100
  []
 
 
 Overfull \hbox (1.29202pt too wide) detected at line 135
- []\T1/XCharter-TLF/m/n/10.95 105
+ []\T1/XCharter-TLF/m/n/10.95 103
  []
 
 
 Overfull \hbox (1.29202pt too wide) detected at line 136
- []\T1/XCharter-TLF/m/n/10.95 105
+ []\T1/XCharter-TLF/m/n/10.95 103
  []
 
 
 Overfull \hbox (1.29202pt too wide) detected at line 137
- []\T1/XCharter-TLF/m/n/10.95 106
+ []\T1/XCharter-TLF/m/n/10.95 103
  []
 
 
 Overfull \hbox (1.29202pt too wide) detected at line 138
- []\T1/XCharter-TLF/m/n/10.95 106
+ []\T1/XCharter-TLF/m/n/10.95 104
+ []
+
+
+Overfull \hbox (1.29202pt too wide) detected at line 139
+ []\T1/XCharter-TLF/m/n/10.95 105
  []
 
 
 Overfull \hbox (1.29202pt too wide) detected at line 140
- []\T1/XCharter-TLF/m/n/10.95 109
+ []\T1/XCharter-TLF/m/n/10.95 105
  []
 
 
 Overfull \hbox (1.29202pt too wide) detected at line 141
- []\T1/XCharter-TLF/m/n/10.95 109
- []
-
-
-Overfull \hbox (1.29202pt too wide) detected at line 142
- []\T1/XCharter-TLF/m/n/10.95 109
+ []\T1/XCharter-TLF/m/n/10.95 105
  []
 
 
 Overfull \hbox (1.29202pt too wide) detected at line 143
- []\T1/XCharter-TLF/m/n/10.95 110
+ []\T1/XCharter-TLF/m/n/10.95 107
  []
 
 
 Overfull \hbox (1.29202pt too wide) detected at line 144
- []\T1/XCharter-TLF/m/n/10.95 111
- []
-
-
-Overfull \hbox (1.29202pt too wide) detected at line 145
- []\T1/XCharter-TLF/m/n/10.95 111
+ []\T1/XCharter-TLF/m/n/10.95 108
  []
 
 
 Overfull \hbox (1.29202pt too wide) detected at line 146
- []\T1/XCharter-TLF/m/n/10.95 111
+ []\T1/XCharter-TLF/m/n/10.95 109
+ []
+
+
+Overfull \hbox (1.29202pt too wide) detected at line 147
+ []\T1/XCharter-TLF/m/n/10.95 110
  []
 
 
 Overfull \hbox (1.29202pt too wide) detected at line 148
- []\T1/XCharter-TLF/m/n/10.95 113
+ []\T1/XCharter-TLF/m/n/10.95 110
  []
 
 
 Overfull \hbox (1.29202pt too wide) detected at line 149
+ []\T1/XCharter-TLF/m/n/10.95 110
+ []
+
+
+Overfull \hbox (1.29202pt too wide) detected at line 150
+ []\T1/XCharter-TLF/m/n/10.95 110
+ []
+
+[5]
+Overfull \hbox (1.29202pt too wide) detected at line 151
+ []\T1/XCharter-TLF/m/n/10.95 112
+ []
+
+
+Overfull \hbox (1.29202pt too wide) detected at line 152
+ []\T1/XCharter-TLF/m/n/10.95 113
+ []
+
+
+Overfull \hbox (1.29202pt too wide) detected at line 153
  []\T1/XCharter-TLF/m/n/10.95 114
+ []
+
+
+Overfull \hbox (1.29202pt too wide) detected at line 154
+ []\T1/XCharter-TLF/m/n/10.95 115
+ []
+
+
+Overfull \hbox (1.29202pt too wide) detected at line 155
+ []\T1/XCharter-TLF/m/n/10.95 116
+ []
+
+
+Overfull \hbox (1.29202pt too wide) detected at line 156
+ []\T1/XCharter-TLF/m/n/10.95 118
  []
 
 )
@@ -1699,9 +1719,7 @@ Overfull \hbox (1.29202pt too wide) detected at line 149
 \openout6 = `book.toc'.
 
  (./zero-knowledge/zk.tex (./zero-knowledge/./zkvms/explorations-zkvm.tex
-[5] [6
-
-]
+[6]
 Chapter 1.
 
 Overfull \hbox (36.93173pt too wide) in paragraph at lines 2--2
@@ -1713,7 +1731,9 @@ LaTeX Font Info:    Font shape `T1/SourceSansThree-TLF/regular/n' aliased to
 (Font)              `T1/SourceSansThree-TLF/m/n' on input line 6.
 LaTeX Font Info:    Font shape `T1/SourceSansThree-TLF/regular/n' aliased to
 (Font)              `T1/SourceSansThree-TLF/m/n' on input line 9.
-[7]
+[7
+
+]
 Underfull \hbox (badness 10000) in paragraph at lines 35--35
 []|\T1/XCharter-TLF/b/n/10.95 (+20) Execution
  []
@@ -1855,7 +1875,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 Chapter 3.
 (./time-synchrony-failures/./key-definitions/key-definitions.tex
 <time-synchrony-failures/key-definitions/assets/5-node-distributed-system.png, 
-id=642, 1391.1975pt x 1276.77pt>
+id=703, 1391.1975pt x 1276.77pt>
 File: time-synchrony-failures/key-definitions/assets/5-node-distributed-system.
 png Graphic file (type png)
 <use time-synchrony-failures/key-definitions/assets/5-node-distributed-system.p
@@ -1880,7 +1900,7 @@ LaTeX Font Info:    Font shape `T1/SourceSansThree-TLF/bold/n' aliased to
 (Font)              `T1/SourceSansThree-TLF/b/n' on input line 8.
  [17]
 <time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-write.pn
-g, id=673, 924.45375pt x 575.14874pt>
+g, id=733, 924.45375pt x 575.14874pt>
 File: time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-wri
 te.png Graphic file (type png)
 <use time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-writ
@@ -1901,7 +1921,7 @@ Underfull \hbox (badness 1655) in paragraph at lines 54--54
 [18 <./time-synchrony-failures/flp-impossibility/assets/flp-single-node-read-wr
 ite.png>] [19]
 <time-synchrony-failures/flp-impossibility/assets/flp-impossibility-lemma1.png,
- id=684, 183.68625pt x 230.8625pt>
+ id=744, 183.68625pt x 230.8625pt>
 File: time-synchrony-failures/flp-impossibility/assets/flp-impossibility-lemma1
 .png Graphic file (type png)
 <use time-synchrony-failures/flp-impossibility/assets/flp-impossibility-lemma1.
@@ -1926,7 +1946,7 @@ tial con-fig-u-ra-
  []
 
 <time-synchrony-failures/flp-impossibility/assets/flp-sequence-bivalent-to-biva
-lent.png, id=687, 1135.24126pt x 309.155pt>
+lent.png, id=747, 1135.24126pt x 309.155pt>
 File: time-synchrony-failures/flp-impossibility/assets/flp-sequence-bivalent-to
 -bivalent.png Graphic file (type png)
 <use time-synchrony-failures/flp-impossibility/assets/flp-sequence-bivalent-to-
@@ -1938,7 +1958,7 @@ equence-bivalent-to-bivalent.png  used on input line 129.
 1.png>] [21 <./time-synchrony-failures/flp-impossibility/assets/flp-sequence-bi
 valent-to-bivalent.png>]
 <time-synchrony-failures/flp-impossibility/assets/flp-pre-0-valent-to-non-pre-0
--valent.png, id=702, 1256.695pt x 318.18875pt>
+-valent.png, id=762, 1256.695pt x 318.18875pt>
 File: time-synchrony-failures/flp-impossibility/assets/flp-pre-0-valent-to-non-
 pre-0-valent.png Graphic file (type png)
 <use time-synchrony-failures/flp-impossibility/assets/flp-pre-0-valent-to-non-p
@@ -1962,7 +1982,7 @@ os[][]
 ]
 Chapter 4.
 <./adverserial-distributed-systems/ethereum/assets/rlp-encoding-first-byte.png,
- id=721, 1208.515pt x 262.9825pt>
+ id=782, 1208.515pt x 262.9825pt>
 File: ./adverserial-distributed-systems/ethereum/assets/rlp-encoding-first-byte
 .png Graphic file (type png)
 <use ./adverserial-distributed-systems/ethereum/assets/rlp-encoding-first-byte.
@@ -2061,7 +2081,7 @@ Overfull \hbox (110.73589pt too wide) in paragraph at lines 59--60
 m/n/10.95 (-20) (0x1a..6a): The ad-dress $[]$
  []
 
-<./adverserial-distributed-systems/ethereum/assets/wintermute-hack.png, id=746,
+<./adverserial-distributed-systems/ethereum/assets/wintermute-hack.png, id=807,
  774.895pt x 485.815pt>
 File: ./adverserial-distributed-systems/ethereum/assets/wintermute-hack.png Gra
 phic file (type png)
@@ -2083,7 +2103,7 @@ fff_fffffffe[]\T1/XCharter-TLF/m/n/10.95 (-20) .
 
 [28 <./adverserial-distributed-systems/ethereum/assets/wintermute-hack.png>]
 (./adverserial-distributed-systems/./ethereum/./pos-block.tex
-<./adverserial-distributed-systems/ethereum/assets/block-merge.png, id=772, 753
+<./adverserial-distributed-systems/ethereum/assets/block-merge.png, id=832, 753
 .81625pt x 392.46625pt>
 File: ./adverserial-distributed-systems/ethereum/assets/block-merge.png Graphic
  file (type png)
@@ -2101,7 +2121,7 @@ stributed-systems/ethereum/assets/block-merge.png>] [30
 
 ]
 Chapter 5.
-<./adverserial-distributed-systems/solana/assets/blockchain-trilemma.png, id=78
+<./adverserial-distributed-systems/solana/assets/blockchain-trilemma.png, id=84
 5, 2818.53pt x 1866.975pt>
 File: ./adverserial-distributed-systems/solana/assets/blockchain-trilemma.png G
 raphic file (type png)
@@ -2138,7 +2158,7 @@ e.tex [33
 
 ]
 <./adverserial-distributed-systems/general-problems/assets/tragedy-of-the-commo
-ns.png, id=804, 939.51pt x 473.77pt>
+ns.png, id=864, 939.51pt x 473.77pt>
 File: ./adverserial-distributed-systems/general-problems/assets/tragedy-of-the-
 commons.png Graphic file (type png)
 <use ./adverserial-distributed-systems/general-problems/assets/tragedy-of-the-c
@@ -2156,7 +2176,7 @@ ommons.png>])
 (./adverserial-distributed-systems/./general-problems/./wealth-inequality.tex)
 (./adverserial-distributed-systems/./general-problems/./mev.tex [35])
 <./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.png, 
-id=823, 3011.25pt x 1694.33pt>
+id=884, 3011.25pt x 1694.33pt>
 File: ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.
 png Graphic file (type png)
 <use ./adverserial-distributed-systems/general-problems/assets/arbitrum-nitro.p
@@ -2363,68 +2383,27 @@ Overfull \hbox (5.41542pt too wide) in paragraph at lines 76--77
 , not to watch-ers (Lemma [][]9.2.14.1[][]).
  []
 
-[75]
-LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 9.0pt on input line 90.
- [76]
-LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/sc' will be
-(Font)              scaled to size 10.95pt on input line 112.
-Package microtype Info: Character `029' is missing
-(microtype)             in font `T1/XCharter-TLF/m/sc/10.95'.
-(microtype)             Ignoring protrusion settings for this character.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 10.95pt on input line 112.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 8.0pt on input line 112.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 6.1pt on input line 112.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 6.0pt on input line 151.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 5.5pt on input line 151.
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 157.
-LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/sc' will be
-(Font)              scaled to size 10.0pt on input line 161.
-Package microtype Info: Character `029' is missing
-(microtype)             in font `T1/XCharter-TLF/m/sc/10'.
-(microtype)             Ignoring protrusion settings for this character.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 10.0pt on input line 161.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 7.3pt on input line 161.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 9.0pt on input line 161.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 6.6pt on input line 161.
-LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/n' will be
-(Font)              scaled to size 7.3pt on input line 185.
-LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/n' will be
-(Font)              scaled to size 5.5pt on input line 185.
- [77{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/xcharter/xch_yelf2i.enc
-}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/xcharter/xch_uaipw4.enc}] 
-[78] [79] [80] [81]
-LaTeX Font Info:    Font shape `T1/SourceSansThree-TLF/regular/n' aliased to
-(Font)              `T1/SourceSansThree-TLF/m/n' on input line 395.
-
-Underfull \vbox (badness 3657) has occurred while \output is active []
-
- [82]
-[83] [84] [85]
-Overfull \hbox (27.56699pt too wide) in paragraph at lines 540--549
+[75] [76] [77]
+Overfull \hbox (27.56699pt too wide) in paragraph at lines 179--188
  [][] 
  []
 
-[86]) (./programming-languages/./rust/./wakers/diy.tex
+[78]
+LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/sc' will be
+(Font)              scaled to size 10.95pt on input line 228.
+Package microtype Info: Character `029' is missing
+(microtype)             in font `T1/XCharter-TLF/m/sc/10.95'.
+(microtype)             Ignoring protrusion settings for this character.
+) (./programming-languages/./rust/./wakers/diy.tex [79]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [87]
+ [80]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [88]
+ [81]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [89]
+ [82]
 Overfull \hbox (17.68428pt too wide) in paragraph at lines 160--160
 []|\T1/XCharter-TLF/m/n/10 (-20) Lemma [][]9.2.16.2[][]|  
  []
@@ -2459,7 +2438,7 @@ Overfull \hbox (2.95886pt too wide) in paragraph at lines 160--160
 []|\T1/XCharter-TLF/m/n/10 (-20) Cor. [][]9.2.11.3[][]|  
  []
 
-[90] [91]) (./programming-languages/./rust/./wakers/programs.tex
+[83] [84]) (./programming-languages/./rust/./wakers/programs.tex
 Overfull \hbox (4.15794pt too wide) in paragraph at lines 12--13
 []\T1/XCharter-TLF/m/n/10.95 (-20) Produces List-ing [][]9.8[][] un-der []\T1/z
 i4/m/it/10.95 strace -e trace=epoll_create1,epoll_ctl,epoll_wait[]\T1/XCharter-
@@ -2469,14 +2448,14 @@ TLF/m/n/10.95 (-20) .
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [92]
+ [85]
 Overfull \hbox (29.19196pt too wide) in paragraph at lines 63--64
 []\T1/XCharter-TLF/m/n/10.95 (-20) Produces List-ing [][]9.10[][] un-der []\T1/
 zi4/m/it/10.95 strace -f -e trace=eventfd2,epoll_ctl,epoll_wait,write[]\T1/XCha
 rter-TLF/m/n/10.95 (-20) . 
  []
 
-[93]
+[86]
 Overfull \hbox (110.71082pt too wide) in paragraph at lines 117--118
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]  
  []
@@ -2489,16 +2468,16 @@ Overfull \hbox (64.63597pt too wide) in paragraph at lines 123--124
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [94]
+ [87]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [95]
+ [88]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [96]
+ [89]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [97])
+ [90])
 Overfull \hbox (75.09178pt too wide) in paragraph at lines 56--57
 \T1/XCharter-TLF/m/n/10 (-20) uler is in \T1/zi4/m/it/10 runtime/scheduler/ \T1
 /XCharter-TLF/m/n/10 (-20) (\T1/zi4/m/it/10 multi_thread/worker.rs\T1/XCharter-
@@ -2519,15 +2498,13 @@ Overfull \hbox (19.20198pt too wide) in paragraph at lines 60--61
 [] 
  []
 
-)) (./programming-languages/./solidity/solidity.tex [98] [99] [100]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+)) (./programming-languages/./solidity/solidity.tex [91] [92] [93] [94{/usr/loc
+al/texlive/2026/texmf-dist/fonts/enc/dvips/xcharter/xch_yelf2i.enc}] [95]
+[96
 
- [101]
-[102]
+]
 Chapter 10.
-[103
-
-] [104] [105]
+[97] [98] [99]
 Overfull \hbox (27.75648pt too wide) in paragraph at lines 119--121
 []\T1/XCharter-TLF/m/n/10.95 (-20) The value would be the zero ad-dress. []\T1/
 zi4/m/it/10.95 0x0000000000_0000000000_0000000000_0000000000[] 
@@ -2537,8 +2514,8 @@ zi4/m/it/10.95 0x0000000000_0000000000_0000000000_0000000000[]
 (./problem-solving/./binary-search/bs.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [106]
-[107] [108
+ [100]
+[101] [102
 
 ]
 Chapter 11.
@@ -2565,12 +2542,6 @@ LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
 LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
 (Font)              scaled to size 10.5pt on input line 12.
 LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
-(Font)              scaled to size 7.9pt on input line 12.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 14.4pt on input line 12.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 10.5pt on input line 12.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
 (Font)              scaled to size 7.9pt on input line 12.
 LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
 (Font)              scaled to size 14.4pt on input line 12.
@@ -2636,10 +2607,6 @@ LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
 (Font)              scaled to size 12.0pt on input line 18.
 LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
 (Font)              scaled to size 8.8pt on input line 18.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 12.0pt on input line 18.
-LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
-(Font)              scaled to size 8.8pt on input line 18.
 LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
 (Font)              scaled to size 12.0pt on input line 18.
 LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
@@ -2664,7 +2631,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 18.
 
-[109]
+[103]
 Overfull \hbox (112.99371pt too wide) in paragraph at lines 22--24
 \T1/XCharter-TLF/m/n/10.95 (-20) Given $\OML/zchmi/m/it/10.95 D \U/ntxmia/m/it/
 10.95 = \OT1/XCharter-TLF/m/n/10.95 (-20) 5$\T1/XCharter-TLF/m/n/10.95 (-20) , 
@@ -2694,7 +2661,7 @@ ia/m/it/10.95 = \LMS/ntxsy/m/n/10.95 j\OML/zchmi/m/it/10.95 O\LMS/ntxsy/m/n/10.
 10.95 ¹\OML/zchmi/m/it/10.95 O\LMS/ntxsy/m/n/10.95 º ^^@
  []
 
-[110]
+[104]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 57.
@@ -2703,20 +2670,93 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 57.
 
-[111] (./problem-solving/./binary-search/intro.tex)
+[105] (./problem-solving/./binary-search/intro.tex)
 (./problem-solving/./binary-search/patterns.tex))
-(./problem-solving/./dynamic-programming/dp.tex [112]
+(./problem-solving/./dynamic-programming/dp.tex [106]
 Chapter 12.
-(./problem-solving/./dynamic-programming/intro.tex [113
+(./problem-solving/./dynamic-programming/intro.tex [107
 
 ])
-(./problem-solving/./dynamic-programming/main_subproblems.tex))) [114]
+(./problem-solving/./dynamic-programming/main_subproblems.tex)))
+(./important-algorithms/important-algorithms.tex
+(./important-algorithms/./systems-engineering/systems-engineering.tex [108]
+Chapter 13.
+(./important-algorithms/./systems-engineering/timing-wheels.tex
+LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/it' will be
+(Font)              scaled to size 9.0pt on input line 16.
+
+Overfull \hbox (11.689pt too wide) in paragraph at lines 18--19
+\T1/XCharter-TLF/m/n/10.95 (-20) men-ta-tion: ev-ery al-go-rithm is read from \
+T1/zi4/m/it/10.95 runtime/time/wheel/ \T1/XCharter-TLF/m/n/10.95 (-20) and \T1/
+zi4/m/it/10.95 runtime/time/entry.rs\T1/XCharter-TLF/m/n/10.95 (-20) ,
+ []
+
+[109
+
+]
+LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
+(Font)              scaled to size 10.95pt on input line 47.
+LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
+(Font)              scaled to size 8.0pt on input line 47.
+LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
+(Font)              scaled to size 6.1pt on input line 47.
+LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
+(Font)              scaled to size 6.0pt on input line 84.
+LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
+(Font)              scaled to size 5.5pt on input line 84.
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 90.
+LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/sc' will be
+(Font)              scaled to size 10.0pt on input line 94.
+Package microtype Info: Character `029' is missing
+(microtype)             in font `T1/XCharter-TLF/m/sc/10'.
+(microtype)             Ignoring protrusion settings for this character.
+LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
+(Font)              scaled to size 10.0pt on input line 94.
+LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
+(Font)              scaled to size 7.3pt on input line 94.
+LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
+(Font)              scaled to size 9.0pt on input line 94.
+LaTeX Font Info:    Font shape `OT1/XCharter-TLF/m/it' will be
+(Font)              scaled to size 6.6pt on input line 94.
+LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/n' will be
+(Font)              scaled to size 7.3pt on input line 118.
+LaTeX Font Info:    Font shape `T1/XCharter-TLF/m/n' will be
+(Font)              scaled to size 5.5pt on input line 118.
+ [110{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/xcharter/xch_uaipw4.en
+c}] [111] [112] [113]
+LaTeX Font Info:    Font shape `T1/SourceSansThree-TLF/regular/n' aliased to
+(Font)              `T1/SourceSansThree-TLF/m/n' on input line 319.
+
+Underfull \vbox (badness 4303) has occurred while \output is active []
+
+ [114]
+[115] [116{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/xcharter/xch_4j4s
+w5.enc}]) [117]
+Overfull \hbox (188.05133pt too wide) in paragraph at lines 11--12
+[]\T1/XCharter-TLF/m/n/10 (-20) : [][]http://www.cs.columbia.edu/~nahum/w6998/p
+apers/ton97-
+ []
+
+
+Overfull \hbox (88.88931pt too wide) in paragraph at lines 12--13
+[]\T1/XCharter-TLF/m/n/10 (-20) : [][]https://github.com/tokio-rs/tokio/tree/to
+kio-1.54.1/tokio/src/runtime/time[][] 
+ []
+
+
+Overfull \hbox (9.92397pt too wide) in paragraph at lines 13--14
+[]\T1/XCharter-TLF/m/n/10 (-20) : [][]https://tokio.rs/blog/2018-03-timers[][] 
+
+ []
+
+)) [118] [119] [120
+
+
+]
 runsystem(makeindex book.idx)...executed safely (allowed).
 
-
-(build/book.ind) [115
-
-
+ (build/book.ind) [121
 
 ] (build/book.aux)
  ***********
@@ -2728,14 +2768,14 @@ L3 programming layer <2026-01-19>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `book.out' has not changed.
-(rerunfilecheck)             Checksum: 4B539FCB2D6D1748C9C85EBFC6F77575;24190.
+(rerunfilecheck)             Checksum: 5A2C2508F3DCEFE6B4CEEA256D44FEA8;26425.
  ) 
 Here is how much of TeX's memory you used:
- 39846 strings out of 467525
- 760189 string characters out of 5418981
- 1526525 words of memory out of 5000000
- 65997 multiletter control sequences out of 15000+600000
- 1131624 words of font info for 838 fonts, out of 8000000 for 9000
+ 39906 strings out of 467525
+ 761881 string characters out of 5418981
+ 1577092 words of memory out of 5000000
+ 66017 multiletter control sequences out of 15000+600000
+ 1129745 words of font info for 837 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  131i,15n,135p,7894b,2332s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/inconsolata/Inconsolat
@@ -2751,10 +2791,10 @@ texmf-dist/fonts/type1/public/xcharter/XCharterMathMI.pfb></usr/local/texlive/2
 026/texmf-dist/fonts/type1/public/newtx/txexs.pfb></usr/local/texlive/2026/texm
 f-dist/fonts/type1/public/newtx/txmiaX.pfb></usr/local/texlive/2026/texmf-dist/
 fonts/type1/public/newtx/txsys.pfb>
-Output written on build/book.pdf (115 pages, 3539132 bytes).
+Output written on build/book.pdf (121 pages, 3555545 bytes).
 PDF statistics:
- 2625 PDF objects out of 2984 (max. 8388607)
- 2322 compressed objects within 24 object streams
- 959 named destinations out of 1000 (max. 500000)
- 223700 words of extra memory for PDF output out of 266212 (max. 10000000)
+ 2764 PDF objects out of 2984 (max. 8388607)
+ 2441 compressed objects within 25 object streams
+ 982 named destinations out of 1000 (max. 500000)
+ 217652 words of extra memory for PDF output out of 221844 (max. 10000000)
 

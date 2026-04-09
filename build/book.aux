@@ -275,126 +275,140 @@
 \newlabel{tab:wakers-14.1}{{9.11}{76}{One round in which three sockets receive data}{table.9.11}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {9.2.15}Inside the timer wheel}{76}{subsection.9.2.15}\protected@file@percent }
 \newlabel{sec:wakers-ch15}{{9.2.15}{76}{Inside the timer wheel}{subsection.9.2.15}{}}
-\newlabel{def:timer-wheel}{{9.2.15.1}{76}{Hierarchical timer wheel}{tcb@cnt@definition.9.2.15.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Ticks and the wheel's clock}{76}{subsubsection*.23}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{What the wheel stores}{77}{subsubsection*.24}\protected@file@percent }
-\newlabel{def:filing-true-deadline}{{9.2.15.2}{77}{Filing deadline, true deadline}{tcb@cnt@definition.9.2.15.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Insertion: choosing a level and a slot}{77}{subsubsection*.25}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {9.6}{\ignorespaces Choosing a level and slot for a deadline of 5,000 ticks when the wheel's clock is at 4,096, as in step 6 of Table~\ref {tab:wakers-15.1}. Each box is one 6-bit group of the tick, in decimal.}}{77}{figure.9.6}\protected@file@percent }
-\newlabel{fig:wakers-15.2}{{9.6}{77}{Choosing a level and slot for a deadline of 5,000 ticks when the wheel's clock is at 4,096, as in step 6 of Table~\ref {tab:wakers-15.1}. Each box is one 6-bit group of the tick, in decimal}{figure.9.6}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {9.1}{\ignorespaces Choosing a level and a slot.}}{78}{algorithm.9.1}\protected@file@percent }
-\newlabel{alg:wakers-level-for}{{9.1}{78}{Insertion: choosing a level and a slot}{algorithm.9.1}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {9.2}{\ignorespaces Inserting a timer, under the driver lock.}}{78}{algorithm.9.2}\protected@file@percent }
-\newlabel{alg:wakers-insert}{{9.2}{78}{Insertion: choosing a level and a slot}{algorithm.9.2}{}}
-\newlabel{lem:wheel-placement}{{9.2.15.3}{79}{Placement}{tcb@cnt@definition.9.2.15.3}{}}
-\newlabel{lem:constant-time-insert}{{9.2.15.4}{79}{Constant-time insert}{tcb@cnt@definition.9.2.15.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Deletion}{79}{subsubsection*.26}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {9.3}{\ignorespaces Removing a timer.}}{79}{algorithm.9.3}\protected@file@percent }
-\newlabel{alg:wakers-remove}{{9.3}{79}{Deletion}{algorithm.9.3}{}}
-\newlabel{lem:stable-filing}{{9.2.15.5}{79}{Stable filing}{tcb@cnt@definition.9.2.15.5}{}}
-\newlabel{lem:constant-time-remove}{{9.2.15.6}{80}{Constant-time removal}{tcb@cnt@definition.9.2.15.6}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Finding the next deadline}{80}{subsubsection*.27}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {9.4}{\ignorespaces Finding the next expiration.}}{80}{algorithm.9.4}\protected@file@percent }
-\newlabel{alg:wakers-next}{{9.4}{80}{Finding the next deadline}{algorithm.9.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9.7}{\ignorespaces \textsc  {NextOccupiedSlot} on a level whose slots 10 and 40 are occupied (green). Rotating the mask so that the slot after the clock's (orange) becomes bit 0, the count of trailing zeros is the distance to the next occupied slot. These are cases from Tokio's own tests.}}{80}{figure.9.7}\protected@file@percent }
-\newlabel{fig:wakers-15.3}{{9.7}{80}{\textsc {NextOccupiedSlot} on a level whose slots 10 and 40 are occupied (green). Rotating the mask so that the slot after the clock's (orange) becomes bit 0, the count of trailing zeros is the distance to the next occupied slot. These are cases from Tokio's own tests}{figure.9.7}{}}
-\newlabel{lem:lowest-level-first}{{9.2.15.7}{81}{Lowest level first}{tcb@cnt@definition.9.2.15.7}{}}
-\newlabel{lem:constant-time-next-deadline}{{9.2.15.8}{81}{Constant-time next deadline}{tcb@cnt@definition.9.2.15.8}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Advancing time: firing and cascading}{81}{subsubsection*.28}\protected@file@percent }
-\newlabel{lem:timers-are-timeouts}{{9.2.15.9}{81}{Timers are timeouts}{tcb@cnt@definition.9.2.15.9}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {9.5}{\ignorespaces Advancing the wheel to tick $t$.}}{82}{algorithm.9.5}\protected@file@percent }
-\newlabel{alg:wakers-advance}{{9.5}{82}{Advancing time: firing and cascading}{algorithm.9.5}{}}
-\newlabel{cor:bounded-cascades}{{9.2.15.10}{82}{Bounded cascades}{tcb@cnt@definition.9.2.15.10}{}}
-\@writefile{toc}{\contentsline {subsubsection}{A worked example}{82}{subsubsection*.29}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {9.8}{\ignorespaces Five timers placed at time zero. The first three of the six levels are shown; the orange outline marks the current slot on each level.}}{83}{figure.9.8}\protected@file@percent }
-\newlabel{fig:wakers-15.1}{{9.8}{83}{Five timers placed at time zero. The first three of the six levels are shown; the orange outline marks the current slot on each level}{figure.9.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9.12}{\ignorespaces The example run to completion, computed with Tokio's rule. A run of 10,030 random timers, checked the same way, fired every one exactly on its deadline.}}{83}{table.9.12}\protected@file@percent }
-\newlabel{tab:wakers-15.1}{{9.12}{83}{The example run to completion, computed with Tokio's rule. A run of 10,030 random timers, checked the same way, fired every one exactly on its deadline}{table.9.12}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Moving a deadline}{84}{subsubsection*.30}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {9.6}{\ignorespaces Moving a timer's deadline to $w'$.}}{84}{algorithm.9.6}\protected@file@percent }
-\newlabel{alg:wakers-reset}{{9.6}{84}{Moving a deadline}{algorithm.9.6}{}}
-\newlabel{lem:lazy-extension}{{9.2.15.11}{84}{Lazy extension}{tcb@cnt@definition.9.2.15.11}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9.13}{\ignorespaces A 70\,ms timer reset to 300\,ms at tick 10. The reset took no lock; the timer cost one extra re-filing at 64\,ms.}}{84}{table.9.13}\protected@file@percent }
-\newlabel{tab:wakers-15.2}{{9.13}{84}{A 70\,ms timer reset to 300\,ms at tick 10. The reset took no lock; the timer cost one extra re-filing at 64\,ms}{table.9.13}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9.14}{\ignorespaces The cost of every timer-wheel operation. None depends on how many timers exist.}}{85}{table.9.14}\protected@file@percent }
-\newlabel{tab:wakers-15.3}{{9.14}{85}{The cost of every timer-wheel operation. None depends on how many timers exist}{table.9.14}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.16}Idle cost and event cost}{85}{subsection.9.2.16}\protected@file@percent }
-\newlabel{sec:wakers-ch16}{{9.2.16}{85}{Idle cost and event cost}{subsection.9.2.16}{}}
-\newlabel{def:idle-event-cost}{{9.2.16.1}{85}{Idle cost, event cost}{tcb@cnt@definition.9.2.16.1}{}}
-\newlabel{lem:idle-cost-memory-only}{{9.2.16.2}{85}{Idle cost is memory only}{tcb@cnt@definition.9.2.16.2}{}}
-\newlabel{lem:event-cost-independent}{{9.2.16.3}{86}{Event cost is independent of waiters}{tcb@cnt@definition.9.2.16.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Measurement}{86}{subsubsection*.31}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {9.15}{\ignorespaces Idle cost. ``0 ms'' means below the 10 ms resolution of the kernel's CPU accounting. The kernel's own socket memory is not part of the resident figure.}}{86}{table.9.15}\protected@file@percent }
-\newlabel{tab:wakers-16.1}{{9.15}{86}{Idle cost. ``0 ms'' means below the 10 ms resolution of the kernel's CPU accounting. The kernel's own socket memory is not part of the resident figure}{table.9.15}{}}
-\@writefile{loe}{\contentsline {exercise}{Exercise\ 6\ {\relax \fontshape  it\selectfont  Why it scales}\hspace  {.66em}}{87}{Exercise.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.17}A hundred-line executor}{87}{subsection.9.2.17}\protected@file@percent }
-\newlabel{sec:wakers-ch17}{{9.2.17}{87}{A hundred-line executor}{subsection.9.2.17}{}}
-\newlabel{lst:wakers-17.1}{{9.11}{88}{A complete executor and timer}{lstlisting.9.11}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.11}A complete executor and timer.}{88}{lstlisting.9.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.18}Common mistakes}{90}{subsection.9.2.18}\protected@file@percent }
-\newlabel{sec:wakers-ch18}{{9.2.18}{90}{Common mistakes}{subsection.9.2.18}{}}
-\@writefile{loe}{\contentsline {exercise}{Exercise\ 7\ {\relax \fontshape  it\selectfont  Building an executor}\hspace  {.66em}}{90}{Exercise.7}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {9.16}{\ignorespaces Misconceptions and their corrections.}}{91}{table.9.16}\protected@file@percent }
-\newlabel{tab:wakers-18.1}{{9.16}{91}{Misconceptions and their corrections}{table.9.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.19}The whole story in one page}{92}{subsection.9.2.19}\protected@file@percent }
-\newlabel{sec:wakers-afterword}{{9.2.19}{92}{The whole story in one page}{subsection.9.2.19}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.20}The programs behind the measurements}{92}{subsection.9.2.20}\protected@file@percent }
-\newlabel{sec:wakers-programs}{{9.2.20}{92}{The programs behind the measurements}{subsection.9.2.20}{}}
-\@writefile{toc}{\contentsline {subsubsection}{mio on its own}{92}{subsubsection*.32}\protected@file@percent }
-\newlabel{lst:wakers-A.1}{{9.12}{93}{A listener and a client using mio directly, with no async code}{lstlisting.9.12}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.12}A listener and a client using mio directly, with no async code.}{93}{lstlisting.9.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{The eventfd wake-up}{93}{subsubsection*.33}\protected@file@percent }
-\newlabel{lst:wakers-A.2}{{9.13}{94}{A blocking job awaited on a single-threaded runtime}{lstlisting.9.13}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.13}A blocking job awaited on a single-threaded runtime.}{94}{lstlisting.9.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{A future that never stores its waker}{94}{subsubsection*.34}\protected@file@percent }
-\newlabel{lst:wakers-A.3}{{9.14}{95}{The broken future, run on several configurations with a two-second limit each}{lstlisting.9.14}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.14}The broken future, run on several configurations with a two-second limit each.}{95}{lstlisting.9.14}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Idle cost and event cost}{96}{subsubsection*.35}\protected@file@percent }
-\newlabel{lst:wakers-A.4}{{9.15}{97}{Idle cost and wake-up latency with 100,000 timers and 9,000 sockets}{lstlisting.9.15}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.15}Idle cost and wake-up latency with 100,000 timers and 9,000 sockets.}{97}{lstlisting.9.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9.3}Exercise Solutions}{98}{section.9.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {10}Solidity}{103}{chapter.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Ticks}{76}{subsubsection*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{The driver's loop}{76}{subsubsection*.24}\protected@file@percent }
+\newlabel{lem:timers-are-timeouts}{{9.2.15.1}{77}{Timers are timeouts}{tcb@cnt@definition.9.2.15.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{A timer's life in Tokio}{77}{subsubsection*.25}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9.12}{\ignorespaces What each timer operation in Tokio does to the wheel.}}{77}{table.9.12}\protected@file@percent }
+\newlabel{tab:wakers-15.4}{{9.12}{77}{What each timer operation in Tokio does to the wheel}{table.9.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.16}Idle cost and event cost}{78}{subsection.9.2.16}\protected@file@percent }
+\newlabel{sec:wakers-ch16}{{9.2.16}{78}{Idle cost and event cost}{subsection.9.2.16}{}}
+\newlabel{def:idle-event-cost}{{9.2.16.1}{78}{Idle cost, event cost}{tcb@cnt@definition.9.2.16.1}{}}
+\newlabel{lem:idle-cost-memory-only}{{9.2.16.2}{78}{Idle cost is memory only}{tcb@cnt@definition.9.2.16.2}{}}
+\newlabel{lem:event-cost-independent}{{9.2.16.3}{78}{Event cost is independent of waiters}{tcb@cnt@definition.9.2.16.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Measurement}{78}{subsubsection*.26}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9.13}{\ignorespaces Idle cost. ``0 ms'' means below the 10 ms resolution of the kernel's CPU accounting. The kernel's own socket memory is not part of the resident figure.}}{79}{table.9.13}\protected@file@percent }
+\newlabel{tab:wakers-16.1}{{9.13}{79}{Idle cost. ``0 ms'' means below the 10 ms resolution of the kernel's CPU accounting. The kernel's own socket memory is not part of the resident figure}{table.9.13}{}}
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 6\ {\relax \fontshape  it\selectfont  Why it scales}\hspace  {.66em}}{79}{Exercise.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.17}A hundred-line executor}{80}{subsection.9.2.17}\protected@file@percent }
+\newlabel{sec:wakers-ch17}{{9.2.17}{80}{A hundred-line executor}{subsection.9.2.17}{}}
+\newlabel{lst:wakers-17.1}{{9.11}{81}{A complete executor and timer}{lstlisting.9.11}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.11}A complete executor and timer.}{81}{lstlisting.9.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.18}Common mistakes}{83}{subsection.9.2.18}\protected@file@percent }
+\newlabel{sec:wakers-ch18}{{9.2.18}{83}{Common mistakes}{subsection.9.2.18}{}}
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 7\ {\relax \fontshape  it\selectfont  Building an executor}\hspace  {.66em}}{83}{Exercise.7}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9.14}{\ignorespaces Misconceptions and their corrections.}}{84}{table.9.14}\protected@file@percent }
+\newlabel{tab:wakers-18.1}{{9.14}{84}{Misconceptions and their corrections}{table.9.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.19}The whole story in one page}{85}{subsection.9.2.19}\protected@file@percent }
+\newlabel{sec:wakers-afterword}{{9.2.19}{85}{The whole story in one page}{subsection.9.2.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.20}The programs behind the measurements}{85}{subsection.9.2.20}\protected@file@percent }
+\newlabel{sec:wakers-programs}{{9.2.20}{85}{The programs behind the measurements}{subsection.9.2.20}{}}
+\@writefile{toc}{\contentsline {subsubsection}{mio on its own}{85}{subsubsection*.27}\protected@file@percent }
+\newlabel{lst:wakers-A.1}{{9.12}{86}{A listener and a client using mio directly, with no async code}{lstlisting.9.12}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.12}A listener and a client using mio directly, with no async code.}{86}{lstlisting.9.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{The eventfd wake-up}{86}{subsubsection*.28}\protected@file@percent }
+\newlabel{lst:wakers-A.2}{{9.13}{87}{A blocking job awaited on a single-threaded runtime}{lstlisting.9.13}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.13}A blocking job awaited on a single-threaded runtime.}{87}{lstlisting.9.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{A future that never stores its waker}{87}{subsubsection*.29}\protected@file@percent }
+\newlabel{lst:wakers-A.3}{{9.14}{88}{The broken future, run on several configurations with a two-second limit each}{lstlisting.9.14}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.14}The broken future, run on several configurations with a two-second limit each.}{88}{lstlisting.9.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Idle cost and event cost}{89}{subsubsection*.30}\protected@file@percent }
+\newlabel{lst:wakers-A.4}{{9.15}{90}{Idle cost and wake-up latency with 100,000 timers and 9,000 sockets}{lstlisting.9.15}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.15}Idle cost and wake-up latency with 100,000 timers and 9,000 sockets.}{90}{lstlisting.9.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9.3}Exercise Solutions}{91}{section.9.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {10}Solidity}{97}{chapter.10}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {10.1}The memory model}{103}{section.10.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.1.1}Memory types: \texttt  {\textcolor {Primary3}{calldata}} vs \texttt  {\textcolor {Primary3}{memory}} vs \texttt  {\textcolor {Primary3}{storage}}}{103}{subsection.10.1.1}\protected@file@percent }
-\newlabel{sec:soliditity-memory-model}{{10.1.1}{103}{Memory types: \code {calldata} vs \code {memory} vs \code {storage}}{subsection.10.1.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.1.2}The on-chain storage}{103}{subsection.10.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Static sized object representation}{103}{subsubsection*.36}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.1}In-storage representation}{104}{lstlisting.10.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.2}In-storage representation(better)}{104}{lstlisting.10.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Dynamically sized object representation}{104}{subsubsection*.37}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {10.2}Function and their modifiers}{104}{section.10.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.1}Visibility Modifiers: \texttt  {\textcolor {Primary3}{private}}, \texttt  {\textcolor {Primary3}{internal}}, \texttt  {\textcolor {Primary3}{external}}, \texttt  {\textcolor {Primary3}{public}}}{104}{subsection.10.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.2}Function Modifiers for preconditions and postconditions}{105}{subsection.10.2.2}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.3}Solidity isOwner modifier}{105}{lstlisting.10.3}\protected@file@percent }
-\newlabel{lst:contract-with-modifiers}{{10.2.2}{105}{Function Modifiers for preconditions and postconditions}{lstnumber.10.3.4}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.4}Contract with modifiers}{105}{lstlisting.10.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.3}Special modifiers: \texttt  {\textcolor {Primary3}{view}}, \texttt  {\textcolor {Primary3}{pure}} and \texttt  {\textcolor {Primary3}{payable}}}{105}{subsection.10.2.3}\protected@file@percent }
-\newlabel{sec:special-modifiers}{{10.2.3}{105}{Special modifiers: \code {view}, \code {pure} and \code {payable}}{subsection.10.2.3}{}}
-\@writefile{loe}{\contentsline {exercise}{Exercise\ 8\ {\relax \fontshape  it\selectfont  Solidity Basics}\hspace  {.66em}}{106}{Exercise.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {10.3}The EIP-721 Standard: Non-Fungible Tokens (NFTs)}{106}{section.10.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {10.4}Exercise Solutions}{106}{section.10.4}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.5}Fibonacci Contract}{107}{lstlisting.10.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {11}Binary Search}{109}{chapter.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10.1}The memory model}{97}{section.10.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.1.1}Memory types: \texttt  {\textcolor {Primary3}{calldata}} vs \texttt  {\textcolor {Primary3}{memory}} vs \texttt  {\textcolor {Primary3}{storage}}}{97}{subsection.10.1.1}\protected@file@percent }
+\newlabel{sec:soliditity-memory-model}{{10.1.1}{97}{Memory types: \code {calldata} vs \code {memory} vs \code {storage}}{subsection.10.1.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.1.2}The on-chain storage}{97}{subsection.10.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Static sized object representation}{97}{subsubsection*.31}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.1}In-storage representation}{98}{lstlisting.10.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.2}In-storage representation(better)}{98}{lstlisting.10.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Dynamically sized object representation}{98}{subsubsection*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10.2}Function and their modifiers}{98}{section.10.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.1}Visibility Modifiers: \texttt  {\textcolor {Primary3}{private}}, \texttt  {\textcolor {Primary3}{internal}}, \texttt  {\textcolor {Primary3}{external}}, \texttt  {\textcolor {Primary3}{public}}}{98}{subsection.10.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.2}Function Modifiers for preconditions and postconditions}{99}{subsection.10.2.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.3}Solidity isOwner modifier}{99}{lstlisting.10.3}\protected@file@percent }
+\newlabel{lst:contract-with-modifiers}{{10.2.2}{99}{Function Modifiers for preconditions and postconditions}{lstnumber.10.3.4}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.4}Contract with modifiers}{99}{lstlisting.10.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.3}Special modifiers: \texttt  {\textcolor {Primary3}{view}}, \texttt  {\textcolor {Primary3}{pure}} and \texttt  {\textcolor {Primary3}{payable}}}{99}{subsection.10.2.3}\protected@file@percent }
+\newlabel{sec:special-modifiers}{{10.2.3}{99}{Special modifiers: \code {view}, \code {pure} and \code {payable}}{subsection.10.2.3}{}}
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 8\ {\relax \fontshape  it\selectfont  Solidity Basics}\hspace  {.66em}}{100}{Exercise.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10.3}The EIP-721 Standard: Non-Fungible Tokens (NFTs)}{100}{section.10.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10.4}Exercise Solutions}{100}{section.10.4}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.5}Fibonacci Contract}{101}{lstlisting.10.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {11}Binary Search}{103}{chapter.11}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {11.1}Basic: Minimize $k$ such that $f(k)$ is true}{109}{section.11.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {11.2}Advanced: Search spaces with \texttt  {\textcolor {Primary3}{feasible(x) -> bool}}}{109}{section.11.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{109}{subsection.11.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{110}{subsection.11.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.3}Problem [SplitM]: Split array into $m$ subarrays}{111}{subsection.11.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {11.3}Advanced: Search spaces with \texttt  {\textcolor {Primary3}{enough(x) -> bool}}}{111}{section.11.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {11.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{111}{subsection.11.3.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {11.1}Rust implementation of enough function}{112}{lstlisting.11.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {12}Dynamic Programming}{113}{chapter.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11.1}Basic: Minimize $k$ such that $f(k)$ is true}{103}{section.11.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11.2}Advanced: Search spaces with \texttt  {\textcolor {Primary3}{feasible(x) -> bool}}}{103}{section.11.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{103}{subsection.11.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{104}{subsection.11.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.3}Problem [SplitM]: Split array into $m$ subarrays}{105}{subsection.11.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11.3}Advanced: Search spaces with \texttt  {\textcolor {Primary3}{enough(x) -> bool}}}{105}{section.11.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{105}{subsection.11.3.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {11.1}Rust implementation of enough function}{106}{lstlisting.11.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {12}Dynamic Programming}{107}{chapter.12}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{relation:dontrequirememo}{{12.1}{113}{Dynamic Programming}{equation.12.1}{}}
-\newlabel{relation:requiresmemo}{{12.2}{113}{Dynamic Programming}{equation.12.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {12.1}Memoization}{113}{section.12.1}\protected@file@percent }
-\newlabel{timecomplexity:requiresmemo}{{12.3}{113}{Memoization}{equation.12.3}{}}
-\newlabel{timecomplexity:requiresmemowithmemo}{{12.4}{114}{Memoization}{equation.12.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {12.2}Most important subproblems}{114}{section.12.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Alphabetical Index}{115}{section*.38}\protected@file@percent }
-\gdef \@abspage@last{115}
+\newlabel{relation:dontrequirememo}{{12.1}{107}{Dynamic Programming}{equation.12.1}{}}
+\newlabel{relation:requiresmemo}{{12.2}{107}{Dynamic Programming}{equation.12.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {12.1}Memoization}{107}{section.12.1}\protected@file@percent }
+\newlabel{timecomplexity:requiresmemo}{{12.3}{107}{Memoization}{equation.12.3}{}}
+\newlabel{timecomplexity:requiresmemowithmemo}{{12.4}{108}{Memoization}{equation.12.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {12.2}Most important subproblems}{108}{section.12.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {13}Algorithms for Systems Engineering}{109}{chapter.13}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{ch:systems-algorithms}{{13}{109}{Algorithms for Systems Engineering}{chapter.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {13.1}Hierarchical timing wheels}{109}{section.13.1}\protected@file@percent }
+\newlabel{sec:timing-wheels}{{13.1}{109}{Hierarchical timing wheels}{section.13.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.1}The structure}{110}{subsection.13.1.1}\protected@file@percent }
+\newlabel{def:timer-wheel}{{13.1.1.1}{110}{Hierarchical timer wheel}{tcb@cnt@definition.13.1.1.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.2}Ticks and the wheel's clock}{110}{subsection.13.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.3}What the wheel stores}{110}{subsection.13.1.3}\protected@file@percent }
+\newlabel{def:filing-true-deadline}{{13.1.3.1}{110}{Filing deadline, true deadline}{tcb@cnt@definition.13.1.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.4}Insertion: choosing a level and a slot}{110}{subsection.13.1.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {13.1}{\ignorespaces Choosing a level and slot for a deadline of 5,000 ticks when the wheel's clock is at 4,096, as in step 6 of Table~\ref {tab:tw-example}. Each box is one 6-bit group of the tick, in decimal.}}{111}{figure.13.1}\protected@file@percent }
+\newlabel{fig:tw-level-for}{{13.1}{111}{Choosing a level and slot for a deadline of 5,000 ticks when the wheel's clock is at 4,096, as in step 6 of Table~\ref {tab:tw-example}. Each box is one 6-bit group of the tick, in decimal}{figure.13.1}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {13.1}{\ignorespaces Choosing a level and a slot.}}{111}{algorithm.13.1}\protected@file@percent }
+\newlabel{alg:tw-level-for}{{13.1}{111}{Insertion: choosing a level and a slot}{algorithm.13.1}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {13.2}{\ignorespaces Inserting a timer, under the driver lock.}}{111}{algorithm.13.2}\protected@file@percent }
+\newlabel{alg:tw-insert}{{13.2}{111}{Insertion: choosing a level and a slot}{algorithm.13.2}{}}
+\newlabel{lem:wheel-placement}{{13.1.4.1}{112}{Placement}{tcb@cnt@definition.13.1.4.1}{}}
+\newlabel{lem:constant-time-insert}{{13.1.4.2}{112}{Constant-time insert}{tcb@cnt@definition.13.1.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.5}Deletion}{112}{subsection.13.1.5}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {13.3}{\ignorespaces Removing a timer.}}{112}{algorithm.13.3}\protected@file@percent }
+\newlabel{alg:tw-remove}{{13.3}{112}{Deletion}{algorithm.13.3}{}}
+\newlabel{lem:stable-filing}{{13.1.5.1}{112}{Stable filing}{tcb@cnt@definition.13.1.5.1}{}}
+\newlabel{lem:constant-time-remove}{{13.1.5.2}{113}{Constant-time removal}{tcb@cnt@definition.13.1.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.6}Finding the next deadline}{113}{subsection.13.1.6}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {13.4}{\ignorespaces Finding the next expiration.}}{113}{algorithm.13.4}\protected@file@percent }
+\newlabel{alg:tw-next}{{13.4}{113}{Finding the next deadline}{algorithm.13.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13.2}{\ignorespaces \textsc  {NextOccupiedSlot} on a level whose slots 10 and 40 are occupied (green). Rotating the mask so that the slot after the clock's (orange) becomes bit 0, the count of trailing zeros is the distance to the next occupied slot. These are cases from Tokio's own tests.}}{114}{figure.13.2}\protected@file@percent }
+\newlabel{fig:tw-next-slot}{{13.2}{114}{\textsc {NextOccupiedSlot} on a level whose slots 10 and 40 are occupied (green). Rotating the mask so that the slot after the clock's (orange) becomes bit 0, the count of trailing zeros is the distance to the next occupied slot. These are cases from Tokio's own tests}{figure.13.2}{}}
+\newlabel{lem:lowest-level-first}{{13.1.6.1}{114}{Lowest level first}{tcb@cnt@definition.13.1.6.1}{}}
+\newlabel{lem:constant-time-next-deadline}{{13.1.6.2}{114}{Constant-time next deadline}{tcb@cnt@definition.13.1.6.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.7}Advancing time: firing and cascading}{114}{subsection.13.1.7}\protected@file@percent }
+\newlabel{cor:bounded-cascades}{{13.1.7.1}{114}{Bounded cascades}{tcb@cnt@definition.13.1.7.1}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {13.5}{\ignorespaces Advancing the wheel to tick $t$.}}{115}{algorithm.13.5}\protected@file@percent }
+\newlabel{alg:tw-advance}{{13.5}{115}{Advancing time: firing and cascading}{algorithm.13.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.8}A worked example}{115}{subsection.13.1.8}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {13.3}{\ignorespaces Five timers placed at time zero. The first three of the six levels are shown; the orange outline marks the current slot on each level.}}{115}{figure.13.3}\protected@file@percent }
+\newlabel{fig:tw-example}{{13.3}{115}{Five timers placed at time zero. The first three of the six levels are shown; the orange outline marks the current slot on each level}{figure.13.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13.1}{\ignorespaces The example run to completion, computed with Tokio's rule. A run of 10,030 random timers, checked the same way, fired every one exactly on its deadline.}}{116}{table.13.1}\protected@file@percent }
+\newlabel{tab:tw-example}{{13.1}{116}{The example run to completion, computed with Tokio's rule. A run of 10,030 random timers, checked the same way, fired every one exactly on its deadline}{table.13.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.9}Moving a deadline}{116}{subsection.13.1.9}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {13.6}{\ignorespaces Moving a timer's deadline to $w'$.}}{116}{algorithm.13.6}\protected@file@percent }
+\newlabel{alg:tw-reset}{{13.6}{116}{Moving a deadline}{algorithm.13.6}{}}
+\newlabel{lem:lazy-extension}{{13.1.9.1}{116}{Lazy extension}{tcb@cnt@definition.13.1.9.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13.2}{\ignorespaces A 70\,ms timer reset to 300\,ms at tick 10. The reset took no lock; the timer cost one extra re-filing at 64\,ms.}}{117}{table.13.2}\protected@file@percent }
+\newlabel{tab:tw-lazy}{{13.2}{117}{A 70\,ms timer reset to 300\,ms at tick 10. The reset took no lock; the timer cost one extra re-filing at 64\,ms}{table.13.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13.3}{\ignorespaces The cost of every timer-wheel operation. None depends on how many timers exist.}}{117}{table.13.3}\protected@file@percent }
+\newlabel{tab:tw-costs}{{13.3}{117}{The cost of every timer-wheel operation. None depends on how many timers exist}{table.13.3}{}}
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 9\ {\relax \fontshape  it\selectfont  Timing wheels}\hspace  {.66em}}{118}{Exercise.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {13.2}Exercise Solutions}{118}{section.13.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Alphabetical Index}{121}{section*.33}\protected@file@percent }
+\gdef \@abspage@last{121}

@@ -38,7 +38,8 @@ cover.tex                 title page
 ```
 
 Parts are `zero-knowledge`, `version-control`, `time-synchrony-failures`,
-`adverserial-distributed-systems`, `programming-languages` and `problem-solving`.
+`adverserial-distributed-systems`, `programming-languages`, `problem-solving` and
+`important-algorithms`.
 The directory name `adverserial` is misspelled, but leave it as is because paths
 depend on it.
 

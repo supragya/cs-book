@@ -105,46 +105,53 @@
 \contentsline {subsection}{\numberline {9.2.13}Two kinds of wake}{73}{subsection.9.2.13}%
 \contentsline {subsection}{\numberline {9.2.14}Inside epoll}{75}{subsection.9.2.14}%
 \contentsline {subsection}{\numberline {9.2.15}Inside the timer wheel}{76}{subsection.9.2.15}%
-\contentsline {subsubsection}{Ticks and the wheel's clock}{76}{subsubsection*.23}%
-\contentsline {subsubsection}{What the wheel stores}{77}{subsubsection*.24}%
-\contentsline {subsubsection}{Insertion: choosing a level and a slot}{77}{subsubsection*.25}%
-\contentsline {subsubsection}{Deletion}{79}{subsubsection*.26}%
-\contentsline {subsubsection}{Finding the next deadline}{80}{subsubsection*.27}%
-\contentsline {subsubsection}{Advancing time: firing and cascading}{81}{subsubsection*.28}%
-\contentsline {subsubsection}{A worked example}{82}{subsubsection*.29}%
-\contentsline {subsubsection}{Moving a deadline}{84}{subsubsection*.30}%
-\contentsline {subsection}{\numberline {9.2.16}Idle cost and event cost}{85}{subsection.9.2.16}%
-\contentsline {subsubsection}{Measurement}{86}{subsubsection*.31}%
-\contentsline {subsection}{\numberline {9.2.17}A hundred-line executor}{87}{subsection.9.2.17}%
-\contentsline {subsection}{\numberline {9.2.18}Common mistakes}{90}{subsection.9.2.18}%
-\contentsline {subsection}{\numberline {9.2.19}The whole story in one page}{92}{subsection.9.2.19}%
-\contentsline {subsection}{\numberline {9.2.20}The programs behind the measurements}{92}{subsection.9.2.20}%
-\contentsline {subsubsection}{mio on its own}{92}{subsubsection*.32}%
-\contentsline {subsubsection}{The eventfd wake-up}{93}{subsubsection*.33}%
-\contentsline {subsubsection}{A future that never stores its waker}{94}{subsubsection*.34}%
-\contentsline {subsubsection}{Idle cost and event cost}{96}{subsubsection*.35}%
-\contentsline {section}{\numberline {9.3}Exercise Solutions}{98}{section.9.3}%
-\contentsline {chapter}{\numberline {10}Solidity}{103}{chapter.10}%
-\contentsline {section}{\numberline {10.1}The memory model}{103}{section.10.1}%
-\contentsline {subsection}{\numberline {10.1.1}Memory types: \texttt {\textcolor {Primary3}{calldata}} vs \texttt {\textcolor {Primary3}{memory}} vs \texttt {\textcolor {Primary3}{storage}}}{103}{subsection.10.1.1}%
-\contentsline {subsection}{\numberline {10.1.2}The on-chain storage}{103}{subsection.10.1.2}%
-\contentsline {subsubsection}{Static sized object representation}{103}{subsubsection*.36}%
-\contentsline {subsubsection}{Dynamically sized object representation}{104}{subsubsection*.37}%
-\contentsline {section}{\numberline {10.2}Function and their modifiers}{104}{section.10.2}%
-\contentsline {subsection}{\numberline {10.2.1}Visibility Modifiers: \texttt {\textcolor {Primary3}{private}}, \texttt {\textcolor {Primary3}{internal}}, \texttt {\textcolor {Primary3}{external}}, \texttt {\textcolor {Primary3}{public}}}{104}{subsection.10.2.1}%
-\contentsline {subsection}{\numberline {10.2.2}Function Modifiers for preconditions and postconditions}{105}{subsection.10.2.2}%
-\contentsline {subsection}{\numberline {10.2.3}Special modifiers: \texttt {\textcolor {Primary3}{view}}, \texttt {\textcolor {Primary3}{pure}} and \texttt {\textcolor {Primary3}{payable}}}{105}{subsection.10.2.3}%
-\contentsline {section}{\numberline {10.3}The EIP-721 Standard: Non-Fungible Tokens (NFTs)}{106}{section.10.3}%
-\contentsline {section}{\numberline {10.4}Exercise Solutions}{106}{section.10.4}%
-\contentsline {chapter}{\numberline {11}Binary Search}{109}{chapter.11}%
-\contentsline {section}{\numberline {11.1}Basic: Minimize $k$ such that $f(k)$ is true}{109}{section.11.1}%
-\contentsline {section}{\numberline {11.2}Advanced: Search spaces with \texttt {\textcolor {Primary3}{feasible(x) -> bool}}}{109}{section.11.2}%
-\contentsline {subsection}{\numberline {11.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{109}{subsection.11.2.1}%
-\contentsline {subsection}{\numberline {11.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{110}{subsection.11.2.2}%
-\contentsline {subsection}{\numberline {11.2.3}Problem [SplitM]: Split array into $m$ subarrays}{111}{subsection.11.2.3}%
-\contentsline {section}{\numberline {11.3}Advanced: Search spaces with \texttt {\textcolor {Primary3}{enough(x) -> bool}}}{111}{section.11.3}%
-\contentsline {subsection}{\numberline {11.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{111}{subsection.11.3.1}%
-\contentsline {chapter}{\numberline {12}Dynamic Programming}{113}{chapter.12}%
-\contentsline {section}{\numberline {12.1}Memoization}{113}{section.12.1}%
-\contentsline {section}{\numberline {12.2}Most important subproblems}{114}{section.12.2}%
-\contentsline {chapter}{Alphabetical Index}{115}{section*.38}%
+\contentsline {subsubsection}{Ticks}{76}{subsubsection*.23}%
+\contentsline {subsubsection}{The driver's loop}{76}{subsubsection*.24}%
+\contentsline {subsubsection}{A timer's life in Tokio}{77}{subsubsection*.25}%
+\contentsline {subsection}{\numberline {9.2.16}Idle cost and event cost}{78}{subsection.9.2.16}%
+\contentsline {subsubsection}{Measurement}{78}{subsubsection*.26}%
+\contentsline {subsection}{\numberline {9.2.17}A hundred-line executor}{80}{subsection.9.2.17}%
+\contentsline {subsection}{\numberline {9.2.18}Common mistakes}{83}{subsection.9.2.18}%
+\contentsline {subsection}{\numberline {9.2.19}The whole story in one page}{85}{subsection.9.2.19}%
+\contentsline {subsection}{\numberline {9.2.20}The programs behind the measurements}{85}{subsection.9.2.20}%
+\contentsline {subsubsection}{mio on its own}{85}{subsubsection*.27}%
+\contentsline {subsubsection}{The eventfd wake-up}{86}{subsubsection*.28}%
+\contentsline {subsubsection}{A future that never stores its waker}{87}{subsubsection*.29}%
+\contentsline {subsubsection}{Idle cost and event cost}{89}{subsubsection*.30}%
+\contentsline {section}{\numberline {9.3}Exercise Solutions}{91}{section.9.3}%
+\contentsline {chapter}{\numberline {10}Solidity}{97}{chapter.10}%
+\contentsline {section}{\numberline {10.1}The memory model}{97}{section.10.1}%
+\contentsline {subsection}{\numberline {10.1.1}Memory types: \texttt {\textcolor {Primary3}{calldata}} vs \texttt {\textcolor {Primary3}{memory}} vs \texttt {\textcolor {Primary3}{storage}}}{97}{subsection.10.1.1}%
+\contentsline {subsection}{\numberline {10.1.2}The on-chain storage}{97}{subsection.10.1.2}%
+\contentsline {subsubsection}{Static sized object representation}{97}{subsubsection*.31}%
+\contentsline {subsubsection}{Dynamically sized object representation}{98}{subsubsection*.32}%
+\contentsline {section}{\numberline {10.2}Function and their modifiers}{98}{section.10.2}%
+\contentsline {subsection}{\numberline {10.2.1}Visibility Modifiers: \texttt {\textcolor {Primary3}{private}}, \texttt {\textcolor {Primary3}{internal}}, \texttt {\textcolor {Primary3}{external}}, \texttt {\textcolor {Primary3}{public}}}{98}{subsection.10.2.1}%
+\contentsline {subsection}{\numberline {10.2.2}Function Modifiers for preconditions and postconditions}{99}{subsection.10.2.2}%
+\contentsline {subsection}{\numberline {10.2.3}Special modifiers: \texttt {\textcolor {Primary3}{view}}, \texttt {\textcolor {Primary3}{pure}} and \texttt {\textcolor {Primary3}{payable}}}{99}{subsection.10.2.3}%
+\contentsline {section}{\numberline {10.3}The EIP-721 Standard: Non-Fungible Tokens (NFTs)}{100}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Exercise Solutions}{100}{section.10.4}%
+\contentsline {chapter}{\numberline {11}Binary Search}{103}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Basic: Minimize $k$ such that $f(k)$ is true}{103}{section.11.1}%
+\contentsline {section}{\numberline {11.2}Advanced: Search spaces with \texttt {\textcolor {Primary3}{feasible(x) -> bool}}}{103}{section.11.2}%
+\contentsline {subsection}{\numberline {11.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{103}{subsection.11.2.1}%
+\contentsline {subsection}{\numberline {11.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{104}{subsection.11.2.2}%
+\contentsline {subsection}{\numberline {11.2.3}Problem [SplitM]: Split array into $m$ subarrays}{105}{subsection.11.2.3}%
+\contentsline {section}{\numberline {11.3}Advanced: Search spaces with \texttt {\textcolor {Primary3}{enough(x) -> bool}}}{105}{section.11.3}%
+\contentsline {subsection}{\numberline {11.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{105}{subsection.11.3.1}%
+\contentsline {chapter}{\numberline {12}Dynamic Programming}{107}{chapter.12}%
+\contentsline {section}{\numberline {12.1}Memoization}{107}{section.12.1}%
+\contentsline {section}{\numberline {12.2}Most important subproblems}{108}{section.12.2}%
+\contentsline {chapter}{\numberline {13}Algorithms for Systems Engineering}{109}{chapter.13}%
+\contentsline {section}{\numberline {13.1}Hierarchical timing wheels}{109}{section.13.1}%
+\contentsline {subsection}{\numberline {13.1.1}The structure}{110}{subsection.13.1.1}%
+\contentsline {subsection}{\numberline {13.1.2}Ticks and the wheel's clock}{110}{subsection.13.1.2}%
+\contentsline {subsection}{\numberline {13.1.3}What the wheel stores}{110}{subsection.13.1.3}%
+\contentsline {subsection}{\numberline {13.1.4}Insertion: choosing a level and a slot}{110}{subsection.13.1.4}%
+\contentsline {subsection}{\numberline {13.1.5}Deletion}{112}{subsection.13.1.5}%
+\contentsline {subsection}{\numberline {13.1.6}Finding the next deadline}{113}{subsection.13.1.6}%
+\contentsline {subsection}{\numberline {13.1.7}Advancing time: firing and cascading}{114}{subsection.13.1.7}%
+\contentsline {subsection}{\numberline {13.1.8}A worked example}{115}{subsection.13.1.8}%
+\contentsline {subsection}{\numberline {13.1.9}Moving a deadline}{116}{subsection.13.1.9}%
+\contentsline {section}{\numberline {13.2}Exercise Solutions}{118}{section.13.2}%
+\contentsline {chapter}{Alphabetical Index}{121}{section*.33}%
