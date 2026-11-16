@@ -23,144 +23,392 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3.1}Key defintions}{13}{section.3.1}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces An example distributed system with 5 nodes. It may not be necessary that all nodes are connected directly to each other, but all nodes together present themeselves as a single unit to server client.}}{13}{figure.3.1}\protected@file@percent }
 \newlabel{fig:five-node-distributed-system}{{3.1}{13}{An example distributed system with 5 nodes. It may not be necessary that all nodes are connected directly to each other, but all nodes together present themeselves as a single unit to server client}{figure.3.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}Consistency and Liveness}{13}{subsection.3.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}Node honesty}{14}{subsection.3.1.2}\protected@file@percent }
-\newlabel{subsection:node-honesty}{{3.1.2}{14}{Node honesty}{subsection.3.1.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}Network Synchrony}{15}{subsection.3.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Consensus}{15}{subsection.3.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.5}Permissioning}{15}{subsection.3.1.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.6}Global Clock}{15}{subsection.3.1.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.7}Public Key Interchange Infrastructure}{15}{subsection.3.1.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}State Machine Replication}{15}{section.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Dolev-Strong: Byzantine-broadcast, SMR, in a synchronous world}{16}{section.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}FLP: Can't handle even 1 faulty node in asynchronous world}{16}{section.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}The FLP Impossibility Claim}{16}{subsection.3.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Key concepts}{17}{subsection.3.4.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces The single node case of read and write}}{17}{figure.3.2}\protected@file@percent }
-\newlabel{fig:flp-single-node-read-write}{{3.2}{17}{The single node case of read and write}{figure.3.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Consensus, System Configurations, Events and Schedules}{18}{subsection.3.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.4}Lemma 1: Disjoint Schedules Commute}{18}{subsection.3.4.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Schedules applying to disjoint processes can be out of order}}{18}{figure.3.3}\protected@file@percent }
-\newlabel{fig:flp-impossibility-lemma1}{{3.3}{18}{Schedules applying to disjoint processes can be out of order}{figure.3.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.5}Lemma 2: There exists a bi-valent initial configuration}{18}{subsection.3.4.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.6}Lemma 3: All roads lead to indecision}{19}{subsection.3.4.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces A bi-valent configuration can lead to another bi-valent configuration}}{19}{figure.3.4}\protected@file@percent }
-\newlabel{fig:bivalent-to-bivalent}{{3.4}{19}{A bi-valent configuration can lead to another bi-valent configuration}{figure.3.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Finding a non Pre-0-valent configuration from a Pre-0-valent configuration}}{20}{figure.3.5}\protected@file@percent }
-\newlabel{fig:finding-non-pre-0-valent}{{3.5}{20}{Finding a non Pre-0-valent configuration from a Pre-0-valent configuration}{figure.3.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.7}Proving the theorem}{20}{subsection.3.4.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.8}Conclusion}{20}{subsection.3.4.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}The CAP principle}{21}{section.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Ethereum}{23}{chapter.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}Consistency and Liveness}{14}{subsection.3.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}Node honesty}{15}{subsection.3.1.2}\protected@file@percent }
+\newlabel{subsection:node-honesty}{{3.1.2}{15}{Node honesty}{subsection.3.1.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}Network Synchrony}{16}{subsection.3.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Consensus}{16}{subsection.3.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.5}Permissioning}{16}{subsection.3.1.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.6}Global Clock}{16}{subsection.3.1.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.7}Public Key Interchange Infrastructure}{16}{subsection.3.1.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}State Machine Replication}{16}{section.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Dolev-Strong: Byzantine-broadcast, SMR, in a synchronous world}{17}{section.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}FLP: Can't handle even 1 faulty node in asynchronous world}{17}{section.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}The FLP Impossibility Claim}{17}{subsection.3.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Key concepts}{18}{subsection.3.4.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces The single node case of read and write}}{18}{figure.3.2}\protected@file@percent }
+\newlabel{fig:flp-single-node-read-write}{{3.2}{18}{The single node case of read and write}{figure.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Consensus, System Configurations, Events and Schedules}{19}{subsection.3.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.4}Lemma 1: Disjoint Schedules Commute}{20}{subsection.3.4.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Schedules applying to disjoint processes can be out of order}}{20}{figure.3.3}\protected@file@percent }
+\newlabel{fig:flp-impossibility-lemma1}{{3.3}{20}{Schedules applying to disjoint processes can be out of order}{figure.3.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.5}Lemma 2: There exists a bi-valent initial configuration}{20}{subsection.3.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.6}Lemma 3: All roads lead to indecision}{20}{subsection.3.4.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces A bi-valent configuration can lead to another bi-valent configuration}}{21}{figure.3.4}\protected@file@percent }
+\newlabel{fig:bivalent-to-bivalent}{{3.4}{21}{A bi-valent configuration can lead to another bi-valent configuration}{figure.3.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Finding a non Pre-0-valent configuration from a Pre-0-valent configuration}}{22}{figure.3.5}\protected@file@percent }
+\newlabel{fig:finding-non-pre-0-valent}{{3.5}{22}{Finding a non Pre-0-valent configuration from a Pre-0-valent configuration}{figure.3.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.7}Proving the theorem}{22}{subsection.3.4.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.8}Conclusion}{23}{subsection.3.4.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}The CAP principle}{23}{section.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Ethereum}{25}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Legacy Ethereum (Ethereum 1.0)}{23}{section.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Recursive Length Prefix (RLP) encoding}{23}{subsection.4.1.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces The first byte of an RLP serialized blob describes how to parse data.}}{23}{figure.4.1}\protected@file@percent }
-\newlabel{fig:first-byte-rlp}{{4.1}{23}{The first byte of an RLP serialized blob describes how to parse data}{figure.4.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}How to deploy a contract: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {CREATE}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {CREATE2}}}}{23}{subsection.4.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Addresses generated by \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {CREATE2}}} seldom collide with addresses generated via \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {CREATE}}}}{24}{section*.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Address collision between \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {CREATE}}} and \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {CREATE2}}}}{24}{section*.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Wintermute Hack (2022): \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {CREATE}}} and EIP-155 for transaction signatures}{24}{subsection.4.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Description of the hack}{25}{section*.4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces The steps of the Wintermute hack (2022).}}{25}{figure.4.2}\protected@file@percent }
-\newlabel{fig:wintermute-hack}{{4.2}{25}{The steps of the Wintermute hack (2022)}{figure.4.2}{}}
-\@writefile{loe}{\contentsline {exercise}{Exercise\ 1\ {\relax \fontshape  it\selectfont  Ethereum Deployments}\hspace  {.66em}}{25}{Exercise.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.4}Accessing Historical Block Hashes: EIP: 2935}{25}{subsection.4.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Ethereum after Merge (Ethereum 2.0)}{26}{section.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}The Proof-of-Stake Block}{26}{subsection.4.2.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces The Proof-of-Stake Block}}{26}{figure.4.3}\protected@file@percent }
-\newlabel{fig:pos-block}{{4.3}{26}{The Proof-of-Stake Block}{figure.4.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Finality Metalayer: Casper FFG}{26}{subsection.4.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Exercise Solutions}{27}{section.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Solana}{29}{chapter.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Legacy Ethereum (Ethereum 1.0)}{25}{section.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Recursive Length Prefix (RLP) encoding}{25}{subsection.4.1.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces The first byte of an RLP serialized blob describes how to parse data.}}{25}{figure.4.1}\protected@file@percent }
+\newlabel{fig:first-byte-rlp}{{4.1}{25}{The first byte of an RLP serialized blob describes how to parse data}{figure.4.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}How to deploy a contract: \texttt  {\textcolor {Primary3}{CREATE}} vs \texttt  {\textcolor {Primary3}{CREATE2}}}{26}{subsection.4.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Addresses generated by \texttt  {\textcolor {Primary3}{CREATE2}} seldom collide with addresses generated via \texttt  {\textcolor {Primary3}{CREATE}}}{26}{subsubsection*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Address collision between \texttt  {\textcolor {Primary3}{CREATE}} and \texttt  {\textcolor {Primary3}{CREATE2}}}{26}{subsubsection*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Wintermute Hack (2022): \texttt  {\textcolor {Primary3}{CREATE}} and EIP-155 for transaction signatures}{26}{subsection.4.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Description of the hack}{27}{subsubsection*.4}\protected@file@percent }
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 1\ {\relax \fontshape  it\selectfont  Ethereum Deployments}\hspace  {.66em}}{27}{Exercise.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.4}Accessing Historical Block Hashes: EIP: 2935}{27}{subsection.4.1.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces The steps of the Wintermute hack (2022).}}{28}{figure.4.2}\protected@file@percent }
+\newlabel{fig:wintermute-hack}{{4.2}{28}{The steps of the Wintermute hack (2022)}{figure.4.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Ethereum after Merge (Ethereum 2.0)}{28}{section.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}The Proof-of-Stake Block}{29}{subsection.4.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces The Proof-of-Stake Block}}{29}{figure.4.3}\protected@file@percent }
+\newlabel{fig:pos-block}{{4.3}{29}{The Proof-of-Stake Block}{figure.4.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Finality Metalayer: Casper FFG}{29}{subsection.4.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Exercise Solutions}{29}{section.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Solana}{31}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces The blockchain trilemma}}{29}{figure.5.1}\protected@file@percent }
-\newlabel{fig:blockchain-trilemma}{{5.1}{29}{The blockchain trilemma}{figure.5.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}The Transaction Processing Unit}{29}{section.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Proof of History: VDF based transaction ordering}{29}{section.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}Entries, Slots, Bank}{29}{section.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}General Concepts in Adversarial Distributed Systems}{31}{chapter.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces The blockchain trilemma}}{31}{figure.5.1}\protected@file@percent }
+\newlabel{fig:blockchain-trilemma}{{5.1}{31}{The blockchain trilemma}{figure.5.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}The Transaction Processing Unit}{32}{section.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Proof of History: VDF based transaction ordering}{32}{section.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Entries, Slots, Bank}{32}{section.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}General Concepts in Adversarial Distributed Systems}{33}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {6.1}Proof of Stake: The Nothing at Stake problem}{31}{section.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.1}No penalties = No canonicalization}{31}{subsection.6.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.2}Example: The 1\% attacker}{32}{subsection.6.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.3}The Tragedy of the Commons}{32}{subsection.6.1.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {6.1}{\ignorespaces Tragedy of the commons}}{32}{figure.6.1}\protected@file@percent }
-\newlabel{fig:tragedy-of-the-commons}{{6.1}{32}{Tragedy of the commons}{figure.6.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.4}Simulating the "wrong choice is costly"}{32}{subsection.6.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.2}Wealth Inequality and the Gini Coefficient}{32}{section.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.3}Miner's Extractable Value (MEV)}{33}{section.6.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.1}Basic on-chain DeX based arbitrage}{33}{subsection.6.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.4}The ever growing state, state expiry}{33}{section.6.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.5}Rebuilding the chain / Chain Derivation}{33}{section.6.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.6}Supporting a different virtual machine}{33}{section.6.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Arbitrum Stylus}{34}{section*.5}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {6.2}{\ignorespaces Arbitrum Nitro}}{34}{figure.6.2}\protected@file@percent }
-\newlabel{fig:arbitrum-nitro}{{6.2}{34}{Arbitrum Nitro}{figure.6.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{R55-Eth}{34}{section*.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {7}Layer 2 Scaling Solutions}{35}{chapter.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Proof of Stake: The Nothing at Stake problem}{33}{section.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.1}No penalties = No canonicalization}{34}{subsection.6.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.2}Example: The 1\% attacker}{34}{subsection.6.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.3}The Tragedy of the Commons}{34}{subsection.6.1.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6.1}{\ignorespaces Tragedy of the commons}}{34}{figure.6.1}\protected@file@percent }
+\newlabel{fig:tragedy-of-the-commons}{{6.1}{34}{Tragedy of the commons}{figure.6.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.4}Simulating the "wrong choice is costly"}{35}{subsection.6.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Wealth Inequality and the Gini Coefficient}{35}{section.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Miner's Extractable Value (MEV)}{35}{section.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.1}Basic on-chain DeX based arbitrage}{36}{subsection.6.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.4}The ever growing state, state expiry}{36}{section.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.5}Rebuilding the chain / Chain Derivation}{36}{section.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.6}Supporting a different virtual machine}{36}{section.6.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Arbitrum Stylus}{36}{subsubsection*.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6.2}{\ignorespaces Arbitrum Nitro}}{37}{figure.6.2}\protected@file@percent }
+\newlabel{fig:arbitrum-nitro}{{6.2}{37}{Arbitrum Nitro}{figure.6.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{R55-Eth}{37}{subsubsection*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {7}Layer 2 Scaling Solutions}{39}{chapter.7}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {7.1}General classification}{35}{section.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7.2}Where sits the enourmous data?}{35}{section.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7.3}Plasma: Each one save one}{36}{section.7.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.3.1}Operator misbehaviors and exits}{36}{subsection.7.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.3.2}Plasma Cash}{36}{subsection.7.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7.4}Bottlenecked by DA}{36}{section.7.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7.5}Rollups and levels of confirmation}{37}{section.7.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7.6}Faster Layer 2 Interoperability}{37}{section.7.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {8}Golang}{39}{chapter.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.1}General classification}{39}{section.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.2}Where sits the enourmous data?}{39}{section.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.3}Plasma: Each one save one}{40}{section.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3.1}Operator misbehaviors and exits}{40}{subsection.7.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3.2}Plasma Cash}{40}{subsection.7.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.4}Bottlenecked by DA}{41}{section.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.5}Rollups and levels of confirmation}{41}{section.7.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.6}Faster Layer 2 Interoperability}{41}{section.7.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {8}Golang}{43}{chapter.8}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{\numberline {9}Rust}{41}{chapter.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {9}Rust}{45}{chapter.9}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {9.1}Iterators}{41}{section.9.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {10}Solidity}{43}{chapter.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9.1}Iterators}{45}{section.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9.2}Async Rust: the Waker}{45}{section.9.2}\protected@file@percent }
+\newlabel{sec:wakers}{{9.2}{45}{Async Rust: the Waker}{section.9.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.1}Why wakers exist}{46}{subsection.9.2.1}\protected@file@percent }
+\newlabel{sec:wakers-ch1}{{9.2.1}{46}{Why wakers exist}{subsection.9.2.1}{}}
+\newlabel{def:future-poll}{{9.2.1.1}{46}{Future, poll}{tcb@cnt@definition.9.2.1.1}{}}
+\newlabel{def:executor}{{9.2.1.2}{46}{Executor}{tcb@cnt@definition.9.2.1.2}{}}
+\newlabel{ax:inertness}{{9.2.1.3}{47}{Inertness}{tcb@cnt@definition.9.2.1.3}{}}
+\newlabel{def:waker}{{9.2.1.4}{47}{Waker, wake}{tcb@cnt@definition.9.2.1.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.2}What the operating system provides}{47}{subsection.9.2.2}\protected@file@percent }
+\newlabel{sec:wakers-ch2}{{9.2.2}{47}{What the operating system provides}{subsection.9.2.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Two worlds: your program and the kernel}{48}{subsubsection*.7}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {9.1}{\ignorespaces The three layers. Programs talk to the kernel through system calls; hardware gets the kernel's attention through interrupts.}}{48}{figure.9.1}\protected@file@percent }
+\newlabel{fig:wakers-2.1}{{9.1}{48}{The three layers. Programs talk to the kernel through system calls; hardware gets the kernel's attention through interrupts}{figure.9.1}{}}
+\newlabel{ax:kernel-passivity}{{9.2.2.1}{48}{Kernel passivity}{tcb@cnt@definition.9.2.2.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Threads and the scheduler}{48}{subsubsection*.8}\protected@file@percent }
+\newlabel{ax:free-blocking}{{9.2.2.2}{48}{Free blocking}{tcb@cnt@definition.9.2.2.2}{}}
+\newlabel{ax:costly-threads}{{9.2.2.3}{49}{Costly threads}{tcb@cnt@definition.9.2.2.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Ways for a thread to wait}{49}{subsubsection*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{File descriptors}{49}{subsubsection*.10}\protected@file@percent }
+\newlabel{def:file-descriptor}{{9.2.2.4}{49}{File descriptor}{tcb@cnt@definition.9.2.2.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Blocking and non-blocking I/O}{49}{subsubsection*.11}\protected@file@percent }
+\newlabel{def:non-blocking-io}{{9.2.2.5}{49}{Non-blocking I/O}{tcb@cnt@definition.9.2.2.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Interrupts and buffers}{50}{subsubsection*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Readiness and completion}{50}{subsubsection*.13}\protected@file@percent }
+\newlabel{def:readiness-model}{{9.2.2.6}{50}{Readiness model}{tcb@cnt@definition.9.2.2.6}{}}
+\newlabel{def:completion-model}{{9.2.2.7}{50}{Completion model}{tcb@cnt@definition.9.2.2.7}{}}
+\newlabel{ax:files-always-ready}{{9.2.2.8}{50}{Files are always ready}{tcb@cnt@definition.9.2.2.8}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Signals}{50}{subsubsection*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Waking a waiting thread on purpose}{51}{subsubsection*.15}\protected@file@percent }
+\newlabel{ax:kernel-blindness}{{9.2.2.9}{51}{Kernel blindness}{tcb@cnt@definition.9.2.2.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.3}Futures, tasks and wakers}{51}{subsection.9.2.3}\protected@file@percent }
+\newlabel{sec:wakers-ch3}{{9.2.3}{51}{Futures, tasks and wakers}{subsection.9.2.3}{}}
+\newlabel{def:task}{{9.2.3.1}{51}{Task}{tcb@cnt@definition.9.2.3.1}{}}
+\newlabel{lst:wakers-3.1}{{9.1}{51}{One task, many futures}{lstlisting.9.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.1}One task, many futures.}{51}{lstlisting.9.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9.1}{\ignorespaces The kernel services this section relies on.}}{52}{table.9.1}\protected@file@percent }
+\newlabel{tab:wakers-2.1}{{9.1}{52}{The kernel services this section relies on}{table.9.1}{}}
+\newlabel{def:leaf-future}{{9.2.3.2}{53}{Leaf future}{tcb@cnt@definition.9.2.3.2}{}}
+\newlabel{lem:one-waker-per-task}{{9.2.3.3}{53}{One waker per task}{tcb@cnt@definition.9.2.3.3}{}}
+\newlabel{cor:whole-task-repoll}{{9.2.3.4}{53}{Whole-task re-poll}{tcb@cnt@definition.9.2.3.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.2}{\ignorespaces The task of Listing~\ref {lst:wakers-3.1} as a tree of futures. Only the leaves store a waker, all of them the same task's (Lemma~\ref {lem:one-waker-per-task}), and any wake re-polls from the top (Corollary~\ref {cor:whole-task-repoll}).}}{53}{figure.9.2}\protected@file@percent }
+\newlabel{fig:wakers-3.1}{{9.2}{53}{The task of Listing~\ref {lst:wakers-3.1} as a tree of futures. Only the leaves store a waker, all of them the same task's (Lemma~\ref {lem:one-waker-per-task}), and any wake re-polls from the top (Corollary~\ref {cor:whole-task-repoll})}{figure.9.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.4}What \texttt  {poll} receives}{55}{subsection.9.2.4}\protected@file@percent }
+\newlabel{sec:wakers-ch4}{{9.2.4}{55}{What \texorpdfstring {\texttt {poll}}{poll} receives}{subsection.9.2.4}{}}
+\newlabel{lst:wakers-4.1}{{9.2}{55}{The signature of \texttt {Future::poll} and the stable \texttt {Context} API}{lstlisting.9.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.2}The signature of \texttt  {Future::poll} and the stable \texttt  {Context} API.}{55}{lstlisting.9.2}\protected@file@percent }
+\newlabel{def:context}{{9.2.4.1}{55}{Context}{tcb@cnt@definition.9.2.4.1}{}}
+\newlabel{ax:wakers-travel}{{9.2.4.2}{55}{Wakers travel}{tcb@cnt@definition.9.2.4.2}{}}
+\newlabel{lem:clone-to-keep}{{9.2.4.3}{55}{Clone to keep}{tcb@cnt@definition.9.2.4.3}{}}
+\newlabel{lst:wakers-4.2}{{9.3}{55}{\texttt {Context}, \texttt {Waker} and \texttt {RawWaker} as defined in Rust 1.97}{lstlisting.9.3}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.3}\texttt  {Context}, \texttt  {Waker} and \texttt  {RawWaker} as defined in Rust 1.97.}{55}{lstlisting.9.3}\protected@file@percent }
+\newlabel{def:raw-waker}{{9.2.4.4}{55}{Raw waker}{tcb@cnt@definition.9.2.4.4}{}}
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 2\ {\relax \fontshape  it\selectfont  Futures, tasks and wakers}\hspace  {.66em}}{56}{Exercise.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.5}Two tasks, start to finish}{56}{subsection.9.2.5}\protected@file@percent }
+\newlabel{sec:wakers-ch5}{{9.2.5}{56}{Two tasks, start to finish}{subsection.9.2.5}{}}
+\newlabel{lst:wakers-5.1}{{9.4}{57}{One network wait and one file read}{lstlisting.9.4}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.4}One network wait and one file read.}{57}{lstlisting.9.4}\protected@file@percent }
+\newlabel{def:waker-slot}{{9.2.5.1}{57}{Waker slot}{tcb@cnt@definition.9.2.5.1}{}}
+\newlabel{def:wake-path}{{9.2.5.2}{57}{Wake path}{tcb@cnt@definition.9.2.5.2}{}}
+\newlabel{def:driver-duty}{{9.2.5.3}{57}{Driver duty}{tcb@cnt@definition.9.2.5.3}{}}
+\newlabel{def:local-remote-wake}{{9.2.5.4}{57}{Local wake, remote wake}{tcb@cnt@definition.9.2.5.4}{}}
+\newlabel{lem:remote-wakes-need-a-poke}{{9.2.5.5}{57}{Remote wakes need a poke}{tcb@cnt@definition.9.2.5.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.2}{\ignorespaces The lifecycle of Listing~\ref {lst:wakers-5.1}.}}{58}{table.9.2}\protected@file@percent }
+\newlabel{tab:wakers-5.1}{{9.2}{58}{The lifecycle of Listing~\ref {lst:wakers-5.1}}{table.9.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.6}Who calls \texttt  {wake()}}{59}{subsection.9.2.6}\protected@file@percent }
+\newlabel{sec:wakers-ch6}{{9.2.6}{59}{Who calls \texorpdfstring {\texttt {wake()}}{wake()}}{subsection.9.2.6}{}}
+\newlabel{lem:wakers-called-from-user-space}{{9.2.6.1}{59}{Wakers are called from user space}{tcb@cnt@definition.9.2.6.1}{}}
+\newlabel{def:wake-source}{{9.2.6.2}{59}{Wake source}{tcb@cnt@definition.9.2.6.2}{}}
+\newlabel{cor:wakers-cross-threads}{{9.2.6.3}{59}{Wakers cross threads}{tcb@cnt@definition.9.2.6.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.3}{\ignorespaces The eight wake sources.}}{60}{table.9.3}\protected@file@percent }
+\newlabel{tab:wakers-6.1}{{9.3}{60}{The eight wake sources}{table.9.3}{}}
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 3\ {\relax \fontshape  it\selectfont  Wake paths}\hspace  {.66em}}{60}{Exercise.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.7}The Wake Obligation}{61}{subsection.9.2.7}\protected@file@percent }
+\newlabel{sec:wakers-ch7}{{9.2.7}{61}{The Wake Obligation}{subsection.9.2.7}{}}
+\newlabel{def:waker-driven-executor}{{9.2.7.1}{61}{Waker-driven executor}{tcb@cnt@definition.9.2.7.1}{}}
+\newlabel{ax:wake-obligation}{{9.2.7.2}{61}{The Wake Obligation}{tcb@cnt@definition.9.2.7.2}{}}
+\newlabel{ax:no-promise-of-readiness}{{9.2.7.3}{61}{No promise of readiness}{tcb@cnt@definition.9.2.7.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Three ways to keep the obligation}{61}{subsubsection*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Lost wakes}{62}{subsubsection*.17}\protected@file@percent }
+\newlabel{def:lost-wake}{{9.2.7.4}{62}{Lost wake}{tcb@cnt@definition.9.2.7.4}{}}
+\newlabel{lem:atomic-check-and-store}{{9.2.7.5}{62}{Atomic check-and-store}{tcb@cnt@definition.9.2.7.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Two further rules}{62}{subsubsection*.18}\protected@file@percent }
+\newlabel{lem:twice-harmless-zero-fatal}{{9.2.7.6}{62}{Twice is harmless, zero is fatal}{tcb@cnt@definition.9.2.7.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.8}Stranded tasks}{62}{subsection.9.2.8}\protected@file@percent }
+\newlabel{sec:wakers-ch8}{{9.2.8}{62}{Stranded tasks}{subsection.9.2.8}{}}
+\newlabel{def:stranded-task}{{9.2.8.1}{62}{Stranded task}{tcb@cnt@definition.9.2.8.1}{}}
+\newlabel{lem:stranding}{{9.2.8.2}{63}{Stranding}{tcb@cnt@definition.9.2.8.2}{}}
+\newlabel{cor:contagion}{{9.2.8.3}{63}{Contagion}{tcb@cnt@definition.9.2.8.3}{}}
+\newlabel{def:accidental-rescue}{{9.2.8.4}{63}{Accidental rescue}{tcb@cnt@definition.9.2.8.4}{}}
+\newlabel{lem:shared-fate}{{9.2.8.5}{63}{Shared fate}{tcb@cnt@definition.9.2.8.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Is the Stranding lemma true of every runtime?}{63}{subsubsection*.19}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9.4}{\ignorespaces A future that never stores its waker, on seven configurations.}}{64}{table.9.4}\protected@file@percent }
+\newlabel{tab:wakers-8.1}{{9.4}{64}{A future that never stores its waker, on seven configurations}{table.9.4}{}}
+\newlabel{prop:wake-obligation-in-practice}{{9.2.8.6}{64}{The Wake Obligation, in practice}{tcb@cnt@definition.9.2.8.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.9}Silent sources}{64}{subsection.9.2.9}\protected@file@percent }
+\newlabel{sec:wakers-ch9}{{9.2.9}{64}{Silent sources}{subsection.9.2.9}{}}
+\newlabel{def:silent-source}{{9.2.9.1}{64}{Silent source}{tcb@cnt@definition.9.2.9.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.5}{\ignorespaces Ways to wait on a silent source.}}{65}{table.9.5}\protected@file@percent }
+\newlabel{tab:wakers-9.1}{{9.5}{65}{Ways to wait on a silent source}{table.9.5}{}}
+\newlabel{lem:interval-polling-trade-off}{{9.2.9.2}{65}{Interval polling trade-off}{tcb@cnt@definition.9.2.9.2}{}}
+\newlabel{lst:wakers-9.1}{{9.5}{65}{Interval polling: the timer is the waker}{lstlisting.9.5}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.5}Interval polling: the timer is the waker.}{65}{lstlisting.9.5}\protected@file@percent }
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 4\ {\relax \fontshape  it\selectfont  Keeping the Wake Obligation}\hspace  {.66em}}{65}{Exercise.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.10}The runtime at a glance}{66}{subsection.9.2.10}\protected@file@percent }
+\newlabel{sec:wakers-ch10}{{9.2.10}{66}{The runtime at a glance}{subsection.9.2.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.3}{\ignorespaces Tokio's multi-thread runtime, simplified. The \texttt  {current\_thread} runtime of Section~\ref {sec:wakers-ch5} is the same picture with one worker and no stealing.}}{67}{figure.9.3}\protected@file@percent }
+\newlabel{fig:wakers-10.1}{{9.3}{67}{Tokio's multi-thread runtime, simplified. The \texttt {current\_thread} runtime of Section~\ref {sec:wakers-ch5} is the same picture with one worker and no stealing}{figure.9.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.6}{\ignorespaces Where a woken task lands.}}{68}{table.9.6}\protected@file@percent }
+\newlabel{tab:wakers-10.1}{{9.6}{68}{Where a woken task lands}{table.9.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.11}Driver duty}{68}{subsection.9.2.11}\protected@file@percent }
+\newlabel{sec:wakers-ch11}{{9.2.11}{68}{Driver duty}{subsection.9.2.11}{}}
+\newlabel{def:driver}{{9.2.11.1}{68}{Driver}{tcb@cnt@definition.9.2.11.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Two different things called ``poll''}{69}{subsubsection*.20}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9.7}{\ignorespaces The two meanings of ``poll.''}}{69}{table.9.7}\protected@file@percent }
+\newlabel{tab:wakers-11.1}{{9.7}{69}{The two meanings of ``poll.''}{table.9.7}{}}
+\newlabel{lem:single-blocking-point}{{9.2.11.2}{69}{Single blocking point}{tcb@cnt@definition.9.2.11.2}{}}
+\newlabel{lst:wakers-11.1}{{9.6}{69}{The four driver layers, from outermost to innermost}{lstlisting.9.6}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.6}The four driver layers, from outermost to innermost.}{69}{lstlisting.9.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{The single-threaded runtime}{70}{subsubsection*.21}\protected@file@percent }
+\newlabel{lst:wakers-11.2}{{9.7}{70}{The \texttt {current\_thread} scheduler loop, paraphrased from Tokio's source}{lstlisting.9.7}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.7}The \texttt  {current\_thread} scheduler loop, paraphrased from Tokio's source.}{70}{lstlisting.9.7}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9.8}{\ignorespaces The two runtime flavours compared.}}{70}{table.9.8}\protected@file@percent }
+\newlabel{tab:wakers-11.2}{{9.8}{70}{The two runtime flavours compared}{table.9.8}{}}
+\newlabel{cor:no-block-on-no-progress}{{9.2.11.3}{70}{No block\_on, no progress}{tcb@cnt@definition.9.2.11.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.12}mio: where Tokio meets the operating system}{71}{subsection.9.2.12}\protected@file@percent }
+\newlabel{sec:wakers-ch12}{{9.2.12}{71}{mio: where Tokio meets the operating system}{subsection.9.2.12}{}}
+\newlabel{def:token}{{9.2.12.1}{71}{Token}{tcb@cnt@definition.9.2.12.1}{}}
+\newlabel{lem:token-round-trip}{{9.2.12.2}{71}{Token round trip}{tcb@cnt@definition.9.2.12.2}{}}
+\newlabel{lst:wakers-12.1}{{9.8}{71}{The epoll system calls made by Listing~\ref {lst:wakers-A.1}. Each token comes back in epoll's \texttt {data} field}{lstlisting.9.8}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.8}The epoll system calls made by Listing~\ref {lst:wakers-A.1}. Each token comes back in epoll's \texttt  {data} field.}{71}{lstlisting.9.8}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {9.4}{\ignorespaces The layers between an \texttt  {.await} and the kernel.}}{72}{figure.9.4}\protected@file@percent }
+\newlabel{fig:wakers-12.1}{{9.4}{72}{The layers between an \texttt {.await} and the kernel}{figure.9.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.9}{\ignorespaces The edges of mio's responsibility.}}{72}{table.9.9}\protected@file@percent }
+\newlabel{tab:wakers-12.1}{{9.9}{72}{The edges of mio's responsibility}{table.9.9}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Without epoll}{72}{subsubsection*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.13}Two kinds of wake}{73}{subsection.9.2.13}\protected@file@percent }
+\newlabel{sec:wakers-ch13}{{9.2.13}{73}{Two kinds of wake}{subsection.9.2.13}{}}
+\newlabel{def:task-thread-level-wake}{{9.2.13.1}{73}{Task-level wake, thread-level wake}{tcb@cnt@definition.9.2.13.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.10}{\ignorespaces The two wakers.}}{73}{table.9.10}\protected@file@percent }
+\newlabel{tab:wakers-13.1}{{9.10}{73}{The two wakers}{table.9.10}{}}
+\newlabel{lem:two-stage-remote-wake}{{9.2.13.2}{74}{Two-stage remote wake}{tcb@cnt@definition.9.2.13.2}{}}
+\newlabel{lst:wakers-13.1}{{9.9}{74}{The two stages of a remote wake}{lstlisting.9.9}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.9}The two stages of a remote wake.}{74}{lstlisting.9.9}\protected@file@percent }
+\newlabel{lst:wakers-13.2}{{9.10}{74}{\texttt {strace} of a \texttt {current\_thread} runtime awaiting \texttt {spawn\_blocking(|| \{ sleep(50 ms); 42 \})} (Listing~\ref {lst:wakers-A.2})}{lstlisting.9.10}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.10}\texttt  {strace} of a \texttt  {current\_thread} runtime awaiting \texttt  {spawn\_blocking(|| \{ sleep(50 ms); 42 \})} (Listing~\ref {lst:wakers-A.2}).}{74}{lstlisting.9.10}\protected@file@percent }
+\newlabel{lem:wake-coalescing}{{9.2.13.3}{74}{Wake coalescing}{tcb@cnt@definition.9.2.13.3}{}}
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 5\ {\relax \fontshape  it\selectfont  Inside Tokio}\hspace  {.66em}}{74}{Exercise.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.14}Inside epoll}{75}{subsection.9.2.14}\protected@file@percent }
+\newlabel{sec:wakers-ch14}{{9.2.14}{75}{Inside epoll}{subsection.9.2.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.5}{\ignorespaces epoll's two lists. Highlighted squares are the sockets that just received data.}}{75}{figure.9.5}\protected@file@percent }
+\newlabel{fig:wakers-14.1}{{9.5}{75}{epoll's two lists. Highlighted squares are the sockets that just received data}{figure.9.5}{}}
+\newlabel{lem:event-proportional-waiting}{{9.2.14.1}{75}{Event-proportional waiting}{tcb@cnt@definition.9.2.14.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.11}{\ignorespaces One round in which three sockets receive data.}}{76}{table.9.11}\protected@file@percent }
+\newlabel{tab:wakers-14.1}{{9.11}{76}{One round in which three sockets receive data}{table.9.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.15}Inside the timer wheel}{76}{subsection.9.2.15}\protected@file@percent }
+\newlabel{sec:wakers-ch15}{{9.2.15}{76}{Inside the timer wheel}{subsection.9.2.15}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Ticks}{76}{subsubsection*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{The driver's loop}{76}{subsubsection*.24}\protected@file@percent }
+\newlabel{lem:timers-are-timeouts}{{9.2.15.1}{77}{Timers are timeouts}{tcb@cnt@definition.9.2.15.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{A timer's life in Tokio}{77}{subsubsection*.25}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9.12}{\ignorespaces What each timer operation in Tokio does to the wheel.}}{77}{table.9.12}\protected@file@percent }
+\newlabel{tab:wakers-15.4}{{9.12}{77}{What each timer operation in Tokio does to the wheel}{table.9.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.16}Idle cost and event cost}{78}{subsection.9.2.16}\protected@file@percent }
+\newlabel{sec:wakers-ch16}{{9.2.16}{78}{Idle cost and event cost}{subsection.9.2.16}{}}
+\newlabel{def:idle-event-cost}{{9.2.16.1}{78}{Idle cost, event cost}{tcb@cnt@definition.9.2.16.1}{}}
+\newlabel{lem:idle-cost-memory-only}{{9.2.16.2}{78}{Idle cost is memory only}{tcb@cnt@definition.9.2.16.2}{}}
+\newlabel{lem:event-cost-independent}{{9.2.16.3}{78}{Event cost is independent of waiters}{tcb@cnt@definition.9.2.16.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Measurement}{78}{subsubsection*.26}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9.13}{\ignorespaces Idle cost. ``0 ms'' means below the 10 ms resolution of the kernel's CPU accounting. The kernel's own socket memory is not part of the resident figure.}}{79}{table.9.13}\protected@file@percent }
+\newlabel{tab:wakers-16.1}{{9.13}{79}{Idle cost. ``0 ms'' means below the 10 ms resolution of the kernel's CPU accounting. The kernel's own socket memory is not part of the resident figure}{table.9.13}{}}
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 6\ {\relax \fontshape  it\selectfont  Why it scales}\hspace  {.66em}}{79}{Exercise.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.17}A hundred-line executor}{80}{subsection.9.2.17}\protected@file@percent }
+\newlabel{sec:wakers-ch17}{{9.2.17}{80}{A hundred-line executor}{subsection.9.2.17}{}}
+\newlabel{lst:wakers-17.1}{{9.11}{81}{A complete executor and timer}{lstlisting.9.11}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.11}A complete executor and timer.}{81}{lstlisting.9.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.18}Common mistakes}{83}{subsection.9.2.18}\protected@file@percent }
+\newlabel{sec:wakers-ch18}{{9.2.18}{83}{Common mistakes}{subsection.9.2.18}{}}
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 7\ {\relax \fontshape  it\selectfont  Building an executor}\hspace  {.66em}}{83}{Exercise.7}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9.14}{\ignorespaces Misconceptions and their corrections.}}{84}{table.9.14}\protected@file@percent }
+\newlabel{tab:wakers-18.1}{{9.14}{84}{Misconceptions and their corrections}{table.9.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.19}The whole story in one page}{85}{subsection.9.2.19}\protected@file@percent }
+\newlabel{sec:wakers-afterword}{{9.2.19}{85}{The whole story in one page}{subsection.9.2.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2.20}The programs behind the measurements}{85}{subsection.9.2.20}\protected@file@percent }
+\newlabel{sec:wakers-programs}{{9.2.20}{85}{The programs behind the measurements}{subsection.9.2.20}{}}
+\@writefile{toc}{\contentsline {subsubsection}{mio on its own}{85}{subsubsection*.27}\protected@file@percent }
+\newlabel{lst:wakers-A.1}{{9.12}{86}{A listener and a client using mio directly, with no async code}{lstlisting.9.12}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.12}A listener and a client using mio directly, with no async code.}{86}{lstlisting.9.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{The eventfd wake-up}{86}{subsubsection*.28}\protected@file@percent }
+\newlabel{lst:wakers-A.2}{{9.13}{87}{A blocking job awaited on a single-threaded runtime}{lstlisting.9.13}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.13}A blocking job awaited on a single-threaded runtime.}{87}{lstlisting.9.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{A future that never stores its waker}{87}{subsubsection*.29}\protected@file@percent }
+\newlabel{lst:wakers-A.3}{{9.14}{88}{The broken future, run on several configurations with a two-second limit each}{lstlisting.9.14}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.14}The broken future, run on several configurations with a two-second limit each.}{88}{lstlisting.9.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Idle cost and event cost}{89}{subsubsection*.30}\protected@file@percent }
+\newlabel{lst:wakers-A.4}{{9.15}{90}{Idle cost and wake-up latency with 100,000 timers and 9,000 sockets}{lstlisting.9.15}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9.15}Idle cost and wake-up latency with 100,000 timers and 9,000 sockets.}{90}{lstlisting.9.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9.3}Exercise Solutions}{91}{section.9.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {10}Solidity}{97}{chapter.10}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {10.1}The memory model}{43}{section.10.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.1.1}Memory types: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {calldata}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {memory}}} vs \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {storage}}}}{43}{subsection.10.1.1}\protected@file@percent }
-\newlabel{sec:soliditity-memory-model}{{10.1.1}{43}{Memory types: \code {calldata} vs \code {memory} vs \code {storage}}{subsection.10.1.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.1.2}The on-chain storage}{43}{subsection.10.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Static sized object representation}{43}{section*.7}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.1}In-storage representation}{43}{lstlisting.10.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.2}In-storage representation(better)}{44}{lstlisting.10.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Dynamically sized object representation}{44}{section*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {10.2}Function and their modifiers}{44}{section.10.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.1}Visibility Modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {private}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {internal}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {external}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {public}}}}{44}{subsection.10.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.2}Function Modifiers for preconditions and postconditions}{44}{subsection.10.2.2}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.3}Solidity isOwner modifier}{44}{lstlisting.10.3}\protected@file@percent }
-\newlabel{lst:contract-with-modifiers}{{10.2.2}{45}{Function Modifiers for preconditions and postconditions}{lstnumber.10.3.4}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.4}Contract with modifiers}{45}{lstlisting.10.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.3}Special modifiers: \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {view}}}, \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {pure}}} and \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {payable}}}}{45}{subsection.10.2.3}\protected@file@percent }
-\newlabel{sec:special-modifiers}{{10.2.3}{45}{Special modifiers: \code {view}, \code {pure} and \code {payable}}{subsection.10.2.3}{}}
-\@writefile{loe}{\contentsline {exercise}{Exercise\ 2\ {\relax \fontshape  it\selectfont  Solidity Basics}\hspace  {.66em}}{45}{Exercise.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {10.3}The EIP-721 Standard: Non-Fungible Tokens (NFTs)}{45}{section.10.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {10.4}Exercise Solutions}{46}{section.10.4}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.5}Fibonacci Contract}{46}{lstlisting.10.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {11}Binary Search}{47}{chapter.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10.1}The memory model}{97}{section.10.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.1.1}Memory types: \texttt  {\textcolor {Primary3}{calldata}} vs \texttt  {\textcolor {Primary3}{memory}} vs \texttt  {\textcolor {Primary3}{storage}}}{97}{subsection.10.1.1}\protected@file@percent }
+\newlabel{sec:soliditity-memory-model}{{10.1.1}{97}{Memory types: \code {calldata} vs \code {memory} vs \code {storage}}{subsection.10.1.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.1.2}The on-chain storage}{97}{subsection.10.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Static sized object representation}{97}{subsubsection*.31}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.1}In-storage representation}{98}{lstlisting.10.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.2}In-storage representation(better)}{98}{lstlisting.10.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Dynamically sized object representation}{98}{subsubsection*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10.2}Function and their modifiers}{98}{section.10.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.1}Visibility Modifiers: \texttt  {\textcolor {Primary3}{private}}, \texttt  {\textcolor {Primary3}{internal}}, \texttt  {\textcolor {Primary3}{external}}, \texttt  {\textcolor {Primary3}{public}}}{98}{subsection.10.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.2}Function Modifiers for preconditions and postconditions}{99}{subsection.10.2.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.3}Solidity isOwner modifier}{99}{lstlisting.10.3}\protected@file@percent }
+\newlabel{lst:contract-with-modifiers}{{10.2.2}{99}{Function Modifiers for preconditions and postconditions}{lstnumber.10.3.4}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.4}Contract with modifiers}{99}{lstlisting.10.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2.3}Special modifiers: \texttt  {\textcolor {Primary3}{view}}, \texttt  {\textcolor {Primary3}{pure}} and \texttt  {\textcolor {Primary3}{payable}}}{99}{subsection.10.2.3}\protected@file@percent }
+\newlabel{sec:special-modifiers}{{10.2.3}{99}{Special modifiers: \code {view}, \code {pure} and \code {payable}}{subsection.10.2.3}{}}
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 8\ {\relax \fontshape  it\selectfont  Solidity Basics}\hspace  {.66em}}{100}{Exercise.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10.3}The EIP-721 Standard: Non-Fungible Tokens (NFTs)}{100}{section.10.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10.4}Exercise Solutions}{100}{section.10.4}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {10.5}Fibonacci Contract}{101}{lstlisting.10.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {11}Binary Search}{103}{chapter.11}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {11.1}Basic: Minimize $k$ such that $f(k)$ is true}{47}{section.11.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {11.2}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {feasible(x) -> bool}}}}{47}{section.11.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{47}{subsection.11.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{48}{subsection.11.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.3}Problem [SplitM]: Split array into $m$ subarrays}{48}{subsection.11.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {11.3}Advanced: Search spaces with \colorbox {LightPrimary}{\textcolor {Primary2}{\texttt  {enough(x) -> bool}}}}{49}{section.11.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {11.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{49}{subsection.11.3.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {11.1}Rust implementation of enough function}{49}{lstlisting.11.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {12}Dynamic Programming}{51}{chapter.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11.1}Basic: Minimize $k$ such that $f(k)$ is true}{103}{section.11.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11.2}Advanced: Search spaces with \texttt  {\textcolor {Primary3}{feasible(x) -> bool}}}{103}{section.11.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.1}Problem [SeqShip]: Sequential objects shipping within $D$ days}{103}{subsection.11.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.2}Problem [KokoBanana]: Monkey eating piles of bananas}{104}{subsection.11.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2.3}Problem [SplitM]: Split array into $m$ subarrays}{105}{subsection.11.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11.3}Advanced: Search spaces with \texttt  {\textcolor {Primary3}{enough(x) -> bool}}}{105}{section.11.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.3.1}Problem [KSmallMul]: K-th smallest number in multiplication table}{105}{subsection.11.3.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {11.1}Rust implementation of enough function}{106}{lstlisting.11.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {12}Dynamic Programming}{107}{chapter.12}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{relation:dontrequirememo}{{12.1}{51}{Dynamic Programming}{equation.12.0.1}{}}
-\newlabel{relation:requiresmemo}{{12.2}{51}{Dynamic Programming}{equation.12.0.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {12.1}Memoization}{51}{section.12.1}\protected@file@percent }
-\newlabel{timecomplexity:requiresmemo}{{12.3}{51}{Memoization}{equation.12.1.3}{}}
-\newlabel{timecomplexity:requiresmemowithmemo}{{12.4}{52}{Memoization}{equation.12.1.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {12.2}Most important subproblems}{52}{section.12.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Alphabetical Index}{53}{section*.9}\protected@file@percent }
-\gdef \@abspage@last{53}
+\newlabel{relation:dontrequirememo}{{12.1}{107}{Dynamic Programming}{equation.12.1}{}}
+\newlabel{relation:requiresmemo}{{12.2}{107}{Dynamic Programming}{equation.12.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {12.1}Memoization}{107}{section.12.1}\protected@file@percent }
+\newlabel{timecomplexity:requiresmemo}{{12.3}{107}{Memoization}{equation.12.3}{}}
+\newlabel{timecomplexity:requiresmemowithmemo}{{12.4}{108}{Memoization}{equation.12.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {12.2}Most important subproblems}{108}{section.12.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {13}Algorithms for Systems Engineering}{109}{chapter.13}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{ch:systems-algorithms}{{13}{109}{Algorithms for Systems Engineering}{chapter.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {13.1}Hierarchical timing wheels}{109}{section.13.1}\protected@file@percent }
+\newlabel{sec:timing-wheels}{{13.1}{109}{Hierarchical timing wheels}{section.13.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.1}The structure}{110}{subsection.13.1.1}\protected@file@percent }
+\newlabel{def:timer-wheel}{{13.1.1.1}{110}{Hierarchical timer wheel}{tcb@cnt@definition.13.1.1.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.2}Ticks and the wheel's clock}{110}{subsection.13.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.3}What the wheel stores}{110}{subsection.13.1.3}\protected@file@percent }
+\newlabel{def:filing-true-deadline}{{13.1.3.1}{110}{Filing deadline, true deadline}{tcb@cnt@definition.13.1.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.4}Insertion: choosing a level and a slot}{110}{subsection.13.1.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {13.1}{\ignorespaces Choosing a level and slot for a deadline of 5,000 ticks when the wheel's clock is at 4,096, as in step 6 of Table~\ref {tab:tw-example}. Each box is one 6-bit group of the tick, in decimal.}}{111}{figure.13.1}\protected@file@percent }
+\newlabel{fig:tw-level-for}{{13.1}{111}{Choosing a level and slot for a deadline of 5,000 ticks when the wheel's clock is at 4,096, as in step 6 of Table~\ref {tab:tw-example}. Each box is one 6-bit group of the tick, in decimal}{figure.13.1}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {13.1}{\ignorespaces Choosing a level and a slot.}}{111}{algorithm.13.1}\protected@file@percent }
+\newlabel{alg:tw-level-for}{{13.1}{111}{Insertion: choosing a level and a slot}{algorithm.13.1}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {13.2}{\ignorespaces Inserting a timer, under the driver lock.}}{111}{algorithm.13.2}\protected@file@percent }
+\newlabel{alg:tw-insert}{{13.2}{111}{Insertion: choosing a level and a slot}{algorithm.13.2}{}}
+\newlabel{lem:wheel-placement}{{13.1.4.1}{112}{Placement}{tcb@cnt@definition.13.1.4.1}{}}
+\newlabel{lem:constant-time-insert}{{13.1.4.2}{112}{Constant-time insert}{tcb@cnt@definition.13.1.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.5}Deletion}{112}{subsection.13.1.5}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {13.3}{\ignorespaces Removing a timer.}}{112}{algorithm.13.3}\protected@file@percent }
+\newlabel{alg:tw-remove}{{13.3}{112}{Deletion}{algorithm.13.3}{}}
+\newlabel{lem:stable-filing}{{13.1.5.1}{112}{Stable filing}{tcb@cnt@definition.13.1.5.1}{}}
+\newlabel{lem:constant-time-remove}{{13.1.5.2}{113}{Constant-time removal}{tcb@cnt@definition.13.1.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.6}Finding the next deadline}{113}{subsection.13.1.6}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {13.4}{\ignorespaces Finding the next expiration.}}{113}{algorithm.13.4}\protected@file@percent }
+\newlabel{alg:tw-next}{{13.4}{113}{Finding the next deadline}{algorithm.13.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13.2}{\ignorespaces \textsc  {NextOccupiedSlot} on a level whose slots 10 and 40 are occupied (green). Rotating the mask so that the slot after the clock's (orange) becomes bit 0, the count of trailing zeros is the distance to the next occupied slot. These are cases from Tokio's own tests.}}{114}{figure.13.2}\protected@file@percent }
+\newlabel{fig:tw-next-slot}{{13.2}{114}{\textsc {NextOccupiedSlot} on a level whose slots 10 and 40 are occupied (green). Rotating the mask so that the slot after the clock's (orange) becomes bit 0, the count of trailing zeros is the distance to the next occupied slot. These are cases from Tokio's own tests}{figure.13.2}{}}
+\newlabel{lem:lowest-level-first}{{13.1.6.1}{114}{Lowest level first}{tcb@cnt@definition.13.1.6.1}{}}
+\newlabel{lem:constant-time-next-deadline}{{13.1.6.2}{114}{Constant-time next deadline}{tcb@cnt@definition.13.1.6.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.7}Advancing time: firing and cascading}{114}{subsection.13.1.7}\protected@file@percent }
+\newlabel{cor:bounded-cascades}{{13.1.7.1}{114}{Bounded cascades}{tcb@cnt@definition.13.1.7.1}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {13.5}{\ignorespaces Advancing the wheel to tick $t$.}}{115}{algorithm.13.5}\protected@file@percent }
+\newlabel{alg:tw-advance}{{13.5}{115}{Advancing time: firing and cascading}{algorithm.13.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.8}A worked example}{115}{subsection.13.1.8}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {13.3}{\ignorespaces Five timers placed at time zero. The first three of the six levels are shown; the orange outline marks the current slot on each level.}}{115}{figure.13.3}\protected@file@percent }
+\newlabel{fig:tw-example}{{13.3}{115}{Five timers placed at time zero. The first three of the six levels are shown; the orange outline marks the current slot on each level}{figure.13.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13.1}{\ignorespaces The example run to completion, computed with Tokio's rule. A run of 10,030 random timers, checked the same way, fired every one exactly on its deadline.}}{116}{table.13.1}\protected@file@percent }
+\newlabel{tab:tw-example}{{13.1}{116}{The example run to completion, computed with Tokio's rule. A run of 10,030 random timers, checked the same way, fired every one exactly on its deadline}{table.13.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {13.1.9}Moving a deadline}{116}{subsection.13.1.9}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {13.6}{\ignorespaces Moving a timer's deadline to $w'$.}}{116}{algorithm.13.6}\protected@file@percent }
+\newlabel{alg:tw-reset}{{13.6}{116}{Moving a deadline}{algorithm.13.6}{}}
+\newlabel{lem:lazy-extension}{{13.1.9.1}{116}{Lazy extension}{tcb@cnt@definition.13.1.9.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13.2}{\ignorespaces A 70\,ms timer reset to 300\,ms at tick 10. The reset took no lock; the timer cost one extra re-filing at 64\,ms.}}{117}{table.13.2}\protected@file@percent }
+\newlabel{tab:tw-lazy}{{13.2}{117}{A 70\,ms timer reset to 300\,ms at tick 10. The reset took no lock; the timer cost one extra re-filing at 64\,ms}{table.13.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13.3}{\ignorespaces The cost of every timer-wheel operation. None depends on how many timers exist.}}{117}{table.13.3}\protected@file@percent }
+\newlabel{tab:tw-costs}{{13.3}{117}{The cost of every timer-wheel operation. None depends on how many timers exist}{table.13.3}{}}
+\@writefile{loe}{\contentsline {exercise}{Exercise\ 9\ {\relax \fontshape  it\selectfont  Timing wheels}\hspace  {.66em}}{118}{Exercise.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {13.2}Exercise Solutions}{118}{section.13.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Alphabetical Index}{121}{section*.33}\protected@file@percent }
+\gdef \@abspage@last{121}

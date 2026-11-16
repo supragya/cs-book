@@ -1,0 +1,18 @@
+\chapter{Algorithms for Systems Engineering}
+\label{ch:systems-algorithms}
+
+Systems software---runtimes, kernels, network stacks---leans on a small set of algorithms that rarely appear in algorithms courses. They are shaped less by asymptotic elegance than by the machine: fixed-size words, cache lines, locks, and the cost of a system call. This chapter collects them, each with its invariant, its operations, and what they cost.
+
+\subimport{}{timing-wheels.tex}
+
+\begin{refbox}{Further Resources}
+    \small
+    \begin{description}
+        \item [Hashed and Hierarchical Timing Wheels (Varghese and Lauck)]: \href{http://www.cs.columbia.edu/~nahum/w6998/papers/ton97-timing-wheels.pdf}{http://www.cs.columbia.edu/\textasciitilde nahum/w6998/papers/ton97-timing-wheels.pdf}
+        \item [Tokio's timer wheel, 1.54.1]: \href{https://github.com/tokio-rs/tokio/tree/tokio-1.54.1/tokio/src/runtime/time}{https://github.com/tokio-rs/tokio/tree/tokio-1.54.1/tokio/src/runtime/time}
+        \item [New Timer implementation (Tokio blog, 2018)]: \href{https://tokio.rs/blog/2018-03-timers}{https://tokio.rs/blog/2018-03-timers}
+    \end{description}
+\end{refbox}
+
+\section{Exercise Solutions}
+\shipoutAnswer

@@ -1,0 +1,180 @@
+%% Part II: Watching it work. Two real tasks, followed one step at a time.
+
+\subsection{Two tasks, start to finish}
+\label{sec:wakers-ch5}
+
+\textit{Two tasks that look identical in source code can take completely different routes back to life. Following both, step by step, shows how the pieces fit, and supplies the vocabulary for the rest of the section.}
+
+The program in Listing~\ref{lst:wakers-5.1} runs on Tokio's \code{current\_thread} runtime, which has a single worker thread:
+
+\begin{itemize}
+    \item \textbf{Task A} waits for an HTTP response on a socket.
+    \item \textbf{Task B} reads a configuration file.
+\end{itemize}
+
+\begin{lstlisting}[caption={One network wait and one file read.}, label=lst:wakers-5.1]
+#[tokio::main(flavor = "current_thread")]
+async fn main() {
+    let mut sock = TcpStream::connect("api.example.com:80").await.unwrap();
+    sock.write_all(b"GET / HTTP/1.1\r\nHost: api.example.com\r\n\r\n").await.unwrap();
+
+    let a = tokio::spawn(async move {                           // Task A: network
+        let mut buf = [0u8; 4096];
+        let n = sock.read(&mut buf).await.unwrap();             // pauses here
+    });
+    let b = tokio::spawn(async {                                // Task B: file I/O
+        let cfg = tokio::fs::read("config.toml").await.unwrap(); // pauses here
+    });
+    let _ = tokio::join!(a, b);
+}
+\end{lstlisting}
+
+Four terms will make the walkthrough easier to follow.
+
+\begin{definition}{Waker slot}{waker-slot}
+    \index{Waker slot}
+    A \emph{waker slot} is the place where a leaf future leaves a cloned waker while it waits: a socket's reader slot, a timer entry, a channel's list of waiting tasks, a blocking job's handle.
+\end{definition}
+
+\begin{definition}{Wake path}{wake-path}
+    \index{Wake path}
+    A \emph{wake path} is the chain of events that leads from something happening in the world to a call of \code{wake()} on a stored waker.
+\end{definition}
+
+\begin{definition}{Driver duty}{driver-duty}
+    \index{Driver duty}
+    A worker thread is on \emph{driver duty} when, having no tasks to poll, it blocks in the operating system's readiness call and then dispatches whatever events come back. Section~\ref{sec:wakers-ch11} describes the driver in full.
+\end{definition}
+
+\begin{definition}{Local wake, remote wake}{local-remote-wake}
+    \index{Local wake}\index{Remote wake}
+    A \emph{local wake} is a call to \code{wake()} made on one of the runtime's own worker threads. A \emph{remote wake} is one made on any other thread.
+\end{definition}
+
+Table~\ref{tab:wakers-5.1} follows the program from spawn to completion. The last column shows which waker slots are occupied after each step.
+
+\begin{table}[htbp]
+    \centering\small
+    \begin{tabularx}{\linewidth}{r Y >{\raggedright\arraybackslash}p{2.7cm} >{\raggedright\arraybackslash}p{2.5cm}}
+        \toprule
+        \textbf{\#} & \textbf{What happens} & \textbf{Worker thread} & \textbf{Occupied slots} \\
+        \midrule
+        1 & Both tasks are spawned onto the run queue. The socket was registered with epoll once, when it was created. & idle; queue: A, B & none \\
+        2 & The worker polls A. \texttt{sock.read} finds no data, stores a clone of waker A in the socket's reader slot, and returns \texttt{Pending}. & polling A & socket $\rightarrow$ A \\
+        3 & The worker polls B. Disk files can't use epoll (Axiom~\ref{ax:files-always-ready}), so \texttt{tokio::fs::read} hands the read to a thread in Tokio's blocking pool. B awaits that job's handle, which stores waker B. \texttt{Pending}. & polling B & socket $\rightarrow$ A \newline job handle $\rightarrow$ B \\
+        4 & The run queue is empty. The worker goes on driver duty and sleeps in \texttt{epoll\_wait} with no timeout. No CPU is used (Axiom~\ref{ax:free-blocking}): the worker is asleep, and so is the pool thread, waiting for the disk. & asleep in \texttt{epoll\_wait} & socket $\rightarrow$ A \newline job handle $\rightarrow$ B \\
+        5 & The disk read finishes. On the \emph{pool thread}, Tokio stores the bytes and calls waker B: a remote wake. B is pushed onto the queue for remote wakes. & still asleep; queue: B & socket $\rightarrow$ A \\
+        6 & The kernel can't see the queue change (Axiom~\ref{ax:kernel-blindness}), so the wake also writes to an \texttt{eventfd} in the same epoll set. \texttt{epoll\_wait} returns with that one event. & woken by the eventfd & socket $\rightarrow$ A \\
+        7 & The worker polls B. The job's result is ready; B returns \texttt{Ready} and finishes. & polling B & socket $\rightarrow$ A \\
+        8 & The queue is empty again: back to driver duty. A's waker has sat in its slot all along, costing nothing. & asleep in \texttt{epoll\_wait} & socket $\rightarrow$ A \\
+        9 & The response arrives. The network card interrupts, the kernel buffers the bytes and marks the socket ready, and \texttt{epoll\_wait} returns one event identifying the socket. & woken by the socket & socket $\rightarrow$ A \\
+        10 & Still on driver duty, the worker sets the socket's ``readable'' flag and calls waker A: a local wake, so no eventfd is needed. A goes onto the run queue. & driver; queue: A & none \\
+        11 & The worker polls A. The read succeeds; A returns \texttt{Ready}. Each task was polled exactly twice: once to start, once after its wake. & polling A & none \\
+        \bottomrule
+    \end{tabularx}
+    \caption{The lifecycle of Listing~\ref{lst:wakers-5.1}.}
+    \label{tab:wakers-5.1}
+\end{table}
+
+The two wake paths, side by side:
+
+\begin{itemize}
+    \item \textbf{Task A (network):} packet $\rightarrow$ interrupt $\rightarrow$ kernel marks socket ready $\rightarrow$ \code{epoll\_wait} returns $\rightarrow$ worker on driver duty calls waker A. A local wake.
+    \item \textbf{Task B (file):} disk read completes $\rightarrow$ pool thread's \code{read} returns $\rightarrow$ pool thread calls waker B $\rightarrow$ eventfd write $\rightarrow$ \code{epoll\_wait} returns. A remote wake.
+\end{itemize}
+
+\begin{lemma}{Remote wakes need a poke}{remote-wakes-need-a-poke}
+    If a worker is blocked in \code{epoll\_wait}, a remote wake that only pushes a task onto a queue does not wake it. The waker must also make a descriptor in the epoll set ready.
+    \why Pushing onto a queue changes only memory. By Axiom~\ref{ax:kernel-blindness}, the blocked thread becomes runnable only when a descriptor becomes ready, its timeout passes, or a signal arrives.
+\end{lemma}
+
+Now suppose Task A used a hand-written future with a bug: at step 2 it returns \code{Pending} \emph{without} storing the waker. Then:
+
+\begin{itemize}
+    \item B proceeds and completes exactly as before.
+    \item At step 9 the response arrives and \code{epoll\_wait} returns, but the socket's reader slot is empty. There is nothing to call.
+    \item A is never put back on the queue. The bytes sit in the kernel's buffer.
+    \item Tokio registers sockets in edge-triggered mode, so the socket won't even be reported again until more data arrives---and then the slot will still be empty.
+\end{itemize}
+
+A waits forever, with no error and no CPU use. Section~\ref{sec:wakers-ch8} is about this failure.
+
+\begin{quotebox}{Summary}
+    \begin{itemize}
+        \item While a task waits, its waker simply occupies a waker slot. Nothing runs on its behalf.
+        \item Network waits end in a local wake by a worker on driver duty. File I/O ends in a remote wake from a pool thread.
+        \item A remote wake must poke the kernel to reach a sleeping worker (Lemma~\ref{lem:remote-wakes-need-a-poke}).
+    \end{itemize}
+\end{quotebox}
+
+\subsection{Who calls \texorpdfstring{\texttt{wake()}}{wake()}}
+\label{sec:wakers-ch6}
+
+\textit{It's tempting to imagine the operating system reaching in to wake a task. It never does. Every waker is called by ordinary Rust code, and many wake-ups never involve the operating system at all.}
+
+\begin{lemma}{Wakers are called from user space}{wakers-called-from-user-space}
+    Every call to \code{wake()} is made by Rust code running in user space: a worker on driver duty, a pool thread, another task, an interrupt handler on systems without an operating system, or a host event loop.
+    \why By Axiom~\ref{ax:kernel-passivity}, the kernel never calls a program's functions, apart from signal handlers, and runtimes do not call wakers from those. The kernel only returns from system calls; what happens next is user-space code.
+\end{lemma}
+
+\begin{definition}{Wake source}{wake-source}
+    \index{Wake source}
+    A \emph{wake source} is the root cause at the start of a wake path.
+\end{definition}
+
+There is no official list of wake sources, and there cannot be one: any code holding a waker may call it. In practice, every wake path starts at one of eight sources:
+
+\begin{table}[htbp]
+    \centering\small
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.3cm} Y Y}
+        \toprule
+        \textbf{Wake source} & \textbf{Covers} & \textbf{Who calls \texttt{wake()}} \\
+        \midrule
+        \textbf{1. Readiness I/O} (Task A) & Sockets, pipes, terminals, any descriptor wrapped in \texttt{AsyncFd} & A worker on driver duty, after \texttt{epoll\_wait}, \texttt{kevent} or IOCP returns \\
+        \textbf{2. Blocking pool} (Task B) & \texttt{tokio::fs}, \texttt{spawn\_blocking}, DNS lookups & The pool thread, when its blocking call returns \\
+        \textbf{3. Time} & \texttt{sleep}, \texttt{timeout}, \texttt{interval} & A worker on driver duty, after \texttt{epoll\_wait} times out \\
+        \textbf{4. Another task} & Channels, mutex unlocks, \texttt{Notify}, semaphores, a finished \texttt{JoinHandle} & The other task, inside \texttt{send()}, \texttt{drop(guard)} and so on; no kernel involved \\
+        \textbf{5. Completion I/O} & io\_uring (tokio-uring, glommio, monoio; Tokio's unstable \texttt{io-uring} feature), IOCP & The runtime, reading the completion queue \\
+        \textbf{6. Signals and processes} & \texttt{tokio::signal}, \texttt{tokio::process} & The handler writes to a pipe, so this becomes source 1 \\
+        \textbf{7. Hardware interrupts} & Embedded runtimes such as Embassy and RTIC & The interrupt handler itself; there is no operating system \\
+        \textbf{8. A host event loop} & WebAssembly in a browser (\texttt{wasm-bindgen-futures}) & A JavaScript promise callback \\
+        \bottomrule
+    \end{tabularx}
+    \caption{The eight wake sources.}
+    \label{tab:wakers-6.1}
+\end{table}
+
+\begin{corollary}{Wakers cross threads}{wakers-cross-threads}
+    A waker may be called on a different thread from the one that polled the task. Hence the requirement that \code{Waker} be \code{Send + Sync} (Axiom~\ref{ax:wakers-travel}).
+\end{corollary}
+
+Files deserve a final word, since they surprise people:
+
+\begin{itemize}
+    \item By Axiom~\ref{ax:files-always-ready}, epoll cannot watch disk files.
+    \item So \code{tokio::fs} runs the ordinary, blocking system call on a pool thread, as Task B did (source 2).
+    \item On Linux, Tokio can instead use io\_uring for some file operations, if built with the \code{tokio\_unstable} flag and the \code{io-uring} feature (source 5).
+\end{itemize}
+
+\begin{quotebox}{Summary}
+    \begin{itemize}
+        \item The kernel only returns from system calls. Rust code always calls the waker (Lemma~\ref{lem:wakers-called-from-user-space}).
+        \item Every wake path starts at one of eight wake sources.
+        \item Wakers may be called from any thread (Corollary~\ref{cor:wakers-cross-threads}).
+    \end{itemize}
+\end{quotebox}
+
+\begin{Exercise}[title={Wake paths}]
+    \begin{enumerate}
+        \item In Table~\ref{tab:wakers-5.1}, step 6 needs a write to an eventfd but step 10 does not. Explain why, naming the statement involved.
+        \item On Tokio's multi-thread runtime, classify each wake as local or remote: (a) a timer expires and the worker on driver duty wakes the sleeping task; (b) a \code{spawn\_blocking} job finishes; (c) a task running on worker 1 sends on a channel that a task last polled on worker 2 is waiting on; (d) a thread you started with \code{std::thread::spawn} calls a stored waker.
+        \item Which of the eight wake sources of Table~\ref{tab:wakers-6.1} ends each of these waits: \code{rx.recv().await} on a \code{tokio::sync::mpsc} channel; \code{tokio::signal::ctrl\_c().await}; \code{interval.tick().await}; \code{tokio::fs::read(path).await}?
+    \end{enumerate}
+\end{Exercise}
+\begin{Answer}
+    \begin{enumerate}
+        \item Step 6 is a remote wake, made on the pool thread while the only worker sleeps in \code{epoll\_wait}. Pushing task B onto a queue changes only memory, which the kernel cannot see, so the waker must also make a descriptor in the epoll set ready (Lemma~\ref{lem:remote-wakes-need-a-poke}). Step 10 is a local wake, made by the worker itself while on driver duty: that thread is already awake and simply polls A next.
+        \item By Definition~\ref{def:local-remote-wake}: (a) local, since the worker on driver duty is one of the runtime's own threads; (b) remote, since blocking-pool threads are not workers; (c) local, since the wake is made on worker 1, so the waiting task lands in worker 1's LIFO slot, wherever it last ran; (d) remote.
+        \item The channel: source 4, another task (the sender's \code{send} calls the waker). \code{ctrl\_c}: source 6, signals, whose handler writes to a pipe, so it arrives as source 1. \code{interval.tick}: source 3, time. \code{tokio::fs::read}: source 2, the blocking pool.
+    \end{enumerate}
+\end{Answer}

@@ -1,0 +1,432 @@
+%% Part IV: Inside Tokio. Run queues, driver duty, mio, and the second kind of wake.
+
+\subsection{The runtime at a glance}
+\label{sec:wakers-ch10}
+
+\textit{Tokio's default runtime spreads tasks across several worker threads, each with its own queue, and balances the load by stealing. Figure~\ref{fig:wakers-10.1} shows the whole structure.}
+
+\begin{figure}[htbp]
+    \centering
+    % Coordinates follow a 940 x 660 grid; y grows downwards.
+    \newcommand{\wkworker}[6]{% x, name, queued tasks (0-8), pill colour, pill text, notes
+        \draw[rounded corners=6pt, draw=gray!50, fill=white, line width=0.6pt] (#1,152) rectangle ++(280,200);
+        \node[anchor=north west, inner sep=0] at ({#1+16},162) {\small\textbf{#2}\quad\textcolor{gray}{one OS thread}};
+        \fill[rounded corners=3pt, #4!15] ({#1+16},186) rectangle ++(248,26);
+        \node[anchor=west, font=\ttfamily\scriptsize, text=#4!70!black] at ({#1+24},199) {#5};
+        \node[anchor=west, inner sep=0, text=gray] at ({#1+16},230) {LIFO slot};
+        \node[anchor=west, inner sep=0, text=gray] at ({#1+76},230) {local run queue (up to 256)};
+        \ifnum#3>0 \fill[rounded corners=1pt, StmtProposition] ({#1+16},244) rectangle ++(22,22);
+        \else \draw[rounded corners=1pt, gray!50] ({#1+16},244) rectangle ++(22,22); \fi
+        \foreach \i in {0,...,7}{
+            \ifnum\i<#3 \fill[rounded corners=1pt, StmtProposition] ({#1+76+20*\i},247) rectangle ++(16,16);
+            \else \draw[rounded corners=1pt, gray!50] ({#1+76+20*\i},247) rectangle ++(16,16); \fi
+        }
+        \node[anchor=west, text=gray] at ({#1+236},255) {\dots};
+        \node[anchor=north west, inner sep=0, text width=4.3cm, text=gray] at ({#1+16},280) {#6};
+    }
+    \figurefonts\resizebox{\linewidth}{!}{\begin{tikzpicture}[x=0.017cm, y=-0.019cm, font=\sffamily\scriptsize, >={Stealth}]
+        % other threads
+        \draw[rounded corners=6pt, draw=StmtAxiom, fill=StmtAxiom!8, line width=0.6pt] (20,20) rectangle (290,106);
+        \node[anchor=north west, inner sep=0, text width=4.3cm] at (36,32) {{\small\textbf{Other threads}}\\[2pt] \textcolor{gray}{blocking pool, main(), any non-worker}\\[2pt] \texttt{spawn()} $\cdot$ \texttt{wake()}};
+        \draw[->, gray, thick] (290,63) -- (326,63);
+        % global inject queue
+        \draw[rounded corners=6pt, draw=StmtProposition, fill=orange!8, line width=0.6pt] (330,20) rectangle (920,106);
+        \node[anchor=north west, inner sep=0] at (348,32) {\small\textbf{Global inject queue}\quad\textcolor{gray}{\scriptsize shared by all workers, behind a mutex}};
+        \foreach \i in {0,1,2}{\fill[rounded corners=1pt, StmtProposition] ({348+24*\i},64) rectangle ++(18,18);}
+        \foreach \i in {3,4,5}{\draw[rounded corners=1pt, gray!50] ({348+24*\i},64) rectangle ++(18,18);}
+        \node[anchor=north west, inner sep=0, text=gray, text width=6.8cm] at (510,60) {in: remote wakes, outside spawns, overflow\\ out: workers pull when idle, and periodically};
+        % inject queue to workers
+        \draw[->, gray, thick] (400,106) .. controls (400,130) and (160,124) .. (160,150);
+        \draw[->, gray, thick] (470,106) -- (470,150);
+        \draw[->, gray, thick] (560,106) .. controls (560,130) and (780,124) .. (780,150);
+        % workers
+        \wkworker{20}{Worker 0}{6}{Primary1}{executor $\cdot$ polling task}{next task: LIFO slot first (max 3 in a row), then the local queue.\\[2pt] Full? Half moves to the inject queue.}
+        \wkworker{330}{Worker 1}{4}{Primary1}{executor $\cdot$ polling task}{A task woken from this thread lands in this worker's LIFO slot.\\[2pt] (LIFO-slot tasks can't be stolen.)}
+        \wkworker{640}{Worker 2}{0}{StmtProposition}{idle $\cdot$ running the driver}{Empty: 1) check inject queue, 2) steal from a sibling, 3) park.\\[2pt] (First to park takes the driver.)}
+        % stealing
+        \draw[->, StmtProposition, thick, dashed] (560,352) .. controls (580,392) and (690,392) .. (712,356);
+        \node[text=StmtProposition, font=\sffamily\scriptsize\bfseries] at (600,402) {steal half of the local queue};
+        % driver
+        \draw[rounded corners=6pt, draw=orange!70!black, fill=yellow!10, line width=0.6pt] (330,420) rectangle (920,570);
+        \node[anchor=north west, inner sep=0] at (348,430) {\small\textbf{Driver}\quad\textcolor{gray}{\scriptsize one worker holds it at a time; other idle workers sleep on a condvar}};
+        \draw[rounded corners=4pt, draw=gray!50, fill=white] (348,456) rectangle (618,530);
+        \node[anchor=north west, inner sep=0, text width=4.3cm] at (360,466) {\texttt{I/O driver (mio)}\\[2pt] \textcolor{gray}{epoll set $\rightarrow$ per-socket ScheduledIo; reader and writer wakers live here}};
+        \draw[rounded corners=4pt, draw=gray!50, fill=white] (632,456) rectangle (902,530);
+        \node[anchor=north west, inner sep=0, text width=4.3cm] at (644,466) {\texttt{Time driver}\\[2pt] \textcolor{gray}{timer wheel, 6 levels $\times$ 64 slots; sets the epoll\_wait timeout}};
+        \node[anchor=north west, inner sep=0, text=gray, text width=9.6cm] at (348,542) {Busy workers also check it without blocking every 61 ticks, so I/O isn't starved.};
+        \draw[->, gray, thick] (760,352) -- (760,418) node[midway, right, text=gray] {parks};
+        \draw[->, StmtLemma, thick] (860,418) -- (860,354) node[midway, right, text=StmtLemma, font=\sffamily\scriptsize\bfseries] {wake()};
+        % kernel
+        \draw[rounded corners=6pt, draw=gray!50, fill=gray!8, line width=0.6pt] (330,600) rectangle (920,648);
+        \node[anchor=west] at (340,624) {\small\textbf{Kernel}\quad\texttt{\scriptsize epoll\_wait $\cdot$ sockets $\cdot$ eventfd (unpark signal)}};
+        \draw[<->, gray, thick] (560,572) -- (560,598);
+        % owned tasks
+        \draw[rounded corners=6pt, draw=gray!60, dashed, fill=white, line width=0.6pt] (20,420) rectangle (300,648);
+        \node[anchor=north west, inner sep=0, text width=4.3cm] at (36,432) {\small\textbf{OwnedTasks}\\[4pt] \scriptsize\textcolor{gray}{A list of every live task, including idle ones parked on a waker.\\[4pt] Not a queue. Never scanned to decide what to poll; used only for abort, shutdown and metrics.\\[4pt] A task that's not queued and not woken just sits here.}};
+    \end{tikzpicture}}
+    \caption{Tokio's multi-thread runtime, simplified. The \texttt{current\_thread} runtime of Section~\ref{sec:wakers-ch5} is the same picture with one worker and no stealing.}
+    \label{fig:wakers-10.1}
+\end{figure}
+
+The parts of the figure:
+
+\begin{description}
+    \item[Worker] One operating-system thread that polls tasks, and goes on driver duty when it has none.
+    \item[Local run queue] Each worker's own queue of up to 256 runnable tasks.
+    \item[LIFO slot] Each worker's single-task ``next up'' slot, filled by local wakes.
+    \item[Inject queue] A queue shared by all workers. It receives remote wakes, tasks spawned from outside the workers, and overflow from full local queues.
+    \item[Driver] The I/O and timer machinery, run by one idle worker at a time (Section~\ref{sec:wakers-ch11}).
+    \item[Blocking pool] Up to 512 extra threads by default, for \code{spawn\_blocking} and file I/O. They never poll async tasks; they only call wakers.
+    \item[List of all tasks] Every live task, idle ones included. It is not a queue and is never searched to decide what to run; it exists for cancellation, shutdown and metrics. A stranded task sits here.
+\end{description}
+
+Where a woken task lands depends on who woke it:
+
+\begin{table}[htbp]
+    \centering\small
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm} Y >{\raggedright\arraybackslash}p{2.6cm}}
+        \toprule
+        \textbf{Kind of wake} & \textbf{Where the task goes} & \textbf{In Section~\ref{sec:wakers-ch5}} \\
+        \midrule
+        Local wake & That worker's LIFO slot. The slot's previous occupant moves to the back of the local queue. A full local queue sends half its tasks to the inject queue. & Task A \\
+        Remote wake & The inject queue. Then a sleeping worker is woken: through its condition variable, or through the eventfd if it is on driver duty (Lemma~\ref{lem:remote-wakes-need-a-poke}). & Task B \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Where a woken task lands.}
+    \label{tab:wakers-10.1}
+\end{table}
+
+Each structure exists for a reason:
+
+\begin{itemize}
+    \item \textbf{The LIFO slot}\index{LIFO slot} exploits a common pattern. When task X sends a message that wakes task Y, Y usually needs data X has just touched, so running Y next on the same core finds that data still in cache.
+    \begin{itemize}
+        \item At most three LIFO polls run in a row, so two tasks can't ping-pong forever.
+        \item A task in the LIFO slot cannot be stolen.
+    \end{itemize}
+    \item \textbf{Work stealing}\index{Work stealing} handles uneven load. A worker whose own queue and the inject queue are both empty takes half of a busy sibling's local queue before sleeping.
+    \item \textbf{Task selection order:} the LIFO slot, then the local queue. Every so often the inject queue goes first, for fairness.
+    \item \textbf{I/O fairness:} a busy worker checks the driver without blocking every 61 tasks, so a full queue cannot starve I/O.
+\end{itemize}
+
+\begin{quotebox}{Summary}
+    \begin{itemize}
+        \item Each worker has a LIFO slot and a 256-task local queue; a shared inject queue takes remote wakes.
+        \item Idle workers steal half of a sibling's queue. One idle worker at a time is on driver duty.
+        \item The list of all tasks is never used for scheduling.
+    \end{itemize}
+\end{quotebox}
+
+\subsection{Driver duty}
+\label{sec:wakers-ch11}
+
+\textit{``Reactor'' is the traditional name for the part of a runtime that waits for events. In Tokio it isn't a component or a thread. It is a duty that a worker takes up when it has nothing else to do.}
+
+\begin{definition}{Driver}{driver}
+    \index{Driver}\index{Reactor}
+    Tokio's \emph{driver} is the private machinery that waits on the operating system and dispatches what it reports: socket readiness, expired timers, signals and child-process exits. It has no thread of its own; whichever worker goes on driver duty (Definition~\ref{def:driver-duty}) runs it.
+\end{definition}
+
+A little history clarifies the names:
+
+\begin{itemize}
+    \item The \emph{reactor pattern} is old: block on an operating-system event queue, then dispatch each event to whoever registered interest.
+    \item Before version 1.0, Tokio exposed it as \code{tokio\_core::reactor::Core}.
+    \item Modern Tokio has no public reactor type and no reactor thread. Its documentation calls the same machinery the \emph{driver}.
+    \item In the multi-thread runtime, the first idle worker to take the driver's lock goes on driver duty; other idle workers sleep on a condition variable.
+\end{itemize}
+
+\subsubsection{Two different things called ``poll''}
+
+Tokio sits on a library called mio (Section~\ref{sec:wakers-ch12}), whose main type is \code{Poll}, with a method also named \code{poll}. The two have nothing in common:
+
+\begin{table}[htbp]
+    \centering\small
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{1.8cm} >{\raggedright\arraybackslash}p{4.6cm} Y}
+        \toprule
+         & \textbf{\texttt{Future::poll(cx)}} & \textbf{\texttt{mio::Poll::poll(\&mut events, timeout)}} \\
+        \midrule
+        Meaning & ``Make progress if you can'' & A thin wrapper around \texttt{epoll\_wait} \\
+        Blocks? & Never; returns \texttt{Pending} instead & Yes, until an event or the timeout \\
+        Called by & The executor, on a task & The driver, in exactly one place \\
+        When & When the task is on the run queue & \textbf{Blocking} on driver duty (timeout: next timer, or none). \textbf{Non-blocking} (zero timeout) every 61 tasks while busy. Never in a busy loop. \\
+        \bottomrule
+    \end{tabularx}
+    \caption{The two meanings of ``poll.''}
+    \label{tab:wakers-11.1}
+\end{table}
+
+\begin{lemma}{Single blocking point}{single-blocking-point}
+    A Tokio runtime waits for I/O, timers, signals and child processes in exactly one place: the call to \code{mio::Poll::poll} made by the worker on driver duty. (If the runtime was built without I/O, it is a plain thread park with a timeout instead.) Other idle workers wait on a condition variable for work, not for events.
+    \why The four drivers below are layered so that each wraps the next. A park request passes down through all of them, and only the innermost blocks.
+\end{lemma}
+
+\begin{lstlisting}[language={}, caption={The four driver layers, from outermost to innermost.}, label=lst:wakers-11.1]
+idle worker -> park()
+  -> Time driver      next deadline is 37 ms away -> park_timeout(37 ms);
+                      afterwards, fire every expired timer
+    -> Process driver   (Unix) reap exited child processes whose handle was dropped
+      -> Signal driver    (Unix) a signal handler wrote a byte to a registered socket
+        -> I/O driver       mio::Poll::poll(events, 37 ms) -> epoll_wait(..., 37)   <- blocks here
+                            for each event: token -> that socket's state -> wake()
+\end{lstlisting}
+
+\begin{itemize}
+    \item \textbf{I/O driver:} any descriptor epoll can watch; network sockets are only one kind.
+    \item \textbf{Signal and process drivers:} thin layers that register extra descriptors with the I/O driver.
+    \item \textbf{Time driver:} turns the timer wheel's next deadline into the timeout (Section~\ref{sec:wakers-ch15}).
+    \item \textbf{On Windows:} only the I/O driver (IOCP) and the time driver exist.
+    \item \textbf{Files} never pass through any driver (Axiom~\ref{ax:files-always-ready}).
+\end{itemize}
+
+\subsubsection{The single-threaded runtime}
+
+The \code{current\_thread} runtime has no worker threads. Its only executor is whichever thread calls \code{block\_on}, typically the main thread, and that thread owns the driver outright, with no lock.
+
+\begin{lstlisting}[language={}, caption={The \texttt{current\_thread} scheduler loop, paraphrased from Tokio's source.}, label=lst:wakers-11.2]
+loop {
+    if the main future was woken: poll it      // the block_on future is not a spawned task
+    repeat up to 61 times:
+        take the next task (local queue; the inject queue every 31 tasks)
+        nothing to run?  -> driver duty: epoll_wait(timeout = next timer); restart loop
+        otherwise        -> poll that task
+    ran 61 tasks without parking -> check the driver with a zero timeout
+}
+\end{lstlisting}
+
+\begin{table}[htbp]
+    \centering\small
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.4cm} Y Y}
+        \toprule
+         & \textbf{Multi-thread} & \textbf{\texttt{current\_thread}} \\
+        \midrule
+        Who polls tasks & N worker threads & The thread inside \texttt{block\_on} \\
+        Who has driver duty & Whichever idle worker takes the lock & That same thread, with no lock \\
+        A remote wake & Inject queue; a worker is unparked & Inject queue; the eventfd is written \\
+        Progress when nobody is in \texttt{block\_on} & Yes & \textbf{None} \\
+        \bottomrule
+    \end{tabularx}
+    \caption{The two runtime flavours compared.}
+    \label{tab:wakers-11.2}
+\end{table}
+
+\begin{corollary}{No block\_on, no progress}{no-block-on-no-progress}
+    A \code{current\_thread} runtime polls no tasks, handles no I/O and fires no timers while no thread is inside its \code{block\_on}.
+\end{corollary}
+
+In practice:
+
+\begin{itemize}
+    \item Tasks spawned onto such a runtime through a handle from another thread will not run until some thread enters \code{block\_on}.
+    \item If two threads call \code{block\_on} on the same \code{current\_thread} runtime, only one holds the scheduler at a time; the other waits.
+\end{itemize}
+
+\begin{quotebox}{Summary}
+    \begin{itemize}
+        \item The ``reactor'' is the driver, run as a duty by an idle worker (Definition~\ref{def:driver}).
+        \item \code{Future::poll} never blocks; mio's \code{Poll::poll} is the single blocking point (Lemma~\ref{lem:single-blocking-point}).
+        \item A \code{current\_thread} runtime makes progress only inside \code{block\_on} (Corollary~\ref{cor:no-block-on-no-progress}).
+    \end{itemize}
+\end{quotebox}
+
+\subsection{mio: where Tokio meets the operating system}
+\label{sec:wakers-ch12}
+
+\textit{Between Tokio and the kernel sits a small library that knows nothing about futures. Seeing exactly where it begins and ends removes most of the mystery from async I/O.}
+
+The work divides into two questions:
+
+\begin{itemize}
+    \item \emph{Which handles are ready?} That is mio's job. mio\index{mio} is a thin, synchronous Rust wrapper over each operating system's readiness call.
+    \item \emph{Which task is waiting on that handle, and how do I wake it?} That is Tokio's job.
+\end{itemize}
+
+\begin{definition}{Token}{token}
+    \index{Token (mio)}
+    A \emph{token} is a number (\code{Token(usize)}) that Tokio attaches to a descriptor when it registers it with mio. Tokio uses a pointer to the socket's internal state, including its waker slots, as the token.
+\end{definition}
+
+\begin{lemma}{Token round trip}{token-round-trip}
+    The token passes through the kernel unchanged: it is stored with the registration and returned with every event for that descriptor. The driver therefore goes from an event to the right waker slot with no lookup.
+    \why mio places the token in the \code{data} field of the epoll registration, which the kernel returns verbatim. Listing~\ref{lst:wakers-12.1} shows it happening.
+\end{lemma}
+
+\begin{figure}[htbp]
+    \centering\small
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.6cm} Y}
+        \toprule
+        \textbf{your code} & \texttt{sock.read(\&mut buf).await} \\
+        \midrule
+        \textcolor{Primary3}{\textbf{Tokio}} \newline {\footnotesize\color{gray} futures, tasks, wakers} &
+            \texttt{TcpStream::poll\_read(cx)} checks readiness, otherwise stores \texttt{cx.waker()}. \newline
+            \texttt{ScheduledIo}: per socket, readiness flags plus reader and writer wakers. \newline
+            Driver: for each event, \textbf{token $\rightarrow$ ScheduledIo $\rightarrow$ \texttt{wake()}}. \\
+        \midrule
+        \textcolor{StmtProposition}{\textbf{the handoff}} &
+            \textbf{\texttt{Token(usize)}}, chosen by Tokio when it registers a socket and returned unchanged by mio. Tokio uses a pointer to the socket's \texttt{ScheduledIo}, so no lookup is needed. \\
+        \midrule
+        \textcolor{StmtLemma}{\textbf{mio}} \newline {\footnotesize\color{gray} no futures, no wakers} &
+            \texttt{Registry::register(\&mut sock, Token(n), Interest::READABLE)} \newline
+            \texttt{Poll::poll(\&mut events, timeout)} $\rightarrow$ \texttt{[(Token, readable / writable), ...]} \newline
+            Non-blocking socket types $\cdot$ \texttt{mio::Waker} (Section~\ref{sec:wakers-ch13}) \\
+        \midrule
+        \textcolor{orange!70!black}{\textbf{backend}} \newline {\footnotesize\color{gray} chosen at compile time} &
+            epoll on Linux, Android and illumos $\cdot$ kqueue on macOS, iOS and the BSDs $\cdot$ event ports on Solaris $\cdot$ IOCP with AFD on Windows $\cdot$ \texttt{poll(2)} on AIX, Fuchsia, Haiku, ESP-IDF, WASI and others \\
+        \midrule
+        \textbf{kernel} & sockets, pipes, eventfd; the network stack; interrupts \\
+        \bottomrule
+    \end{tabularx}
+    \caption{The layers between an \texttt{.await} and the kernel.}
+    \label{fig:wakers-12.1}
+\end{figure}
+
+Listing~\ref{lst:wakers-A.1} in Section~\ref{sec:wakers-programs} uses mio on its own, without any async code. Running it under \code{strace} shows every epoll system call it makes:
+
+\begin{lstlisting}[language={}, numbers=none, caption={The epoll system calls made by Listing~\ref{lst:wakers-A.1}. Each token comes back in epoll's \texttt{data} field.}, label=lst:wakers-12.1]
+epoll_create1(EPOLL_CLOEXEC) = 3                                      <- Poll::new()
+epoll_ctl(3, EPOLL_CTL_ADD, 4, {EPOLLIN|EPOLLRDHUP|EPOLLET, data=0})  <- register listener as Token(0)
+epoll_wait(3, [{EPOLLIN, data=0}], 128, -1) = 1                       <- listener is ready
+epoll_ctl(3, EPOLL_CTL_ADD, 6, {EPOLLIN|EPOLLRDHUP|EPOLLET, data=1})  <- register socket as Token(1)
+epoll_wait(3, [{EPOLLIN, data=1}], 128, -1) = 1                       <- socket is ready
+\end{lstlisting}
+
+Two observations:
+
+\begin{itemize}
+    \item Tokio's I/O driver is this same loop. Instead of running application code for each token, it follows the token to the socket's state and calls the wakers stored there.
+    \item The \code{EPOLLET} flag shows that mio always registers in edge-triggered mode, so whoever reads must keep reading until the operating system says \code{WouldBlock}.
+\end{itemize}
+
+\begin{table}[htbp]
+    \centering\small
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.4cm} Y}
+        \toprule
+        \textbf{Not mio's job} & \textbf{Who does it} \\
+        \midrule
+        Reading and writing bytes & The caller; mio only reports when an operation won't block \\
+        Timers & Tokio's timer wheel (Section~\ref{sec:wakers-ch15}); mio offers only a timeout argument \\
+        Files & No one at this layer (Axiom~\ref{ax:files-always-ready}) \\
+        Threads & None are created; \texttt{poll} blocks whichever thread calls it \\
+        Futures, tasks and wakers & Tokio, entirely \\
+        \bottomrule
+    \end{tabularx}
+    \caption{The edges of mio's responsibility.}
+    \label{tab:wakers-12.1}
+\end{table}
+
+\subsubsection{Without epoll}
+
+epoll exists only on Linux. mio picks a backend at compile time, so there is no runtime cost, and Tokio's code above mio is identical everywhere:
+
+\begin{itemize}
+    \item \textbf{epoll:} Linux, Android, illumos.
+    \item \textbf{kqueue:} macOS, iOS and the BSDs. Same readiness model.
+    \item \textbf{Event ports:} Solaris. Same readiness model.
+    \item \textbf{IOCP with AFD:} Windows. Readiness built on completion; see below.
+    \item \textbf{\code{poll(2)}:} AIX, Fuchsia, Haiku, ESP-IDF, WASI and others. It works, but scans every descriptor on every call.
+\end{itemize}
+
+Windows uses the completion model (Definition~\ref{def:completion-model}), but mio promises readiness (Definition~\ref{def:readiness-model}), so on Windows it builds one on top of the other:
+
+\begin{enumerate}
+    \item For each socket, mio asks the Winsock kernel driver to complete a request when the socket becomes readable or writable (\code{IOCTL\_AFD\_POLL}, sent to \texttt{\textbackslash Device\textbackslash Afd}).
+    \item Those requests finish on an I/O completion port, like any other Windows I/O.
+    \item \code{Poll::poll} waits on the port and converts each finished request into a readiness event carrying the original token.
+\end{enumerate}
+
+The libuv library beneath Node.js uses the same technique.
+
+\begin{quotebox}{Summary}
+    \begin{itemize}
+        \item mio answers ``which handles are ready?'' synchronously; Tokio answers ``which task do I wake?''
+        \item The token crosses the boundary and the kernel unchanged (Lemma~\ref{lem:token-round-trip}).
+        \item mio uses epoll, kqueue, event ports, IOCP with AFD, or \code{poll(2)}, chosen at compile time.
+    \end{itemize}
+\end{quotebox}
+
+\subsection{Two kinds of wake}
+\label{sec:wakers-ch13}
+
+\textit{mio has a type called \code{Waker}. It shares nothing with \code{std::task::Waker} but the name, and understanding both completes the story of step 6 in Section~\ref{sec:wakers-ch5}.}
+
+\begin{definition}{Task-level wake, thread-level wake}{task-thread-level-wake}
+    \index{Task-level wake}\index{Thread-level wake}
+    A \emph{task-level wake} makes a task runnable by putting it on a run queue; it is what \code{std::task::Waker} does. A \emph{thread-level wake} makes a blocked thread runnable by making a descriptor ready; it is what \code{mio::Waker} does.
+\end{definition}
+
+\begin{table}[htbp]
+    \centering\small
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm} Y Y}
+        \toprule
+         & \textbf{\texttt{std::task::Waker}} & \textbf{\texttt{mio::Waker}} \\
+        \midrule
+        Level & Task: ``poll this future again'' & Thread: ``stop sleeping in \texttt{Poll::poll}'' \\
+        How many & One per task, cloned freely & One per \texttt{Poll} instance, as mio requires; Tokio registers it as \texttt{TOKEN\_WAKEUP} \\
+        What it is & Two pointers (Definition~\ref{def:raw-waker}) & A kernel object registered with the poller \\
+        \texttt{wake()} does & Pushes the task onto a run queue & A system call that makes that object ready \\
+        \bottomrule
+    \end{tabularx}
+    \caption{The two wakers.}
+    \label{tab:wakers-13.1}
+\end{table}
+
+The thread-level object differs by platform:
+
+\begin{itemize}
+    \item \textbf{Linux:} an \code{eventfd}; waking writes 1 to it.
+    \item \textbf{macOS and the BSDs:} a kqueue user event (\code{EVFILT\_USER}); no descriptor needed.
+    \item \textbf{Windows:} a dummy completion posted with \code{PostQueuedCompletionStatus}.
+    \item \textbf{\code{poll(2)} platforms:} a pipe.
+\end{itemize}
+
+\begin{lemma}{Two-stage remote wake}{two-stage-remote-wake}
+    A remote wake that reaches a worker on driver duty consists of a task-level wake followed by a thread-level wake. A local wake needs only the first.
+    \why The task-level wake queues the task. By Lemma~\ref{lem:remote-wakes-need-a-poke}, a blocked worker cannot notice that without a descriptor becoming ready, which is what the thread-level wake supplies. A local wake runs on a thread that is already awake.
+\end{lemma}
+
+\begin{lstlisting}[language={}, numbers=none, caption={The two stages of a remote wake.}, label=lst:wakers-13.1]
+pool thread: job finished
+  -> std::task::Waker::wake()          task level: push task B onto the inject queue
+    -> the runtime sees that its thread is on driver duty
+      -> mio::Waker::wake()            thread level: write 1 to the eventfd
+        -> kernel: eventfd readable -> epoll_wait returns with token 0
+          -> driver sees TOKEN_WAKEUP; nothing to dispatch, the event only ended the sleep
+            -> the thread returns to polling, takes task B, polls it
+\end{lstlisting}
+
+\begin{lstlisting}[language={}, numbers=none, caption={\texttt{strace} of a \texttt{current\_thread} runtime awaiting \texttt{spawn\_blocking(|| \{ sleep(50 ms); 42 \})} (Listing~\ref{lst:wakers-A.2}).}, label=lst:wakers-13.2]
+eventfd2(0, EFD_CLOEXEC|EFD_NONBLOCK) = 4                    <- mio::Waker::new
+epoll_ctl(3, EPOLL_CTL_ADD, 4, {EPOLLIN|EPOLLET, data=0})   <- registered as Token(0)
+[main thread]  epoll_wait(3, ..., -1)                       <- driver duty, no timeout
+[pool thread]  write(4, "\1\0\0\0\0\0\0\0", 8) = 8          <- job done; task wake -> thread wake
+[main thread]  epoll_wait resumed -> [{EPOLLIN, data=0}] = 1 <- woken by token 0, not a socket
+\end{lstlisting}
+
+\begin{lemma}{Wake coalescing}{wake-coalescing}
+    Any number of thread-level wakes that occur before the sleeping thread runs produce a single event.
+    \why Each write only increases the eventfd's counter. The kernel puts a descriptor on epoll's ready list at most once until \code{epoll\_wait} collects it, so the waiting thread receives one event however many writes preceded it.
+\end{lemma}
+
+\begin{quotebox}{Summary}
+    \begin{itemize}
+        \item \code{std::task::Waker} performs task-level wakes; \code{mio::Waker} performs thread-level wakes (Definition~\ref{def:task-thread-level-wake}).
+        \item A remote wake to a sleeping worker needs both, in that order (Lemma~\ref{lem:two-stage-remote-wake}). Repeated thread-level wakes coalesce (Lemma~\ref{lem:wake-coalescing}).
+    \end{itemize}
+\end{quotebox}
+
+\begin{Exercise}[title={Inside Tokio}]
+    \begin{enumerate}
+        \item Why can't another worker steal the task in a worker's LIFO slot, and what stops two tasks that keep waking each other from monopolising a worker through that slot?
+        \item A program builds a \code{current\_thread} runtime, gives its \code{Handle} to another thread that spawns tasks with it, and never calls \code{block\_on}. What happens to those tasks?
+        \item In Listing~\ref{lst:wakers-13.2}, why does the eventfd's event carry \code{data=0}? If two pool threads both finish jobs before the sleeping thread runs, how many events does \code{epoll\_wait} return for the eventfd?
+        \item In one sentence each, what do \code{Future::poll} and \code{mio::Poll::poll} do, and which of them may block?
+    \end{enumerate}
+\end{Exercise}
+\begin{Answer}
+    \begin{enumerate}
+        \item The LIFO slot exists so that a task woken by the one just polled runs next, on the same core, while the data it needs is still in cache; only the local run queue is stealable. To stay fair, a worker takes at most three tasks in a row from its LIFO slot before going back to its local queue (Section~\ref{sec:wakers-ch10}).
+        \item Nothing runs. A \code{current\_thread} runtime has no worker threads: it polls tasks, handles I/O and fires timers only while some thread is inside its \code{block\_on} (Corollary~\ref{cor:no-block-on-no-progress}). The tasks wait in the inject queue until a thread enters \code{block\_on}.
+        \item The eventfd is the \code{mio::Waker}, registered as Token(0), Tokio's \code{TOKEN\_WAKEUP}; the token comes back unchanged in epoll's \code{data} field (Lemma~\ref{lem:token-round-trip}). Two writes before the thread runs produce a single event: each write only adds to the eventfd's counter, and the descriptor sits on the ready list at most once until \code{epoll\_wait} collects it (Lemma~\ref{lem:wake-coalescing}).
+        \item \code{Future::poll} asks a future to make as much progress as it can and never blocks; it returns \code{Pending} instead. \code{mio::Poll::poll} is a thin wrapper around \code{epoll\_wait} (or its equivalent) and blocks the calling thread until an event arrives or the timeout passes (Table~\ref{tab:wakers-11.1}).
+    \end{enumerate}
+\end{Answer}

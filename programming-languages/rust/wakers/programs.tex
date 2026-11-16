@@ -1,0 +1,198 @@
+%% The programs behind the measurements quoted in this chapter.
+
+\subsection{The programs behind the measurements}
+\label{sec:wakers-programs}
+
+Each program below was compiled and run to produce the results quoted in the text, with Rust 1.97, Tokio 1.54.1 and mio 1.2.5 on Linux. Listing~\ref{lst:wakers-17.1} is the fifth program.
+
+\subsubsection{mio on its own}
+
+\begin{itemize}
+    \item Dependencies: \code{mio = \{ version = "1", features = ["os-poll", "net"] \}}.
+    \item Produces Listing~\ref{lst:wakers-12.1} under \code{strace -e trace=epoll\_create1,epoll\_ctl,epoll\_wait}.
+\end{itemize}
+
+\begin{lstlisting}[caption={A listener and a client using mio directly, with no async code.}, label=lst:wakers-A.1]
+use mio::net::{TcpListener, TcpStream};
+use mio::{Events, Interest, Poll, Token};
+use std::io::{ErrorKind, Read, Write};
+
+fn main() -> std::io::Result<()> {
+    let mut poll = Poll::new()?;                       // Linux: epoll_create1
+    let mut events = Events::with_capacity(128);
+
+    let mut listener = TcpListener::bind("127.0.0.1:0".parse().unwrap())?;
+    let addr = listener.local_addr()?;
+    let mut client = TcpStream::connect(addr)?;        // non-blocking connect
+    poll.registry().register(&mut listener, Token(0), Interest::READABLE)?; // epoll_ctl(ADD)
+
+    let mut server = None;
+    loop {
+        poll.poll(&mut events, None)?;                 // epoll_wait: sleep until something is ready
+        for ev in events.iter() {
+            match ev.token() {                         // a Token is just a usize YOU chose
+                Token(0) => {
+                    let (mut s, _) = listener.accept()?;
+                    poll.registry().register(&mut s, Token(1), Interest::READABLE)?;
+                    server = Some(s);
+                    client.write_all(b"hello")?;
+                }
+                Token(1) => {
+                    let s = server.as_mut().unwrap();
+                    let mut buf = [0u8; 64];
+                    loop {                              // edge-triggered: drain until WouldBlock
+                        match s.read(&mut buf) {
+                            Ok(0) => return Ok(()),
+                            Ok(n) => { println!("token 1 readable, read {:?}", std::str::from_utf8(&buf[..n]).unwrap()); return Ok(()); }
+                            Err(e) if e.kind() == ErrorKind::WouldBlock => break,
+                            Err(e) => return Err(e),
+                        }
+                    }
+                }
+                _ => {}
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+\subsubsection{The eventfd wake-up}
+
+\begin{itemize}
+    \item Dependencies: \code{tokio = \{ version = "1", features = ["full"] \}}.
+    \item Produces Listing~\ref{lst:wakers-13.2} under \code{strace -f -e trace=eventfd2,epoll\_ctl,epoll\_wait,write}.
+\end{itemize}
+
+\begin{lstlisting}[caption={A blocking job awaited on a single-threaded runtime.}, label=lst:wakers-A.2]
+#[tokio::main(flavor = "current_thread")]
+async fn main() {
+    let v = tokio::task::spawn_blocking(|| { std::thread::sleep(std::time::Duration::from_millis(50)); 42 }).await.unwrap();
+    println!("got {v}");
+}
+\end{lstlisting}
+
+\subsubsection{A future that never stores its waker}
+
+\begin{itemize}
+    \item Dependencies: \code{tokio} (full), \code{futures = "0.3"}, \code{smol = "2"}, \code{pollster = "0.4"}, \code{cassette = "0.3"}.
+    \item Produces Table~\ref{tab:wakers-8.1}.
+\end{itemize}
+
+\begin{lstlisting}[caption={The broken future, run on several configurations with a two-second limit each.}, label=lst:wakers-A.3]
+use std::future::Future;
+use std::pin::Pin;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::{mpsc, Arc};
+use std::task::{Context, Poll};
+use std::time::{Duration, Instant};
+
+/// Becomes ready 100 ms after creation, but NEVER stores or calls the waker.
+struct Broken { flag: Arc<AtomicBool> }
+impl Broken {
+    fn new() -> Self {
+        let flag = Arc::new(AtomicBool::new(false));
+        let f = flag.clone();
+        std::thread::spawn(move || { std::thread::sleep(Duration::from_millis(100)); f.store(true, Ordering::SeqCst); });
+        Broken { flag }
+    }
+}
+impl Future for Broken {
+    type Output = ();
+    fn poll(self: Pin<&mut Self>, _cx: &mut Context<'_>) -> Poll<()> {
+        if self.flag.load(Ordering::SeqCst) { Poll::Ready(()) } else { Poll::Pending } // bug: no waker stored
+    }
+}
+
+fn run(name: &str, f: impl FnOnce() + Send + 'static) {
+    let (tx, rx) = mpsc::channel();
+    let t = Instant::now();
+    std::thread::spawn(move || { f(); let _ = tx.send(()); });
+    match rx.recv_timeout(Duration::from_secs(2)) {
+        Ok(()) => println!("{name:<44} completed after {:?}", t.elapsed()),
+        Err(_) => println!("{name:<44} HUNG (still pending after 2 s)"),
+    }
+}
+
+fn main() {
+    run("tokio current_thread block_on", || tokio::runtime::Builder::new_current_thread().enable_all().build().unwrap().block_on(Broken::new()));
+    run("tokio multi_thread, tokio::spawn", || { let rt = tokio::runtime::Runtime::new().unwrap(); rt.block_on(async { tokio::spawn(Broken::new()).await.unwrap() }); });
+    run("futures::executor::block_on", || futures::executor::block_on(Broken::new()));
+    run("smol::block_on", || smol::block_on(Broken::new()));
+    run("pollster::block_on", || pollster::block_on(Broken::new()));
+    run("cassette (no-op waker, busy-polls)", || cassette::block_on(Broken::new()));
+    run("tokio, join!(broken, 10ms heartbeat)", || tokio::runtime::Builder::new_current_thread().enable_all().build().unwrap().block_on(async {
+        let hb = async { for _ in 0..50 { tokio::time::sleep(Duration::from_millis(10)).await; } };
+        tokio::join!(Broken::new(), hb);
+    }));
+    std::process::exit(0); // hung threads are abandoned
+}
+\end{lstlisting}
+
+\subsubsection{Idle cost and event cost}
+
+\begin{itemize}
+    \item Dependencies: \code{tokio} (full).
+    \item Run in release mode as \code{tk 100000 9000}, with the file-descriptor limit at 20,000.
+    \item Produces Table~\ref{tab:wakers-16.1}.
+\end{itemize}
+
+\begin{lstlisting}[caption={Idle cost and wake-up latency with 100,000 timers and 9,000 sockets.}, label=lst:wakers-A.4]
+use std::time::{Duration, Instant};
+use tokio::io::AsyncReadExt;
+use tokio::net::{TcpListener, TcpStream};
+
+fn stat() -> (u64, u64, u64) {
+    let s = std::fs::read_to_string("/proc/self/status").unwrap();
+    let get = |k: &str| s.lines().find(|l| l.starts_with(k)).unwrap()
+        .split_whitespace().nth(1).unwrap().parse::<u64>().unwrap();
+    let st = std::fs::read_to_string("/proc/self/stat").unwrap();
+    let f: Vec<&str> = st.rsplit(')').next().unwrap().split_whitespace().collect();
+    let cpu = f[11].parse::<u64>().unwrap() + f[12].parse::<u64>().unwrap(); // utime+stime ticks
+    (get("VmRSS:"), get("Threads:"), cpu)
+}
+async fn idle(label: &str) {
+    let (rss, thr, c0) = stat();
+    tokio::time::sleep(Duration::from_secs(5)).await;
+    let (_, _, c1) = stat();
+    println!("{label:<34} RSS {:>7.1} MiB | OS threads {:>2} | CPU over 5s idle: {} ms",
+        rss as f64 / 1024.0, thr, (c1 - c0) * 10);
+}
+
+#[tokio::main(flavor = "multi_thread", worker_threads = 4)]
+async fn main() {
+    let n_timers: usize = std::env::args().nth(1).unwrap().parse().unwrap();
+    let n_socks: usize = std::env::args().nth(2).unwrap().parse().unwrap();
+    idle("baseline").await;
+
+    let t = Instant::now();
+    for i in 0..n_timers {
+        tokio::spawn(async move { tokio::time::sleep(Duration::from_secs(600 + (i % 1000) as u64)).await; });
+    }
+    println!("  spawned {n_timers} sleeping tasks in {:?}", t.elapsed());
+    idle(&format!("+{n_timers} pending timers")).await;
+
+    let l = TcpListener::bind("127.0.0.1:0").await.unwrap();
+    let addr = l.local_addr().unwrap();
+    let mut clients = Vec::with_capacity(n_socks);
+    let t = Instant::now();
+    for _ in 0..n_socks {
+        let c = TcpStream::connect(addr).await.unwrap();
+        let (mut s, _) = l.accept().await.unwrap();
+        tokio::spawn(async move { let mut b = [0u8; 64]; let _ = s.read(&mut b).await; });
+        clients.push(c);
+    }
+    println!("  opened {n_socks} TCP connections ({} fds) in {:?}", n_socks * 2, t.elapsed());
+    idle(&format!("+{n_socks} idle sockets awaiting read")).await;
+
+    // wake ONE socket: how long until its task runs?
+    use tokio::io::AsyncWriteExt;
+    let (tx, rx) = tokio::sync::oneshot::channel();
+    let c = TcpStream::connect(addr).await.unwrap();
+    let (mut s, _) = l.accept().await.unwrap();
+    tokio::spawn(async move { let mut b = [0u8; 1]; s.read(&mut b).await.unwrap(); tx.send(Instant::now()).unwrap(); });
+    tokio::time::sleep(Duration::from_millis(100)).await;
+    let mut c = c; let t0 = Instant::now(); c.write_all(b"x").await.unwrap();
+    let woke = rx.await.unwrap();
+    println!("  one write -> sleeping task polled again after {:?} (amid {} other waiters)", woke - t0, n_timers + n_socks);
+}
+\end{lstlisting}

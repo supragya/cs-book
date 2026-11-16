@@ -1,8 +1,7 @@
-\RequirePackage{xcolor}
-\RequirePackage{sansmath}
+\RequirePackage[table]{xcolor}
 \RequirePackage{soul}
 \RequirePackage{tcolorbox}
-\tcbuselibrary{skins,breakable}
+\tcbuselibrary{skins,breakable,theorems}
 
 \definecolor{Primary1}{HTML}{1FABD5}
 \definecolor{Primary2}{HTML}{1D8DB0}
@@ -10,35 +9,118 @@
 % \definecolor{Highlight}{HTML}{FFFF00}
 \colorlet{LightPrimary}{Primary2!15!white}
 \colorlet{Highlight}{Primary1!20!white}
+% Strings in code listings: a dark green that reads well on the grey listing background.
+\definecolor{CodeString}{HTML}{2E7D32}
 \sethlcolor{Highlight}
 
 
 %% FONT
-\sansmath
-\SetSymbolFont{operators}{sans}{OT1}{cmss}{m}{n}
-\SetSymbolFont{letters}{sans}{OML}{cmbrm}{m}{it}
-\SetSymbolFont{symbols}{sans}{OMS}{cmbrs}{m}{n}
-\SetSymbolFont{largesymbols}{sans}{OMX}{iwona}{m}{n}
-\renewcommand{\familydefault}{\sfdefault}
+% Body: XCharter with matching maths. Headings and box titles: Source Sans.
+% Code: Inconsolata (varl: distinguishable l; varqu: straight quotes).
+\RequirePackage{amsmath}  % must come before newtxmath
+\RequirePackage{XCharter}
+\RequirePackage[xcharter]{newtxmath}
+\RequirePackage[scaled=0.92]{sourcesanspro}
+\RequirePackage[varl,varqu,scaled=0.95]{zi4}
+\RequirePackage{microtype}
+\RequirePackage[sf]{titlesec}
 
 \setlength{\parindent}{0pt}
 
-% Create a new LaTeX command where upon writing \code{...}, the text inside the curly braces will be formatted in a monospaced font, colored in a Primary2 color with background color of LightPrimary.
-\newcommand{\code}[1]{\colorbox{LightPrimary}{\textcolor{Primary2}{\texttt{#1}}}}
+% \code{...}: inline code in a monospaced font, coloured Primary3. No background box,
+% so it sits lightly in prose.
+\newcommand{\code}[1]{\texttt{\textcolor{Primary3}{#1}}}
 
 \newcommand{\todo}[1]{{\textcolor{orange}{\texttt{TODO: #1}}}}
 
 \newtcolorbox{quotebox}[2][]{breakable,sharp corners, skin=enhancedmiddle jigsaw,parbox=false,
 boxrule=0mm,leftrule=2mm,boxsep=0mm,arc=0mm,outer arc=0mm,attach title to upper,
 after title={.\ }, coltitle=Primary2,colback=Primary1!10,colframe=black, title={#2},
-fonttitle=\bfseries,#1}
+fonttitle=\sffamily\bfseries,#1}
 
 \newtcolorbox{refbox}[2][]{breakable, skin=enhancedmiddle jigsaw,parbox=false,
 boxrule=0mm,leftrule=2mm,boxsep=0mm,arc=0mm,outer arc=0mm,attach title to upper,
 after title={}, coltitle=Primary2,colback=yellow!10,colframe=black, title={#2},
-fonttitle=\bfseries,#1}
+fonttitle=\sffamily\bfseries,#1}
 
 \newtcolorbox{alertbox}[2][]{breakable, skin=enhancedmiddle jigsaw,parbox=false,
 boxrule=0mm,leftrule=2mm,boxsep=0mm,arc=0mm,outer arc=0mm,attach title to upper,
 after title={\ }, coltitle=Primary2,colback=yellow!20,colframe=black, title={#2},
-fonttitle=\bfseries,#1}
+fonttitle=\sffamily\bfseries,#1}
+
+%% NUMBERED STATEMENTS
+% Definitions, axioms, lemmas, corollaries and propositions share one counter,
+% numbered within the section: \begin{lemma}{Name}{slug} ... \end{lemma},
+% referenced as Lemma~\ref{lem:slug}. Prefixes: def, ax, lem, cor, prop.
+\colorlet{StmtDefinition}{Primary3}
+\colorlet{StmtAxiom}{violet!80!black}
+\colorlet{StmtLemma}{green!45!black}
+\colorlet{StmtProposition}{orange!85!black}
+\tcbset{statement/.style={breakable, enhanced, sharp corners, parbox=false,
+  boxrule=0mm, leftrule=1.5mm, boxsep=0mm, left=3mm, right=2mm, top=1.5mm, bottom=1.5mm,
+  colback=#1!6, colframe=#1, coltitle=#1, fonttitle=\sffamily\bfseries,
+  attach title to upper, after title={.\ }, separator sign none,
+  description delimiters parenthesis, description font=\mdseries\bfseries}}
+\newtcbtheorem[number within=subsection]{definition}{Definition}{statement=StmtDefinition}{def}
+\newtcbtheorem[use counter from=definition]{axiom}{Axiom}{statement=StmtAxiom}{ax}
+\newtcbtheorem[use counter from=definition]{lemma}{Lemma}{statement=StmtLemma}{lem}
+\newtcbtheorem[use counter from=definition]{corollary}{Corollary}{statement=StmtLemma}{cor}
+\newtcbtheorem[use counter from=definition]{proposition}{Proposition}{statement=StmtProposition}{prop}
+% Inside a statement: the argument for a lemma, and where an axiom comes from.
+\newcommand{\why}{\par\smallskip\textit{Why.}\ }
+\newcommand{\source}[2][Source]{\par\smallskip{\small\color{gray!90!black}#1: #2}}
+
+% Figures drawn at the old 10pt sizes: inside a figure, call \figurefonts to pin the
+% size commands to their 10pt values, so labels keep fitting their boxes.
+\newcommand{\figurefonts}{%
+  \renewcommand\tiny{\fontsize{5}{6}\selectfont}%
+  \renewcommand\scriptsize{\fontsize{7}{8}\selectfont}%
+  \renewcommand\footnotesize{\fontsize{8}{9.5}\selectfont}%
+  \renewcommand\small{\fontsize{9}{11}\selectfont}}
+
+%% TABLES
+% Every table environment gets white / grey / white body rows (the header row stays
+% white). booktabs' padding around rules is moved into the rows, so the stripes
+% meet the rules without white gaps.
+\colorlet{TableStripe}{gray!12}
+\AddToHook{env/table/begin}{%
+  \rowcolors{2}{TableStripe}{white}%
+  \setlength{\aboverulesep}{0pt}%
+  \setlength{\belowrulesep}{0pt}%
+  \renewcommand{\arraystretch}{1.35}}
+% Y: a tabularx X column set ragged-right, so short lines don't stretch into gaps.
+\RequirePackage{array}
+\RequirePackage{tabularx}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+%% LISTINGS: keep each listing on one page unless it is longer than a page.
+% Every listing line is its own paragraph, so TeX may break between any two lines.
+% Make those breaks illegal, except once every page-height of printed lines: a short
+% listing then moves whole to the next page, and a long one still breaks, once per
+% page. Printed lines are counted with \prevgraf, so wrapped source lines count fully,
+% and a wrapped line is never split across pages.
+\newcount\bookLstLines
+\newcount\bookLstPageLines
+\AtBeginDocument{\@ifpackageloaded{listings}{%
+  % The caption is set before the hooks run: keep its lines together, and keep it
+  % with the first line of code.
+  \def\lst@makecaption{\def\@captype{lstlisting}\interlinepenalty\@M\@makecaption}%
+  \lst@AddToHook{Init}{\ifvmode\nobreak\fi \global\bookLstLines=\z@ \interlinepenalty=\@M
+    \global\bookLstPageLines=\numexpr\dimexpr\textheight-4\baselineskip\relax/\baselineskip\relax}%
+  \def\lst@NewLine{%
+    \ifx\lst@OutputBox\@gobble\else
+      \par
+      \global\advance\bookLstLines\prevgraf
+      \ifnum\bookLstLines<\bookLstPageLines \nobreak\else \global\bookLstLines=\z@ \fi
+      \noindent\hbox{}%
+    \fi
+    \global\advance\lst@newlines\m@ne
+    \lst@newlinetrue}%
+}{}}
+
+%% ALGORITHMS (algorithm + algpseudocode)
+% Grey, right-aligned comments; small pseudocode so long lines fit the measure.
+\AtBeginDocument{\@ifpackageloaded{algpseudocode}{%
+  \algrenewcommand\algorithmiccomment[1]{\hfill{\color{gray!90!black}\footnotesize$\triangleright$ #1}}%
+  \algrenewcommand\alglinenumber[1]{{\color{gray}\scriptsize #1}}%
+  \AddToHook{env/algorithmic/begin}{\small}}{}}

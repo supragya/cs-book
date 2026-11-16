@@ -1,0 +1,230 @@
+%% Part V: Why it scales. Two data structures that make waiting free, and the measurements to prove it.
+
+\subsection{Inside epoll}
+\label{sec:wakers-ch14}
+
+\textit{A worker can sleep while ten thousand sockets wait, then wake for the one that matters, without examining the other 9,999. The reason lies in two lists the kernel keeps.}
+
+\begin{description}
+    \item[Interest list] Every registered descriptor, organized as a red-black tree. mio adds each socket once, edge-triggered, when it is created; Tokio never re-registers a socket for each read.
+    \item[Ready list] A short linked list. When a packet lands in a socket's buffer, the kernel's networking code runs a small callback that appends just that socket, and wakes any thread sleeping in \code{epoll\_wait}.
+\end{description}
+\index{epoll}
+
+\begin{figure}[htbp]
+    \centering
+    % Coordinates follow a 700 x 270 grid; y grows downwards.
+    \figurefonts\resizebox{\linewidth}{!}{\begin{tikzpicture}[x=0.022cm, y=-0.022cm, font=\sffamily\scriptsize, >={Stealth}]
+        % interest list
+        \draw[rounded corners=6pt, draw=gray!50, fill=white, line width=0.6pt] (10,10) rectangle (280,260);
+        \node[anchor=north west, inner sep=0] at (26,22) {\small\textbf{Interest list}};
+        \node[anchor=north west, inner sep=0, text=gray] at (26,42) {every registered socket (red-black tree)};
+        \foreach \r in {0,...,11}{
+            \foreach \c in {0,...,13}{
+                \fill[rounded corners=0.5pt, gray!25] ({26+17*\c},{68+14*\r}) rectangle ++(12,10);
+            }
+        }
+        \foreach \c/\r in {3/2, 8/6, 12/9}{
+            \fill[rounded corners=0.5pt, orange!70!black] ({26+17*\c},{68+14*\r}) rectangle ++(12,10);
+        }
+        \node[anchor=west, inner sep=0, text=gray] at (26,246) {registered once, at creation $\cdot$ mostly idle};
+        % packet arrives
+        \draw[->, gray, thick] (282,122) -- (386,122);
+        \node[text=orange!70!black, align=center] at (334,102) {packet arrives:};
+        \node[text=orange!70!black, align=center] at (334,142) {callback appends};
+        % ready list
+        \draw[rounded corners=6pt, draw=orange!70!black, fill=yellow!10, line width=0.6pt] (390,62) rectangle (524,182);
+        \node[anchor=north west, inner sep=0] at (404,74) {\small\textbf{Ready list}};
+        \foreach \fd [count=\k from 0] in {912, 4817, 7310}{
+            \fill[rounded corners=2pt, white] (404,{98+26*\k}) rectangle ++(106,20);
+            \node[anchor=west, font=\ttfamily\scriptsize, text=orange!70!black] at (412,{108+26*\k}) {fd \fd};
+        }
+        \draw[->, gray, thick] (524,122) -- (564,122);
+        % epoll_wait
+        \draw[rounded corners=6pt, draw=StmtLemma, fill=green!6, line width=0.6pt] (568,62) rectangle (690,182);
+        \node[anchor=north west, inner sep=0, text width=2.3cm] at (580,74) {\small\textbf{epoll\_wait}\\[3pt] \scriptsize\textcolor{StmtLemma}{returns 3 events}\\[6pt] driver calls\\ 3 $\times$ \texttt{wake()}};
+        \node[anchor=north west, inner sep=0, text=gray, text width=6.6cm] at (390,204) {Work done is proportional to the 3 ready sockets, not to the thousands being watched.};
+    \end{tikzpicture}}
+    \caption{epoll's two lists. Highlighted squares are the sockets that just received data.}
+    \label{fig:wakers-14.1}
+\end{figure}
+
+\begin{lemma}{Event-proportional waiting}{event-proportional-waiting}
+    The work done by one call to \code{epoll\_wait} is proportional to the number of ready descriptors it returns, not to the number registered.
+    \why Descriptors join the ready list as their events happen, through the kernel's callback. \code{epoll\_wait} only copies out the ready list; it never walks the interest list.
+\end{lemma}
+
+\begin{table}[htbp]
+    \centering\small
+    \begin{tabular}{r c r}
+        \toprule
+        \textbf{Sockets watched} & \textbf{Entries \texttt{epoll\_wait} touches} & \textbf{Entries \texttt{poll()}/\texttt{select()} scan} \\
+        \midrule
+        1,000 & \textcolor{StmtLemma}{\textbf{3}} & \textcolor{red!70!black}{\textbf{1,000}} \\
+        10,000 & \textcolor{StmtLemma}{\textbf{3}} & \textcolor{red!70!black}{\textbf{10,000}} \\
+        100,000 & \textcolor{StmtLemma}{\textbf{3}} & \textcolor{red!70!black}{\textbf{100,000}} \\
+        1,000,000 & \textcolor{StmtLemma}{\textbf{3}} & \textcolor{red!70!black}{\textbf{1,000,000}} \\
+        \bottomrule
+    \end{tabular}
+    \caption{One round in which three sockets receive data.}
+    \label{tab:wakers-14.1}
+\end{table}
+
+\begin{quotebox}{Summary}
+    \begin{itemize}
+        \item The interest list holds everything; the ready list holds only what changed.
+        \item Waiting costs work in proportion to events, not to watchers (Lemma~\ref{lem:event-proportional-waiting}). A million idle sockets cost kernel memory, but no CPU.
+    \end{itemize}
+\end{quotebox}
+
+\subsection{Inside the timer wheel}
+\label{sec:wakers-ch15}
+
+\textit{Timers in Tokio are not a kernel feature. Every \code{sleep} and \code{timeout} lives in a single user-space structure built like a clock with six hands, and its next deadline becomes \code{epoll\_wait}'s timeout.}
+
+That structure is a hierarchical timer wheel (Definition~\ref{def:timer-wheel}). The wheel itself---how it files, removes, finds and fires timers, each in constant time---is a general algorithm, and Section~\ref{sec:timing-wheels} presents it in full. This subsection is about how Tokio's runtime uses it. It describes the default time driver, which has a single wheel behind a mutex; behind the \code{tokio\_unstable} flag, the multi-thread runtime also has an alternative driver that keeps a wheel per worker.
+
+\subsubsection{Ticks}
+
+Tokio's tick is one millisecond, counted from the moment the runtime's time driver started. A deadline is rounded up to the next whole tick (\code{deadline\_to\_tick} adds 999,999 nanoseconds before truncating), so a \code{sleep} never ends early. With six levels of 64 slots, the wheel spans $64^6$ ticks, a little over two years.
+
+\subsubsection{The driver's loop}
+
+The time driver is one of the layers of Listing~\ref{lst:wakers-11.1}. Each time a worker parks on driver duty, it:
+
+\begin{enumerate}
+    \item asks the wheel for its next expiration (Algorithm~\ref{alg:tw-next}) and records it as \code{next\_wake};
+    \item sleeps in \code{epoll\_wait} for that long, rounded up to a whole millisecond, or with no timeout if there are no timers;
+    \item on waking, for whatever reason, reads the clock and advances the wheel to it (Algorithm~\ref{alg:tw-advance});
+    \item fires each due timer: marks it finished and takes its waker. It collects up to 32 wakers, drops the timer lock, calls them, and takes the lock again, so no waker ever runs while the lock is held.
+\end{enumerate}
+
+\begin{lemma}{Timers are timeouts}{timers-are-timeouts}
+    A timer fires when the driver runs at or after its deadline and advances the wheel past it. On an idle runtime this happens because \code{epoll\_wait}'s timeout expires; on a busy one, a worker's periodic non-blocking check of the driver (Table~\ref{tab:wakers-11.1}) can also do it.
+    \why The time driver passes ``time until the next expiration'' (Lemma~\ref{lem:constant-time-next-deadline}) as the timeout (Listing~\ref{lst:wakers-11.1}), and after every return from the layers below it, runs Algorithm~\ref{alg:tw-advance}. Timers have no kernel object of their own.
+\end{lemma}
+
+\code{next\_wake} matters on a busy runtime. A worker on driver duty sleeps with a timeout computed from the wheel's next expiration. If another thread inserts a timer that is due sooner, the insert sees that its deadline is earlier than \code{next\_wake} and unparks the sleeping worker (the last step of Algorithm~\ref{alg:tw-insert}): a thread-level wake (Definition~\ref{def:task-thread-level-wake}), through the same eventfd as any other.
+
+\subsubsection{A timer's life in Tokio}
+
+\begin{itemize}
+    \item \textbf{Creation.} A \code{Sleep} creates its timer entry and inserts it on its \emph{first poll}, not when it is constructed: a \code{sleep(..)} that is created and dropped without being polled never touches the wheel.
+    \item \textbf{Cancellation.} Dropping a \code{Sleep}, which is what happens to a \code{timeout} whose future finishes first, removes its timer (Algorithm~\ref{alg:tw-remove}) and marks it finished \emph{without} calling its waker: nobody is waiting any more.
+    \item \textbf{Moving the deadline.} \code{Sleep::reset} to a later deadline takes the lock-free path of Lemma~\ref{lem:lazy-extension}; this is the idle-timeout pattern, pushed back on every packet. To an earlier deadline, it takes the driver lock, removes and re-inserts the timer, and may unpark the driver.
+    \item \textbf{Intervals.} \code{tokio::time::interval} does not move its timer: after each tick it drops the timer and creates a fresh one on the next poll.
+\end{itemize}
+
+\begin{table}[htbp]
+    \centering\small
+    \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.6cm} Y}
+        \toprule
+        \textbf{In Tokio} & \textbf{Wheel algorithm} \\
+        \midrule
+        First poll of a \texttt{Sleep} & Insert (Algorithm~\ref{alg:tw-insert}) \\
+        Dropping a \texttt{Sleep} or \texttt{Timeout} & Remove (Algorithm~\ref{alg:tw-remove}) \\
+        \texttt{Sleep::reset}, later deadline & Lazy extension (Algorithm~\ref{alg:tw-reset}, Lemma~\ref{lem:lazy-extension}) \\
+        \texttt{Sleep::reset}, earlier deadline & Remove, then Insert \\
+        A worker parking on driver duty & Next expiration (Algorithm~\ref{alg:tw-next}) \\
+        A worker returning from \texttt{epoll\_wait} & Advance (Algorithm~\ref{alg:tw-advance}) \\
+        \bottomrule
+    \end{tabularx}
+    \caption{What each timer operation in Tokio does to the wheel.}
+    \label{tab:wakers-15.4}
+\end{table}
+
+Table~\ref{tab:tw-example} traces five timers over ninety seconds: eleven brief wake-ups of the worker on driver duty, which sleeps in between at no CPU cost (Axiom~\ref{ax:free-blocking}). Adding ten thousand more timers adds work only at the moments when some of them are due.
+
+\begin{quotebox}{Summary}
+    \begin{itemize}
+        \item Tokio's timers live in one user-space hierarchical wheel with 1\,ms ticks (Definition~\ref{def:timer-wheel}); its algorithms are in Section~\ref{sec:timing-wheels}.
+        \item The wheel's next expiration becomes the \code{epoll\_wait} timeout, and timers fire as timeouts (Lemma~\ref{lem:timers-are-timeouts}). A sooner timer unparks the driver.
+        \item A \code{Sleep} enters the wheel on first poll and leaves it when dropped; moving it later is lock-free (Table~\ref{tab:wakers-15.4}).
+    \end{itemize}
+\end{quotebox}
+
+\subsection{Idle cost and event cost}
+\label{sec:wakers-ch16}
+
+\textit{A waker is not a thread, and a waiting task runs nothing. That claim follows from the axioms; this section states it precisely and then measures it.}
+
+\begin{definition}{Idle cost, event cost}{idle-event-cost}
+    \index{Idle cost}\index{Event cost}
+    The \emph{idle cost} of a waiting task is what it consumes while nothing happens to it. The \emph{event cost} is the work done when its wake source fires.
+\end{definition}
+
+\begin{lemma}{Idle cost is memory only}{idle-cost-memory-only}
+    On a waker-driven runtime, the idle cost of a task is memory---the task's allocation and its waker slot---and no CPU time and no thread.
+    \why A waiting task's waker sits in a waker slot (Definition~\ref{def:waker-slot}), which is data. The task is not polled (Definition~\ref{def:waker-driven-executor}). Its wake source is watched by the kernel or a timer wheel, and the thread that waits on them is blocked, which costs no CPU (Axiom~\ref{ax:free-blocking}).
+\end{lemma}
+
+\begin{lemma}{Event cost is independent of waiters}{event-cost-independent}
+    The work done when one task's wake source fires does not grow with the number of other waiting tasks.
+    \why epoll returns only ready descriptors (Lemma~\ref{lem:event-proportional-waiting}); the timer wheel touches only the due slot (Lemmas~\ref{lem:constant-time-insert}, \ref{lem:constant-time-next-deadline}); the token leads straight to the waker slot (Lemma~\ref{lem:token-round-trip}); and the run queue holds only woken tasks.
+\end{lemma}
+
+\subsubsection{Measurement}
+
+The test ran on a two-core Linux machine with Tokio 1.54.1, a four-worker runtime and a release build (Listing~\ref{lst:wakers-A.4}):
+
+\begin{enumerate}
+    \item spawn 100,000 tasks that each sleep for over ten minutes;
+    \item open 9,000 loopback TCP connections, each with a task waiting in \code{read().await};
+    \item after each stage, sample the process during five idle seconds;
+    \item finally, write one byte to one more socket and time its task's wake-up.
+\end{enumerate}
+
+\begin{table}[htbp]
+    \centering\small
+    \begin{tabular}{l r r r}
+        \toprule
+        \textbf{State} & \textbf{Resident memory} & \textbf{OS threads} & \textbf{CPU used in 5 s} \\
+        \midrule
+        Empty runtime & 2.9 MiB & 5 & 0 ms \\
+        + 100,000 sleeping tasks & 39.7 MiB & 5 & 0 ms \\
+        + 9,000 idle sockets (18,000 descriptors) & 49.9 MiB & 5 & 0 ms \\
+        \bottomrule
+    \end{tabular}
+    \caption{Idle cost. ``0 ms'' means below the 10 ms resolution of the kernel's CPU accounting. The kernel's own socket memory is not part of the resident figure.}
+    \label{tab:wakers-16.1}
+\end{table}
+
+The results match the lemmas:
+
+\begin{itemize}
+    \item \textbf{Lemma~\ref{lem:idle-cost-memory-only}:} about 380 bytes per sleeping task including its timer entry, and about 1.1\,KB per socket task in user space. The thread count never changed, and idle CPU was unmeasurable.
+    \item \textbf{Lemma~\ref{lem:event-cost-independent}:} the final write woke its task in 84 microseconds, with 109,000 other waiters in the same runtime.
+\end{itemize}
+
+The real limits on an async server therefore lie elsewhere:
+
+\begin{itemize}
+    \item memory;
+    \item the per-process file-descriptor limit (\code{ulimit -n});
+    \item how much work each event triggers;
+    \item tasks that compute for a long time without reaching an \code{.await}, since tasks share threads cooperatively and such a task stalls every other task on its worker.
+\end{itemize}
+
+\begin{quotebox}{Summary}
+    \begin{itemize}
+        \item Idle cost is memory only (Lemma~\ref{lem:idle-cost-memory-only}). Event cost does not depend on the number of waiters (Lemma~\ref{lem:event-cost-independent}).
+        \item Measured: 109,000 waiters in about 50 MiB, with no extra threads, no idle CPU, and an 84\,$\mu$s wake-up.
+    \end{itemize}
+\end{quotebox}
+
+\begin{Exercise}[title={Why it scales}]
+    \begin{enumerate}
+        \item A server holds 50,000 idle WebSocket connections, each with a task waiting in \code{read().await}, when one message arrives. Which costs grow with the 50,000, and which do not?
+        \item Why would a runtime built on \code{poll(2)} instead of epoll fail Lemma~\ref{lem:event-proportional-waiting}?
+        \item From Table~\ref{tab:wakers-16.1}, estimate the user-space memory per sleeping task and per socket task.
+        \item A handler wraps each request in \code{timeout(Duration::from\_secs(5), ...)}, and almost every request finishes in about 3\,ms. Which timer-wheel operations does a typical request cost, and does its timer ever cascade?
+    \end{enumerate}
+\end{Exercise}
+\begin{Answer}
+    \begin{enumerate}
+        \item Memory grows: each connection costs a task allocation, its socket state with waker slots, a file descriptor, and kernel socket buffers. The cost of the one message does not (Lemma~\ref{lem:event-cost-independent}): \code{epoll\_wait} returns one event (Lemma~\ref{lem:event-proportional-waiting}), its token leads straight to that socket's waker slot (Lemma~\ref{lem:token-round-trip}), and only that task is queued and polled. The idle connections cost no CPU (Lemma~\ref{lem:idle-cost-memory-only}).
+        \item \code{poll(2)} takes the whole descriptor set on every call and the kernel checks every descriptor in it, so each wait costs work proportional to the number of descriptors watched, not to the number that are ready.
+        \item Timers: $(39.7 - 2.9)\,\text{MiB} / 100{,}000 \approx 386$ bytes per sleeping task, including its timer entry. Sockets: $(49.9 - 39.7)\,\text{MiB} / 9{,}000 \approx 1.2$\,KB per socket task (two descriptors each), not counting the kernel's socket memory.
+        \item Two constant-time operations, each under the driver lock, and nothing else. When the \code{Timeout}'s \code{Sleep} is first polled, \textsc{Insert} files it about 5,000 ticks ahead: at level 2, or at level 3 if those 5,000 ticks cross a multiple of $64^3$ (Algorithm~\ref{alg:tw-level-for}). When the request finishes, the \code{Timeout} is dropped and \textsc{Remove} unlinks it (Lemma~\ref{lem:constant-time-remove}). Its slot is never reached, so it never cascades and never fires.
+    \end{enumerate}
+\end{Answer}
